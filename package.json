@@ -1,7 +1,7 @@
 {
   "name": "record_home_dashboard_v1.0.0",
   "version": "1.0.0",
-  "description": "Another module made with create-redcap-module.",
+  "description": "A REDCap External Module that enables to add a customized Dashboard to the Record Homepage",
   "scripts": {
     "build": "npx mix",
     "dev": "npx mix watch"
