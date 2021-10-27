@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import App from './App.vue';
 
+//  Vuex Storage
+import store from '../store'
+
 //  Oruga UI library
 import Oruga from '@oruga-ui/oruga'
 import '@oruga-ui/oruga/dist/oruga.css'
@@ -11,7 +14,8 @@ Vue.use(Oruga, OrugaConfig)
 
 //  Create Vue Instance and mount our module page container
 new Vue({
-  render: h => h(App)
+  render: h => h(App),
+  store
 })
 .$mount('#appEditor');
 
