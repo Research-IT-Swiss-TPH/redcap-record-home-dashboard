@@ -1,3 +1,4 @@
 {
-    "/js/appEditor.js": "/js/appEditor.js"
+    "/dist/appEditor.js": "/dist/appEditor.js",
+    "/dist/style.css": "/dist/style.css"
 }

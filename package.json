@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/tertek/redcap-record-home-dashboard#readme",
   "devDependencies": {
+    "@oruga-ui/oruga": "^0.4.6",
     "laravel-mix": "^6.0.34",
+    "resolve-url-loader": "^4.0.0",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.1.0",
     "vue": "^2.6.14",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14"

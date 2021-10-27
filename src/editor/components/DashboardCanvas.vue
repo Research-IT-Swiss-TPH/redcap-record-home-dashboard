@@ -1,5 +1,12 @@
 <template>
-    <div>{{ msg }} {{ page }}</div>
+    <div class="editor-wrapper mt-3">
+        <div v-if="!selection" id="content-add-new" class="editor-content" @click="openCreateDashboardModal()">
+            <div  id="add-new-text"><i class="fas fa-plus-square"></i> Create Dashboard</div>
+        </div>
+        <div v-if="selection">
+            Selection: {{selection.name}}
+        </div>
+    </div>
 </template>
 
 <script>
@@ -14,5 +21,13 @@ export default {
 </script>
 
 <style>
-
+    .editor-wrapper {
+            min-height: 500px;
+            width:100%;
+            border:1px solid #dbdbdb;
+            border-radius: 4px;
+            border-style: dashed;
+            position: relative;
+            transition: all ease-in-out 250ms;
+        }
 </style>

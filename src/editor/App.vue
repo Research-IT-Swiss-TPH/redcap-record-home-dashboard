@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <section class="container-redcap">
         <dashboard-canvas></dashboard-canvas>
-    </div>
+    </section>
 </template>
 
 <script>

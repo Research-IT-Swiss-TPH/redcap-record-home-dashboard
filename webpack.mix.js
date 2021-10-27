@@ -1,3 +1,5 @@
 let mix = require('laravel-mix');
 
-mix.js('src/Editor/appEditor.js', 'js').vue();
+mix
+.sass('src/style.scss', 'dist')
+.js('src/Editor/appEditor.js', 'dist').vue();

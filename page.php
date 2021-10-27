@@ -15,4 +15,5 @@ print '<div style="width:950px;max-width:950px;" class="d-none d-md-block mt-3 m
         return '<?= PAGE ?>';
     }
 </script>
-<script src="<?= $module->getUrl("./js/appEditor.js") ?>"></script>
+<script src="<?= $module->getUrl("./dist/appEditor.js") ?>"></script>
+<link rel="stylesheet" href="<?= $module->getUrl('dist/style.css')?>">
