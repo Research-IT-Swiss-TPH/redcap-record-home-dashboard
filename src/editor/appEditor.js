@@ -4,6 +4,14 @@ import App from './App.vue';
 //  Vuex Storage
 import store from '../store'
 
+//  Axios  
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+Vue.use(VueAxios, axios.create({
+  baseURL: getBaseUrlFromBackend()
+}))
+
 //  Oruga UI library
 import Oruga from '@oruga-ui/oruga'
 import '@oruga-ui/oruga/dist/oruga.css'

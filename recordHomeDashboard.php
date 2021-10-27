@@ -38,5 +38,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         
         //  check settings
     }   
+
+    public function getBaseUrl(){
+        return $this->getUrl("requestHandler.php");
+    }
     
 }
