@@ -23,7 +23,17 @@
 
     "enable-every-page-hooks-on-system-pages": false,
 
-    "links":{},
+    "links":{
+        "project": [
+            {
+                "name": "Record Home Dashboard",
+                "key": "record-home-dashboard",
+                "icon": "fas fa-columns",
+                "url": "page.php",
+                "show-header-and-footer": true
+            }
+        ]
+    },
 
     "no-auth-pages": [],
 

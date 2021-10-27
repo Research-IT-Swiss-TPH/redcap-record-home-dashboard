@@ -11,8 +11,6 @@ if( file_exists("vendor/autoload.php") ){
 // Declare your module class, which must extend AbstractExternalModule 
 class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
 
-    private $moduleName = "Record Home Dashboard";  
-
    /**
     * Constructs the class
     *
@@ -38,26 +36,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     */
     private function renderModule() {
         
-        
-
-        print '<p class="record-home-dashboard">'.$this->helloFrom_recordHomeDashboard().'<p>';
-
-    }
-
-    /**
-    * Returns a test string including module name.
-    *
-    * @since 1.0.0
-    */    
-    public function helloFrom_recordHomeDashboard() {
-
-        
-        return $this->tt("hello_from").' '.$this->moduleName;
-        
-
-    }
-
-    
-
+        //  check settings
+    }   
     
 }
