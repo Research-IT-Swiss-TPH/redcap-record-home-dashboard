@@ -20,7 +20,19 @@
                 <dashboard-column 
                     :columns="row.columns"
                     :r_id="index"
-                    @delete-column="columnRemove( $event )">
+                    @add-element="elementAdd( $event )"
+                    @delete-column="columnRemove( $event )"
+                    v-slot="{elements, c_id}">
+
+                    <dashboard-element
+                        :r_id="index"
+                        :c_id="c_id"
+                        :elements="elements"
+                        @delete-element="elementRemove( $event )"
+                        @edit-element="elementEdit( $event )"
+                    >
+                    </dashboard-element>
+
                 </dashboard-column>
 
             </dashboard-row>
@@ -37,11 +49,13 @@
 import DashboardRow from './DashboardRow.vue';
 import DashboardRowClass from "../../classes/DashboardRowClass";
 import DashboardColumn from './DashboardColumn.vue'
+import DashboardElement from './DashboardElement.vue'
 
 export default {
     components: {
         DashboardRow,
-        DashboardColumn
+        DashboardColumn,
+        DashboardElement
     },
     data() {
         return {
@@ -62,7 +76,7 @@ export default {
             let columns = this.rows[r_id].columns
             //let col = new DashboardColClass()
             let col = {
-                "content": []
+                "elements": []
             }
             columns.push(col)
         },
@@ -72,13 +86,18 @@ export default {
             let columns = this.rows[r_id].columns
             columns.splice(c_id, 1)
         },
-        elementAdd(params) {
-            let column = this.rows[params.r_id].columns[params.c_id]
+        elementAdd({r_id, c_id}) {
+            let column = this.rows[r_id].columns[c_id]
             let el =  {
                         "type": "text",
                         "content": "Hello World"
                     }
-            column.content.push(el)
+            column.elements.push(el)
+
+        },
+        elementRemove({r_id, c_id, e_id}) {
+            let elements = this.rows[r_id].columns[c_id].elements
+            elements.splice(e_id,1)
 
         }
     },

@@ -6,27 +6,34 @@
             <div class="card">
              <div class="card-header">
                 <div class="float-left">
-                    <span class="font-weight-light text-secondary "># {{ index }}</span>
+                    <small class="text-muted">Column - #{{ index + 1}} </small>
                 </div>
                 <div class="editor-row-menu float-right">
 
-                     <o-button @click="handleEmit('add-element')" size="small" variant="success">
-                        <o-icon icon="plus" ></o-icon>
-                    </o-button>                    
-    
-                     <o-button @click="handleEmit('delete-column', index)" size="small" variant="danger">
+                    <o-tooltip variant="info" label="Add Element">
+                        <o-button @click="handleEmit('add-element', index)" size="small" variant="secondary">
+                            <o-icon icon="plus" ></o-icon>
+                        </o-button>
+                    </o-tooltip>
+
+                    <o-tooltip variant="info" label="Delete Column">
+                     <o-button @click="handleEmit('delete-column', index)" size="small" variant="secondary">
                         <o-icon icon="trash"></o-icon>
                     </o-button>
+                    </o-tooltip>
 
                 </div>                
             </div>
             <div class="card-body">
-                <div v-if="column.content.length == 0" class="text-center text-monospace">Column is empty.</div>
+
+                <div v-if="column.elements.length == 0" class="text-center text-monospace">Column is empty.</div>
                 <div v-else>
-                    <div class="text-center">
-                        Show widgets here.
-                    </div>
+                    <slot 
+                        :c_id="index"
+                        :elements="column.elements">
+                    </slot>                    
                 </div>
+
             </div>                            
         </div>
     </div>
@@ -37,7 +44,7 @@
 
 <script>
 export default {
-    
+
     props: [
         'columns',
         'r_id'

@@ -33,3 +33,9 @@
   --oruga-variant-light: #f8f9fa;
   --oruga-variant-dark: #343a40;
 }
+
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}

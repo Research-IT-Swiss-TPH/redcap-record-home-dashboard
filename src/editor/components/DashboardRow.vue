@@ -2,18 +2,21 @@
         <div class="card editor-row">
             <div class="card-header row-header">
                 <div class="float-left">
-                    <span class="font-weight-light text-secondary "># {{ r_id }}</span>
-                </div>
-                
+                    <small class="text-muted">Row - #{{ r_id + 1}} </small>                
+                </div>                
                 <div class="editor-row-menu float-right">
 
-                     <o-button @click="handleEmit('add-column')" size="small" variant="success">
-                        <o-icon icon="plus" ></o-icon>
-                    </o-button>        
+                    <o-tooltip variant="info" label="Add Column">
+                        <o-button @click="handleEmit('add-column')" size="small" variant="secondary">
+                            <o-icon icon="plus" ></o-icon>
+                        </o-button>
+                    </o-tooltip>
 
-                     <o-button @click="handleEmit('delete-row')" size="small" variant="danger">
-                        <o-icon icon="trash"></o-icon>
-                    </o-button>
+                    <o-tooltip variant="info" label="Delete Row">
+                        <o-button @click="handleEmit('delete-row')" size="small" variant="secondary">
+                            <o-icon icon="trash"></o-icon>
+                        </o-button>
+                    </o-tooltip>
 
                 </div>
 
