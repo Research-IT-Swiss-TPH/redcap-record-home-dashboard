@@ -1,7 +1,7 @@
 <template>
     <div class="editor-wrapper mt-3">
         <div v-if="!selection" id="content-add-new" class="editor-content" @click="openCreateDashboardModal()">
-            <div  id="add-new-text"><i class="fas fa-plus-square"></i> Create Dashboard</div>
+        
         </div>
         <div v-if="selection">
             Selection: {{selection.name}}
@@ -29,5 +29,6 @@ export default {
             border-style: dashed;
             position: relative;
             transition: all ease-in-out 250ms;
+            background: var(--oruga-variant-light);
         }
 </style>

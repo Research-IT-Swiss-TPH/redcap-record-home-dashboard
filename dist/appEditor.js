@@ -17872,7 +17872,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-wrapper {\n        min-height: 500px;\n        width:100%;\n        border:1px solid #dbdbdb;\n        border-radius: 4px;\n        border-style: dashed;\n        position: relative;\n        transition: all ease-in-out 250ms;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-wrapper {\n        min-height: 500px;\n        width:100%;\n        border:1px solid #dbdbdb;\n        border-radius: 4px;\n        border-style: dashed;\n        position: relative;\n        transition: all ease-in-out 250ms;\n        background: var(--oruga-variant-light);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -18754,19 +18754,15 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "editor-wrapper mt-3" }, [
     !_vm.selection
-      ? _c(
-          "div",
-          {
-            staticClass: "editor-content",
-            attrs: { id: "content-add-new" },
-            on: {
-              click: function ($event) {
-                return _vm.openCreateDashboardModal()
-              },
+      ? _c("div", {
+          staticClass: "editor-content",
+          attrs: { id: "content-add-new" },
+          on: {
+            click: function ($event) {
+              return _vm.openCreateDashboardModal()
             },
           },
-          [_vm._m(0)]
-        )
+        })
       : _vm._e(),
     _vm._v(" "),
     _vm.selection
@@ -18778,17 +18774,7 @@ var render = function () {
       : _vm._e(),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "add-new-text" } }, [
-      _c("i", { staticClass: "fas fa-plus-square" }),
-      _vm._v(" Create Dashboard"),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
