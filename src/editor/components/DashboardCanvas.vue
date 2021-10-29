@@ -45,6 +45,13 @@
 
         </div>
 
+        <modal-element
+            :element="element"
+            :selection="selection"
+        >
+            
+        </modal-element>
+
     </div>
 </template>
 
@@ -52,18 +59,22 @@
 import DashboardRow from './DashboardRow.vue';
 import DashboardColumn from './DashboardColumn.vue'
 import DashboardElement from './DashboardElement.vue'
+import ModalElement from './ModalElement.vue'
 
 export default {
     components: {
         DashboardRow,
         DashboardColumn,
-        DashboardElement
+        DashboardElement,
+        ModalElement
     },
     data() {
         return {
             rows: [],
             msg: "Hello World from ",
-            page: getPage()
+            page: getPage(),
+            selection: [],
+            element: []
         }
     },
     methods: {
@@ -103,6 +114,13 @@ export default {
             let elements = this.rows[r_id].columns[c_id].elements
             elements.splice(e_id,1)
 
+        },
+        setSelection({r_id, c_id, e_id}) {
+            this.selection = {
+                r_id: r_id,
+                c_id: c_id,
+                e_id: e_id
+            }
         }
     },
     computed: {

@@ -10,7 +10,7 @@
                 </div>
                 <div class="editor-row-menu float-right">
 
-                    <b-button @click="handleEmit('add-element', index)" size="sm">
+                    <b-button v-b-modal.modal-element size="sm">
                         <i class="fa fa-plus"></i>
                     </b-button>
 
@@ -29,7 +29,7 @@
                         :elements="column.elements">
                     </slot>                    
                 </div>
-
+                
             </div>                            
         </div>
     </div>
@@ -40,7 +40,6 @@
 
 <script>
 export default {
-
     props: [
         'columns',
         'r_id'
@@ -53,6 +52,9 @@ export default {
             }
             
             this.$emit(event, params)
+        },
+        openElementDialog() {
+            this.$bvModal.show('modal-element')
         }
     }
 }
