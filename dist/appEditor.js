@@ -17712,6 +17712,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -18178,7 +18181,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-wrapper {\n        min-height: 500px;\n        width:100%;\n        border:1px solid #dbdbdb;\n        border-radius: 4px;\n        border-style: dashed;\n        position: relative;\n        transition: all ease-in-out 250ms;\n        background: var(--oruga-variant-light);\n}\n#content-add-new {\n    position: absolute;\n    height: 100%;\n    width:100%;\n}\n#add-row-text {\n    display: block;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    color: var(--oruga-variant-gray);\n    font-size: 18px;\n    letter-spacing: 1px;\n}    \n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-wrapper {\n        min-height: 500px;\n        width:100%;\n        border:1px solid #dbdbdb;\n        border-radius: 4px;\n        border-style: dashed;\n        position: relative;\n        transition: all ease-in-out 250ms;\n        background: var(--oruga-variant-light);\n}\n.editor-wrapper.empty {\n    background: none;\n}\n.editor-wrapper.empty:hover{\n    cursor: pointer;\n    background: var(--oruga-variant-light)\n}\n#content-empty {\n    position: absolute;\n    height: 100%;\n    width:100%;\n}\n#add-row-text {\n    display: block;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    color: var(--oruga-variant-gray);\n    font-size: 18px;\n    letter-spacing: 1px;\n    transition: ease-in-out all 0.3s;\n}\n.editor-wrapper.empty:hover #add-row-text {\n    color: var(--oruga-variant-gray-dark)\n}\n.add-row-area {\n    border: 1px dashed #dbdbdb;\n    color: #dbdbdb;\n    margin: 25px;\n    padding: 45px;\n    cursor: pointer;\n    transition: ease-in-out all 0.2s;\n}\n.add-row-area:hover {\n    border-color: var(--oruga-variant-gray-dark);\n    color: var(--oruga-variant-gray-dark);\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -19412,108 +19415,112 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "editor-wrapper mt-3" }, [
-    _vm.rows.length == 0
-      ? _c(
-          "div",
-          {
-            attrs: { id: "content-empty" },
-            on: {
-              click: function ($event) {
-                return _vm.rowAdd()
-              },
-            },
-          },
-          [_vm._m(0)]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.rows.length != 0
-      ? _c(
-          "div",
-          _vm._l(_vm.rows, function (row, index) {
-            return _c(
-              "dashboard-row",
-              {
-                key: index,
-                attrs: { r_id: index },
-                on: {
-                  "delete-row": function ($event) {
-                    return _vm.rowRemove($event)
-                  },
-                  "add-column": function ($event) {
-                    return _vm.columnAdd($event)
-                  },
-                },
-              },
-              [
-                _c("dashboard-column", {
-                  attrs: { columns: row.columns, r_id: index },
-                  on: {
-                    "add-element": function ($event) {
-                      return _vm.elementAdd($event)
-                    },
-                    "delete-column": function ($event) {
-                      return _vm.columnRemove($event)
-                    },
-                  },
-                  scopedSlots: _vm._u(
-                    [
-                      {
-                        key: "default",
-                        fn: function (ref) {
-                          var elements = ref.elements
-                          var c_id = ref.c_id
-                          return [
-                            _c("dashboard-element", {
-                              attrs: {
-                                r_id: index,
-                                c_id: c_id,
-                                elements: elements,
-                              },
-                              on: {
-                                "delete-element": function ($event) {
-                                  return _vm.elementRemove($event)
-                                },
-                                "edit-element": function ($event) {
-                                  return _vm.elementEdit($event)
-                                },
-                              },
-                            }),
-                          ]
-                        },
-                      },
-                    ],
-                    null,
-                    true
-                  ),
-                }),
-              ],
-              1
-            )
-          }),
-          1
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.rows.length != 0
-      ? _c("div", { staticClass: "text-center mt-3" }, [
-          _c(
-            "a",
+  return _c(
+    "div",
+    {
+      staticClass: "editor-wrapper mt-3",
+      class: _vm.rows.length == 0 && "empty",
+    },
+    [
+      _vm.rows.length == 0
+        ? _c(
+            "div",
             {
-              staticClass: "text-decoration-none text-is-secondary",
-              attrs: { href: "#add-row-to-empty" },
+              attrs: { id: "content-empty" },
               on: {
                 click: function ($event) {
                   return _vm.rowAdd()
                 },
               },
             },
-            [_c("i", { staticClass: "fas fa-plus-square" }), _vm._v(" Add row")]
-          ),
-        ])
-      : _vm._e(),
-  ])
+            [_vm._m(0)]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.rows.length != 0
+        ? _c(
+            "div",
+            [
+              _vm._l(_vm.rows, function (row, index) {
+                return _c(
+                  "dashboard-row",
+                  {
+                    key: index,
+                    attrs: { r_id: index },
+                    on: {
+                      "delete-row": function ($event) {
+                        return _vm.rowRemove($event)
+                      },
+                      "add-column": function ($event) {
+                        return _vm.columnAdd($event)
+                      },
+                    },
+                  },
+                  [
+                    _c("dashboard-column", {
+                      attrs: { columns: row.columns, r_id: index },
+                      on: {
+                        "add-element": function ($event) {
+                          return _vm.elementAdd($event)
+                        },
+                        "delete-column": function ($event) {
+                          return _vm.columnRemove($event)
+                        },
+                      },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function (ref) {
+                              var elements = ref.elements
+                              var c_id = ref.c_id
+                              return [
+                                _c("dashboard-element", {
+                                  attrs: {
+                                    r_id: index,
+                                    c_id: c_id,
+                                    elements: elements,
+                                  },
+                                  on: {
+                                    "delete-element": function ($event) {
+                                      return _vm.elementRemove($event)
+                                    },
+                                    "edit-element": function ($event) {
+                                      return _vm.elementEdit($event)
+                                    },
+                                  },
+                                }),
+                              ]
+                            },
+                          },
+                        ],
+                        null,
+                        true
+                      ),
+                    }),
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "add-row-area",
+                  on: {
+                    click: function ($event) {
+                      return _vm.rowAdd()
+                    },
+                  },
+                },
+                [_vm._m(1)]
+              ),
+            ],
+            2
+          )
+        : _vm._e(),
+    ]
+  )
 }
 var staticRenderFns = [
   function () {
@@ -19522,26 +19529,29 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "text-center", attrs: { id: "add-row-text" } },
+      { staticClass: "text-center ", attrs: { id: "add-row-text" } },
       [
-        _c("span", { staticClass: "text-monospace" }, [
-          _vm._v("Dashboard is empty."),
+        _c("p", { staticClass: "text-muted lead" }, [
+          _vm._v("Dashboard is empty"),
         ]),
-        _c("br"),
         _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "text-decoration-none",
-            attrs: { href: "#add-row-to-empty" },
-          },
-          [
-            _c("i", { staticClass: "fas fa-plus-square" }),
-            _vm._v(" Add new row"),
-          ]
-        ),
+        _c("p", { staticClass: "h2" }, [
+          _c("i", { staticClass: "fas fa-plus-square" }),
+          _vm._v(" Add Row"),
+        ]),
       ]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center" }, [
+      _c("span", { staticClass: "lead" }, [
+        _c("i", { staticClass: "fas fa-plus-square" }),
+        _vm._v(" Add row"),
+      ]),
+    ])
   },
 ]
 render._withStripped = true
@@ -19568,8 +19578,8 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", [
     _vm.columns.length == 0
-      ? _c("div", { staticClass: "text-center text-monospace" }, [
-          _vm._v("Row is empty."),
+      ? _c("div", { staticClass: "text-center lead text-muted" }, [
+          _vm._v("Row is empty"),
         ])
       : _c(
           "div",
@@ -19644,11 +19654,9 @@ var render = function () {
                   _vm._v(" "),
                   _c("div", { staticClass: "card-body" }, [
                     column.elements.length == 0
-                      ? _c(
-                          "div",
-                          { staticClass: "text-center text-monospace" },
-                          [_vm._v("Column is empty.")]
-                        )
+                      ? _c("div", { staticClass: "text-center lead" }, [
+                          _vm._v("Column is empty"),
+                        ])
                       : _c(
                           "div",
                           [

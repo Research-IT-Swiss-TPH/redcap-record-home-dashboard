@@ -1,10 +1,10 @@
 <template>
-    <div class="editor-wrapper mt-3">
+    <div class="editor-wrapper mt-3" :class="rows.length == 0 && 'empty'">
 
         <div v-if="rows.length == 0" id="content-empty" @click="rowAdd()">
-            <div class="text-center" id="add-row-text">
-                <span class="text-monospace">Dashboard is empty.</span><br>
-                <a class="text-decoration-none" href="#add-row-to-empty"><i class="fas fa-plus-square"></i> Add new row</a>
+            <div class="text-center " id="add-row-text">
+                <p class="text-muted lead">Dashboard is empty</p>
+                <p class="h2"><i class="fas fa-plus-square"></i> Add Row</p>
             </div>
         </div>
 
@@ -36,10 +36,13 @@
                 </dashboard-column>
 
             </dashboard-row>
-        </div>
 
-        <div class="text-center mt-3" v-if="rows.length != 0">
-            <a @click="rowAdd()" class="text-decoration-none text-is-secondary" href="#add-row-to-empty"><i class="fas fa-plus-square"></i> Add row</a>
+            <div  @click="rowAdd()" class="add-row-area">
+                <div class="text-center">
+                    <span class="lead"><i class="fas fa-plus-square"></i> Add row</span>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -118,12 +121,21 @@ export default {
             background: var(--oruga-variant-light);
         }
 
-    #content-add-new {
+    .editor-wrapper.empty {
+        background: none;
+    }
+
+    .editor-wrapper.empty:hover{
+        cursor: pointer;
+        background: var(--oruga-variant-light)
+    }
+
+    #content-empty {
         position: absolute;
         height: 100%;
         width:100%;
+    }    
 
-    }
     #add-row-text {
         display: block;
         position: absolute;
@@ -133,5 +145,25 @@ export default {
         color: var(--oruga-variant-gray);
         font-size: 18px;
         letter-spacing: 1px;
-    }    
+        transition: ease-in-out all 0.3s;
+
+    }
+    .editor-wrapper.empty:hover #add-row-text {
+        color: var(--oruga-variant-gray-dark)
+    }
+
+    .add-row-area {
+        border: 1px dashed #dbdbdb;
+        color: #dbdbdb;
+        margin: 25px;
+        padding: 45px;
+        cursor: pointer;
+        transition: ease-in-out all 0.2s;
+    }
+
+    .add-row-area:hover {
+        border-color: var(--oruga-variant-gray-dark);
+        color: var(--oruga-variant-gray-dark);
+    }
+
 </style>
