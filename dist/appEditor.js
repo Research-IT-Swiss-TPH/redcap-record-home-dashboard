@@ -18181,7 +18181,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-wrapper {\n        min-height: 500px;\n        width:100%;\n        border:1px solid #dbdbdb;\n        border-radius: 4px;\n        border-style: dashed;\n        position: relative;\n        transition: all ease-in-out 250ms;\n        background: var(--oruga-variant-light);\n}\n.editor-wrapper.empty {\n    background: none;\n}\n.editor-wrapper.empty:hover{\n    cursor: pointer;\n    background: var(--oruga-variant-light)\n}\n#content-empty {\n    position: absolute;\n    height: 100%;\n    width:100%;\n}\n#add-row-text {\n    display: block;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    color: var(--oruga-variant-gray);\n    font-size: 18px;\n    letter-spacing: 1px;\n    transition: ease-in-out all 0.3s;\n}\n.editor-wrapper.empty:hover #add-row-text {\n    color: var(--oruga-variant-gray-dark)\n}\n.add-row-area {\n    border: 1px dashed #dbdbdb;\n    color: #dbdbdb;\n    margin: 25px;\n    padding: 45px;\n    cursor: pointer;\n    transition: ease-in-out all 0.2s;\n}\n.add-row-area:hover {\n    border-color: var(--oruga-variant-gray-dark);\n    color: var(--oruga-variant-gray-dark);\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-wrapper {\n        min-height: 500px;\n        width:100%;\n        border:1px solid #dbdbdb;\n        border-radius: 4px;\n        border-style: dashed;\n        position: relative;\n        transition: all ease-in-out 250ms;\n        background: var(--oruga-variant-light);\n}\n.editor-wrapper.empty {\n    background: none;\n}\n.editor-wrapper.empty:hover{\n    cursor: pointer;\n    background: var(--oruga-variant-light)\n}\n#content-empty {\n    position: absolute;\n    height: 100%;\n    width:100%;\n}\n#add-row-text {\n    display: block;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    color: var(--oruga-variant-gray);\n    font-size: 18px;\n    letter-spacing: 1px;\n    transition: ease-in-out all 0.3s;\n}\n.editor-wrapper.empty:hover #add-row-text {\n    color: var(--oruga-variant-gray-dark)\n}\n.add-row-area {\n    border: 1px dashed #dbdbdb;\n    border-radius: 4px;\n    color: #dbdbdb;\n    margin: 25px;\n    padding: 45px;\n    cursor: pointer;\n    transition: ease-in-out all 0.2s;\n}\n.add-row-area:hover {\n    border-color: var(--oruga-variant-gray);\n    color: var(--oruga-variant-gray);\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -19537,7 +19537,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("p", { staticClass: "h2" }, [
           _c("i", { staticClass: "fas fa-plus-square" }),
-          _vm._v(" Add Row"),
+          _vm._v(" Add row"),
         ]),
       ]
     )
@@ -19603,7 +19603,12 @@ var render = function () {
                       [
                         _c(
                           "o-tooltip",
-                          { attrs: { variant: "info", label: "Add Element" } },
+                          {
+                            attrs: {
+                              variant: "secondary",
+                              label: "Add Element",
+                            },
+                          },
                           [
                             _c(
                               "o-button",
@@ -19625,7 +19630,10 @@ var render = function () {
                         _c(
                           "o-tooltip",
                           {
-                            attrs: { variant: "info", label: "Delete Column" },
+                            attrs: {
+                              variant: "secondary",
+                              label: "Delete Column",
+                            },
                           },
                           [
                             _c(
@@ -19716,7 +19724,7 @@ var render = function () {
             [
               _c(
                 "o-tooltip",
-                { attrs: { variant: "info", label: "Edit Element" } },
+                { attrs: { variant: "secondary", label: "Edit Element" } },
                 [
                   _c(
                     "o-button",
@@ -19737,7 +19745,7 @@ var render = function () {
               _vm._v(" "),
               _c(
                 "o-tooltip",
-                { attrs: { variant: "info", label: "Delete Element" } },
+                { attrs: { variant: "secondary", label: "Delete Element" } },
                 [
                   _c(
                     "o-button",
@@ -19803,7 +19811,7 @@ var render = function () {
         [
           _c(
             "o-tooltip",
-            { attrs: { variant: "info", label: "Add Column" } },
+            { attrs: { variant: "secondary", label: "Add Column" } },
             [
               _c(
                 "o-button",
@@ -19824,7 +19832,7 @@ var render = function () {
           _vm._v(" "),
           _c(
             "o-tooltip",
-            { attrs: { variant: "info", label: "Delete Row" } },
+            { attrs: { variant: "secondary", label: "Delete Row" } },
             [
               _c(
                 "o-button",

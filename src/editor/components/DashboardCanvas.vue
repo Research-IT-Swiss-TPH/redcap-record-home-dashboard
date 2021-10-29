@@ -4,7 +4,7 @@
         <div v-if="rows.length == 0" id="content-empty" @click="rowAdd()">
             <div class="text-center " id="add-row-text">
                 <p class="text-muted lead">Dashboard is empty</p>
-                <p class="h2"><i class="fas fa-plus-square"></i> Add Row</p>
+                <p class="h2"><i class="fas fa-plus-square"></i> Add row</p>
             </div>
         </div>
 
@@ -154,6 +154,7 @@ export default {
 
     .add-row-area {
         border: 1px dashed #dbdbdb;
+        border-radius: 4px;
         color: #dbdbdb;
         margin: 25px;
         padding: 45px;
@@ -162,8 +163,8 @@ export default {
     }
 
     .add-row-area:hover {
-        border-color: var(--oruga-variant-gray-dark);
-        color: var(--oruga-variant-gray-dark);
+        border-color: var(--oruga-variant-gray);
+        color: var(--oruga-variant-gray);
     }
 
 </style>

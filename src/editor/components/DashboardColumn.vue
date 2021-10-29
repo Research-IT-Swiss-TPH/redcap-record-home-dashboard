@@ -10,13 +10,13 @@
                 </div>
                 <div class="editor-row-menu float-right">
 
-                    <o-tooltip variant="info" label="Add Element">
+                    <o-tooltip variant="secondary" label="Add Element">
                         <o-button @click="handleEmit('add-element', index)" size="small" variant="secondary">
                             <o-icon icon="plus" ></o-icon>
                         </o-button>
                     </o-tooltip>
 
-                    <o-tooltip variant="info" label="Delete Column">
+                    <o-tooltip variant="secondary" label="Delete Column">
                      <o-button @click="handleEmit('delete-column', index)" size="small" variant="secondary">
                         <o-icon icon="trash"></o-icon>
                     </o-button>

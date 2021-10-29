@@ -39,3 +39,12 @@
   background-color: #6c757d;
   border-color: #6c757d;
 }
+
+.o-tip__content--secondary {
+  background-color: #5a6268;
+  border-color: #545b62;
+}
+
+.o-btn {
+  outline: none !important;
+}
