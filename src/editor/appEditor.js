@@ -12,13 +12,10 @@ Vue.use(VueAxios, axios.create({
   baseURL: getBaseUrlFromBackend()
 }))
 
-//  Oruga UI library
-import Oruga from '@oruga-ui/oruga'
-import '@oruga-ui/oruga/dist/oruga.css'
-import '@oruga-ui/oruga/dist/oruga-full-vars.css'
-import OrugaConfig from '../oruga'
-Vue.use(Oruga, OrugaConfig)
-
+//  Bootstrap Vue
+import { BootstrapVue} from 'bootstrap-vue'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue)
 
 //  Create Vue Instance and mount our module page container
 new Vue({

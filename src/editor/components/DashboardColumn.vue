@@ -10,17 +10,13 @@
                 </div>
                 <div class="editor-row-menu float-right">
 
-                    <o-tooltip variant="secondary" label="Add Element">
-                        <o-button @click="handleEmit('add-element', index)" size="small" variant="secondary">
-                            <o-icon icon="plus" ></o-icon>
-                        </o-button>
-                    </o-tooltip>
+                    <b-button @click="handleEmit('add-element', index)" size="sm">
+                        <i class="fa fa-plus"></i>
+                    </b-button>
 
-                    <o-tooltip variant="secondary" label="Delete Column">
-                     <o-button @click="handleEmit('delete-column', index)" size="small" variant="secondary">
-                        <o-icon icon="trash"></o-icon>
-                    </o-button>
-                    </o-tooltip>
+                    <b-button @click="handleEmit('delete-column', index)" size="sm">
+                        <i class="fa fa-trash"></i>
+                    </b-button>                          
 
                 </div>                
             </div>

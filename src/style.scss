@@ -1,50 +1,8 @@
 .container-redcap {
-    max-width: 950px;
-    margin-right: 20px;
+  max-width: 950px;
+  margin-right: 20px;
 }
 
-/**
-* Oruga: Using CSS or SASS/SCSS variables
-* https://oruga.io/documentation/#customization
-* Resetting global CSS color variables to Bootstrap 4.6 default
-* https://getbootstrap.com/docs/4.6/getting-started/theming/#css-variables
-*
-**/
-:root {
-    --oruga-variant-blue: #007bff;
-    --oruga-variant-indigo: #6610f2;
-    --oruga-variant-purple: #6f42c1;
-    --oruga-variant-pink: #e83e8c;
-    --oruga-variant-red: #dc3545;
-    --oruga-variant-orange: #fd7e14;
-    --oruga-variant-yellow: #ffc107;
-    --oruga-variant-green: #28a745;
-    --oruga-variant-teal: #20c997;
-    --oruga-variant-cyan: #17a2b8;
-    --oruga-variant-white: #fff;
-    --oruga-variant-gray: #6c757d;
-    --oruga-variant-gray-dark: #343a40;
-    --oruga-variant-primary: #007bff;
-    --oruga-variant-secondary: #6c757d;
-    --oruga-variant-success: #28a745;
-    --oruga-variant-info: #17a2b8;
-    --oruga-variant-warning: #ffc107;
-    --oruga-variant-danger: #dc3545;
-    --oruga-variant-light: #f8f9fa;
-    --oruga-variant-dark: #343a40;
-  }
-
-  .btn-secondary {
-    color: #fff;
-    background-color: #6c757d;
-    border-color: #6c757d;  
-  }
-
-  .o-tip__content--secondary {
-    background-color: #5a6268;
-    border-color: #545b62;
-  }
-
-  .o-btn {
-    outline: none!important;
-  }
+.btn {
+  outline: none!important;
+}

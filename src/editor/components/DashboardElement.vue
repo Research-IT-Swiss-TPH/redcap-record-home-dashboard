@@ -7,17 +7,13 @@
                 </div>
                 <div class="editor-row-menu float-right">
 
-                    <o-tooltip variant="secondary" label="Edit Element">
-                     <o-button @click="handleEmit('edit-element', index)" size="small" variant="secondary">
-                        <o-icon icon="edit" ></o-icon>
-                    </o-button>
-                    </o-tooltip>
-    
-                    <o-tooltip variant="secondary" label="Delete Element">
-                     <o-button @click="handleEmit('delete-element', index)" size="small" variant="secondary">
-                        <o-icon icon="trash"></o-icon>
-                    </o-button>
-                    </o-tooltip>
+                    <b-button  @click="handleEmit('edit-element', index)" size="sm">
+                        <i class="fa fa-edit"></i>
+                    </b-button>                    
+
+                    <b-button  @click="handleEmit('delete-element', index)" size="sm">
+                        <i class="fa fa-trash"></i>
+                    </b-button>
 
                 </div>
 
