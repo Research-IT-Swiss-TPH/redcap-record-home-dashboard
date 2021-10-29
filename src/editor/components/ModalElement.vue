@@ -7,9 +7,8 @@
         <b-form-group>
         <b-form-radio-group
             id="btn-radios-2"
-            v-model="selected"
-            :options="options"
-            :aria-describedby="ariaDescribedby"
+            v-model="selected.type"
+            :options="options.type"
             button-variant="outline-secondary"
             size="lg"
             name="radio-btn-outline"
@@ -20,7 +19,7 @@
       </div>
 
       <div style="min-height:300px;" class="p-4">
-        <div v-if="selected=='text'">
+        <div v-if="selected.type=='text'">
             <b-form-group
                 label="Title"
                 label-cols-lg="4"
@@ -41,7 +40,7 @@
             </b-form-group>
         </div>
 
-        <div v-if="selected=='link'">
+        <div v-if="selected.type=='link'">
             <b-form-group
                 label="Title"
                 label-cols-lg="4"
@@ -57,12 +56,43 @@
                 v-model="content.link.url">
                 </b-form-input>
             </b-form-group>
-        </div>        
+        </div>    
+
+        <div v-if="selected.type=='data'">
+            <b-input-group>
+
+                <b-input-group-prepend>
+                    <b-input-group-text>
+                        <i  class="fa fa-grip-vertical"></i>
+                    </b-input-group-text>                                        
+                </b-input-group-prepend>
+                
+                 <b-form-input 
+                    placeholder="title">
+                 
+                 </b-form-input>
+                 <b-form-select v-model="selected.instrument" placeholder="" :options="options.instruments">
+                    <template #first>
+                        <b-form-select-option :value="null" disabled>Instrument</b-form-select-option>
+                    </template>                     
+                 </b-form-select>
+
+                <b-form-select v-model="selected.field" :options="options.fields" :disabled="selected.instrument == null">
+                    <template #first>
+                        <b-form-select-option :value="null" disabled>Field</b-form-select-option>
+                    </template>                      
+                </b-form-select>
+
+               <b-input-group-append>
+                    <b-button variant="outline-danger">
+                        <i class="fa fa-trash"></i>
+                    </b-button>
+                </b-input-group-append>
+                
+            </b-input-group>            
+        </div>
       </div>
 
-        <div v-if="selected=='data'">
-            
-        </div>
 
     <template #modal-footer="{ ok, cancel }">
       <b-button variant="secondary" @click="cancel()">
@@ -85,13 +115,31 @@ export default {
     ],
     data() {
       return {
-        selected: 'text',
-        options: [
-          { html: '<i class="fas fa-align-left"></i> Text', value: 'text' },
-          { html: '<i class="fas fa-link"></i> Link', value: 'link' },
-          { html: '<i class="fas fa-database"></i> Data', value: 'data' },
-          { html: '<i class="fas fa-table"></i> Table', value: 'table' }
-        ],
+        selected: {
+            type: "text",
+            instrument: null,
+            field: null,
+            repeating: null
+        },
+        options: {
+            type: [
+                    { html: '<i class="fas fa-align-left"></i> Text', value: 'text' },
+                    { html: '<i class="fas fa-link"></i> Link', value: 'link' },
+                    { html: '<i class="fas fa-database"></i> Data', value: 'data' },
+                    { html: '<i class="fas fa-table"></i> Table', value: 'table' }
+                ],
+            instruments: [
+                { value: "base", text: 'base' },
+                { value: "weekly", text: 'weekly' },
+                { value: "monthly", text: 'monthly' },
+                { value: "other", text: 'other' },
+            ],
+            fields: [
+                "field_1",
+                "field_2",
+                "field_3"
+            ]
+        },
         content: {
             text: {
                 title: "",
@@ -135,8 +183,11 @@ export default {
                         "ok": "Save"
                    }
             }
+        },
+        titleState() {
+            return true
         }
-    }
+    }   
 
 }
 </script>

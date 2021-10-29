@@ -2594,24 +2594,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element', 'selection'],
   data: function data() {
     return {
-      selected: 'text',
-      options: [{
-        html: '<i class="fas fa-align-left"></i> Text',
-        value: 'text'
-      }, {
-        html: '<i class="fas fa-link"></i> Link',
-        value: 'link'
-      }, {
-        html: '<i class="fas fa-database"></i> Data',
-        value: 'data'
-      }, {
-        html: '<i class="fas fa-table"></i> Table',
-        value: 'table'
-      }],
+      selected: {
+        type: "text",
+        instrument: null,
+        field: null,
+        repeating: null
+      },
+      options: {
+        type: [{
+          html: '<i class="fas fa-align-left"></i> Text',
+          value: 'text'
+        }, {
+          html: '<i class="fas fa-link"></i> Link',
+          value: 'link'
+        }, {
+          html: '<i class="fas fa-database"></i> Data',
+          value: 'data'
+        }, {
+          html: '<i class="fas fa-table"></i> Table',
+          value: 'table'
+        }],
+        instruments: [{
+          value: "base",
+          text: 'base'
+        }, {
+          value: "weekly",
+          text: 'weekly'
+        }, {
+          value: "monthly",
+          text: 'monthly'
+        }, {
+          value: "other",
+          text: 'other'
+        }],
+        fields: ["field_1", "field_2", "field_3"]
+      },
       content: {
         text: {
           title: "",
@@ -2653,6 +2704,9 @@ __webpack_require__.r(__webpack_exports__);
           "ok": "Save"
         };
       }
+    },
+    titleState: function titleState() {
+      return true;
     }
   }
 });
@@ -50143,19 +50197,18 @@ var render = function () {
                   _c("b-form-radio-group", {
                     attrs: {
                       id: "btn-radios-2",
-                      options: _vm.options,
-                      "aria-describedby": _vm.ariaDescribedby,
+                      options: _vm.options.type,
                       "button-variant": "outline-secondary",
                       size: "lg",
                       name: "radio-btn-outline",
                       buttons: "",
                     },
                     model: {
-                      value: _vm.selected,
+                      value: _vm.selected.type,
                       callback: function ($$v) {
-                        _vm.selected = $$v
+                        _vm.$set(_vm.selected, "type", $$v)
                       },
-                      expression: "selected",
+                      expression: "selected.type",
                     },
                   }),
                 ],
@@ -50169,7 +50222,7 @@ var render = function () {
             "div",
             { staticClass: "p-4", staticStyle: { "min-height": "300px" } },
             [
-              _vm.selected == "text"
+              _vm.selected.type == "text"
                 ? _c(
                     "div",
                     [
@@ -50224,7 +50277,7 @@ var render = function () {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm.selected == "link"
+              _vm.selected.type == "link"
                 ? _c(
                     "div",
                     [
@@ -50277,10 +50330,120 @@ var render = function () {
                     1
                   )
                 : _vm._e(),
+              _vm._v(" "),
+              _vm.selected.type == "data"
+                ? _c(
+                    "div",
+                    [
+                      _c(
+                        "b-input-group",
+                        [
+                          _c(
+                            "b-input-group-prepend",
+                            [
+                              _c("b-input-group-text", [
+                                _c("i", { staticClass: "fa fa-grip-vertical" }),
+                              ]),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("b-form-input", {
+                            attrs: { placeholder: "title" },
+                          }),
+                          _vm._v(" "),
+                          _c("b-form-select", {
+                            attrs: {
+                              placeholder: "",
+                              options: _vm.options.instruments,
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "first",
+                                  fn: function () {
+                                    return [
+                                      _c(
+                                        "b-form-select-option",
+                                        {
+                                          attrs: { value: null, disabled: "" },
+                                        },
+                                        [_vm._v("Instrument")]
+                                      ),
+                                    ]
+                                  },
+                                  proxy: true,
+                                },
+                              ],
+                              null,
+                              false,
+                              3172699053
+                            ),
+                            model: {
+                              value: _vm.selected.instrument,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.selected, "instrument", $$v)
+                              },
+                              expression: "selected.instrument",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("b-form-select", {
+                            attrs: {
+                              options: _vm.options.fields,
+                              disabled: _vm.selected.instrument == null,
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "first",
+                                  fn: function () {
+                                    return [
+                                      _c(
+                                        "b-form-select-option",
+                                        {
+                                          attrs: { value: null, disabled: "" },
+                                        },
+                                        [_vm._v("Field")]
+                                      ),
+                                    ]
+                                  },
+                                  proxy: true,
+                                },
+                              ],
+                              null,
+                              false,
+                              677069690
+                            ),
+                            model: {
+                              value: _vm.selected.field,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.selected, "field", $$v)
+                              },
+                              expression: "selected.field",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "b-input-group-append",
+                            [
+                              _c(
+                                "b-button",
+                                { attrs: { variant: "outline-danger" } },
+                                [_c("i", { staticClass: "fa fa-trash" })]
+                              ),
+                            ],
+                            1
+                          ),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  )
+                : _vm._e(),
             ]
           ),
-          _vm._v(" "),
-          _vm.selected == "data" ? _c("div") : _vm._e(),
         ]
       ),
     ],
