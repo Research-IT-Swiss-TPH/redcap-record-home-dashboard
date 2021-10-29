@@ -17662,9 +17662,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _DashboardRow_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DashboardRow.vue */ "./src/Editor/components/DashboardRow.vue");
-/* harmony import */ var _classes_DashboardRowClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../classes/DashboardRowClass */ "./src/classes/DashboardRowClass.js");
-/* harmony import */ var _DashboardColumn_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DashboardColumn.vue */ "./src/Editor/components/DashboardColumn.vue");
-/* harmony import */ var _DashboardElement_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DashboardElement.vue */ "./src/Editor/components/DashboardElement.vue");
+/* harmony import */ var _DashboardColumn_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DashboardColumn.vue */ "./src/Editor/components/DashboardColumn.vue");
+/* harmony import */ var _DashboardElement_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DashboardElement.vue */ "./src/Editor/components/DashboardElement.vue");
 //
 //
 //
@@ -17715,15 +17714,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     DashboardRow: _DashboardRow_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    DashboardColumn: _DashboardColumn_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    DashboardElement: _DashboardElement_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    DashboardColumn: _DashboardColumn_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    DashboardElement: _DashboardElement_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -17734,7 +17732,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     rowAdd: function rowAdd() {
-      var row = new _classes_DashboardRowClass__WEBPACK_IMPORTED_MODULE_1__["default"]();
+      var row = {
+        "columns": []
+      };
       this.rows.push(row);
     },
     rowRemove: function rowRemove(r_id) {
@@ -18008,31 +18008,6 @@ new vue__WEBPACK_IMPORTED_MODULE_4__["default"]({
   },
   store: _store__WEBPACK_IMPORTED_MODULE_1__["default"]
 }).$mount('#appEditor');
-
-/***/ }),
-
-/***/ "./src/classes/DashboardRowClass.js":
-/*!******************************************!*\
-  !*** ./src/classes/DashboardRowClass.js ***!
-  \******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ DashboardRowClass)
-/* harmony export */ });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var DashboardRowClass = function DashboardRowClass() {
-  _classCallCheck(this, DashboardRowClass);
-
-  _defineProperty(this, "columns", []);
-};
-
-
 
 /***/ }),
 

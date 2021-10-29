@@ -50,7 +50,6 @@
 
 <script>
 import DashboardRow from './DashboardRow.vue';
-import DashboardRowClass from "../../classes/DashboardRowClass";
 import DashboardColumn from './DashboardColumn.vue'
 import DashboardElement from './DashboardElement.vue'
 
@@ -69,7 +68,9 @@ export default {
     },
     methods: {
         rowAdd() {
-            let row = new DashboardRowClass()
+            let row = {
+                "columns": []
+            }
             this.rows.push(row)
         },
         rowRemove(r_id) {
