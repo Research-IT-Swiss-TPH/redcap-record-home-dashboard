@@ -17,7 +17,7 @@
                 </div>
                 <div class="editor-row-menu float-right">
 
-                    <b-button v-b-modal.modal-element size="xs">
+                    <b-button @click="handleEmit('open-modal-create-element', index)" size="xs">
                         <i class="fa fa-plus"></i>
                     </b-button>
 

@@ -2258,6 +2258,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -2273,7 +2275,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      rows: [],
+      rows: [{
+        columns: [{
+          elements: []
+        }]
+      }],
       msg: "Hello World from ",
       page: getPage(),
       selection: [],
@@ -2306,12 +2312,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     elementAdd: function elementAdd(_ref) {
       var r_id = _ref.r_id,
-          c_id = _ref.c_id;
+          c_id = _ref.c_id,
+          e_id = _ref.e_id,
+          el = _ref.el;
       var column = this.rows[r_id].columns[c_id];
-      var el = {
-        "type": "text",
-        "content": "Hello World"
-      };
       column.elements.push(el);
     },
     elementRemove: function elementRemove(_ref2) {
@@ -2321,15 +2325,18 @@ __webpack_require__.r(__webpack_exports__);
       var elements = this.rows[r_id].columns[c_id].elements;
       elements.splice(e_id, 1);
     },
-    setSelection: function setSelection(_ref3) {
-      var r_id = _ref3.r_id,
-          c_id = _ref3.c_id,
-          e_id = _ref3.e_id;
+    setSelection: function setSelection(r_id, c_id, e_id) {
       this.selection = {
         r_id: r_id,
         c_id: c_id,
         e_id: e_id
       };
+    },
+    openModalCreateElement: function openModalCreateElement(_ref3) {
+      var r_id = _ref3.r_id,
+          c_id = _ref3.c_id;
+      this.setSelection(r_id, c_id, null);
+      this.$bvModal.show('modal-element');
     }
   },
   computed: {}
@@ -2651,6 +2658,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element', 'selection'],
   data: function data() {
@@ -2669,8 +2680,8 @@ __webpack_require__.r(__webpack_exports__);
           html: '<i class="fas fa-link"></i> Link',
           value: 'link'
         }, {
-          html: '<i class="fas fa-database"></i> Data',
-          value: 'data'
+          html: '<i class="fas fa-th-list"></i> List',
+          value: 'list'
         }, {
           html: '<i class="fas fa-table"></i> Table',
           value: 'table'
@@ -2699,7 +2710,7 @@ __webpack_require__.r(__webpack_exports__);
           title: "",
           url: ""
         },
-        data: [{
+        list: [{
           title: "",
           field: ""
         }],
@@ -2734,6 +2745,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     titleState: function titleState() {
       return true;
+    }
+  },
+  methods: {
+    handleOk: function handleOk() {
+      console.log(this.selected.type);
+      console.log(this.content[this.selected.type]);
+      var el = {
+        "type": this.selected.type,
+        "content": this.content[this.selected.type]
+      };
+      this.$emit('add-element', {
+        "c_id": this.selection.c_id,
+        "r_id": this.selection.r_id,
+        "e_id": null,
+        "el": el
+      });
     }
   }
 });
@@ -53609,6 +53636,9 @@ var render = function () {
                           "delete-column": function ($event) {
                             return _vm.columnRemove($event)
                           },
+                          "open-modal-create-element": function ($event) {
+                            return _vm.openModalCreateElement($event)
+                          },
                         },
                         scopedSlots: _vm._u(
                           [
@@ -53667,6 +53697,11 @@ var render = function () {
       _vm._v(" "),
       _c("modal-element", {
         attrs: { element: _vm.element, selection: _vm.selection },
+        on: {
+          "add-element": function ($event) {
+            return _vm.elementAdd($event)
+          },
+        },
       }),
     ],
     1
@@ -53770,14 +53805,15 @@ var render = function () {
                           _c(
                             "b-button",
                             {
-                              directives: [
-                                {
-                                  name: "b-modal",
-                                  rawName: "v-b-modal.modal-element",
-                                  modifiers: { "modal-element": true },
-                                },
-                              ],
                               attrs: { size: "xs" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.handleEmit(
+                                    "open-modal-create-element",
+                                    index
+                                  )
+                                },
+                              },
                             },
                             [_c("i", { staticClass: "fa fa-plus" })]
                           ),
@@ -53893,7 +53929,11 @@ var render = function () {
           ),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" }),
+        _c("div", { staticClass: "card-body" }, [
+          _vm._v(
+            "\n            " + _vm._s(element.content.title) + "\n        "
+          ),
+        ]),
       ])
     }),
     0
@@ -54001,6 +54041,11 @@ var render = function () {
             scrollable: "",
             id: "modal-element",
             title: _vm.modalStrings.title,
+          },
+          on: {
+            ok: function ($event) {
+              return _vm.handleOk()
+            },
           },
           scopedSlots: _vm._u([
             {
@@ -54188,7 +54233,7 @@ var render = function () {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm.selected.type == "data"
+              _vm.selected.type == "list"
                 ? _c(
                     "div",
                     [

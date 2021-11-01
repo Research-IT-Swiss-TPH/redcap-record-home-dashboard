@@ -19,7 +19,7 @@
 
         </div>
           <div class="card-body">
-              
+              {{element.content.title}}
           </div>
       </div>
   </div>

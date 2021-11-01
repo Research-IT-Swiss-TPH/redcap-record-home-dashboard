@@ -33,6 +33,7 @@
                         :r_id="index"
                         @add-element="elementAdd( $event )"
                         @delete-column="columnRemove( $event )"
+                        @open-modal-create-element="openModalCreateElement($event)"
                         v-slot="{elements, c_id}">
 
                         <dashboard-element
@@ -58,6 +59,7 @@
         <modal-element
             :element="element"
             :selection="selection"
+            @add-element="elementAdd($event)"
         >
             
         </modal-element>
@@ -82,7 +84,15 @@ export default {
     },
     data() {
         return {
-            rows: [],
+            rows: [
+                {
+                    columns: [
+                        {
+                            elements: []
+                        }
+                    ]
+                }
+            ],
             msg: "Hello World from ",
             page: getPage(),
             selection: [],
@@ -113,12 +123,8 @@ export default {
             let columns = this.rows[r_id].columns
             columns.splice(c_id, 1)
         },
-        elementAdd({r_id, c_id}) {
+        elementAdd({r_id, c_id, e_id, el}) {
             let column = this.rows[r_id].columns[c_id]
-            let el =  {
-                        "type": "text",
-                        "content": "Hello World"
-                    }
             column.elements.push(el)
 
         },
@@ -127,12 +133,16 @@ export default {
             elements.splice(e_id,1)
 
         },
-        setSelection({r_id, c_id, e_id}) {
+        setSelection(r_id, c_id, e_id) {
             this.selection = {
                 r_id: r_id,
                 c_id: c_id,
                 e_id: e_id
             }
+        },
+        openModalCreateElement({r_id, c_id}) {
+            this.setSelection(r_id, c_id, null)
+            this.$bvModal.show('modal-element')
         }
 
     },

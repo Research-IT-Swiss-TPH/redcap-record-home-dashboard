@@ -1,6 +1,10 @@
 <template>
   <div>
-  <b-modal centered scrollable  id="modal-element" :title="modalStrings.title">
+  <b-modal 
+    @ok="handleOk()"
+    centered scrollable  
+    id="modal-element" 
+    :title="modalStrings.title">
 
       <div class="text-center mt-3">
 
@@ -58,7 +62,7 @@
             </b-form-group>
         </div>    
 
-        <div v-if="selected.type=='data'">
+        <div v-if="selected.type=='list'">
             <b-input-group>
 
                 <b-input-group-prepend>
@@ -125,7 +129,7 @@ export default {
             type: [
                     { html: '<i class="fas fa-align-left"></i> Text', value: 'text' },
                     { html: '<i class="fas fa-link"></i> Link', value: 'link' },
-                    { html: '<i class="fas fa-database"></i> Data', value: 'data' },
+                    { html: '<i class="fas fa-th-list"></i> List', value: 'list' },
                     { html: '<i class="fas fa-table"></i> Table', value: 'table' }
                 ],
             instruments: [
@@ -149,7 +153,7 @@ export default {
                 title: "",
                 url: ""
             },
-            data: [
+            list: [
                 {
                     title: "",
                     field: ""    
@@ -187,7 +191,24 @@ export default {
         titleState() {
             return true
         }
-    }   
+    },
+    methods: {
+        handleOk() {
+
+            console.log(this.selected.type)
+            console.log(this.content[this.selected.type])
+            let el = {
+                "type": this.selected.type,
+                "content": this.content[this.selected.type]
+            }
+            this.$emit('add-element', {
+                "c_id": this.selection.c_id,
+                "r_id": this.selection.r_id,
+                "e_id": null,
+                "el": el
+            })
+        }
+    }
 
 }
 </script>
