@@ -49937,7 +49937,7 @@ var render = function () {
                               },
                             },
                           },
-                          [_c("i", { staticClass: "fa fa-trash" })]
+                          [_c("i", { staticClass: "fa fa-trash-alt" })]
                         ),
                       ],
                       1
@@ -50029,7 +50029,7 @@ var render = function () {
                     },
                   },
                 },
-                [_c("i", { staticClass: "fa fa-trash" })]
+                [_c("i", { staticClass: "fa fa-trash-alt" })]
               ),
             ],
             1
@@ -50100,7 +50100,7 @@ var render = function () {
                 },
               },
             },
-            [_c("i", { staticClass: "fa fa-trash" })]
+            [_c("i", { staticClass: "fa fa-trash-alt" })]
           ),
         ],
         1
@@ -50430,7 +50430,7 @@ var render = function () {
                               _c(
                                 "b-button",
                                 { attrs: { variant: "outline-danger" } },
-                                [_c("i", { staticClass: "fa fa-trash" })]
+                                [_c("i", { staticClass: "fa fa-trash-alt" })]
                               ),
                             ],
                             1

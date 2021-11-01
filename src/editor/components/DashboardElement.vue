@@ -12,7 +12,7 @@
                     </b-button>                    
 
                     <b-button  @click="handleEmit('delete-element', index)" size="sm">
-                        <i class="fa fa-trash"></i>
+                        <i class="fa fa-trash-alt"></i>
                     </b-button>
 
                 </div>

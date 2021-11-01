@@ -11,7 +11,7 @@
                     </b-button>
 
                     <b-button  @click="handleEmit('delete-row')" size="sm">
-                        <i class="fa fa-trash"></i>
+                        <i class="fa fa-trash-alt"></i>
                     </b-button>
 
                 </div>

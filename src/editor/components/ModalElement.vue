@@ -85,7 +85,7 @@
 
                <b-input-group-append>
                     <b-button variant="outline-danger">
-                        <i class="fa fa-trash"></i>
+                        <i class="fa fa-trash-alt"></i>
                     </b-button>
                 </b-input-group-append>
                 
