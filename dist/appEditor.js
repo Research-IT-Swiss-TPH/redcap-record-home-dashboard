@@ -2257,6 +2257,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2347,6 +2348,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2387,7 +2390,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_0___default())
+  },
   props: ['columns', 'r_id'],
   methods: {
     handleEmit: function handleEmit(event, c_id) {
@@ -45162,7 +45174,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-content-row {\n    border: 1px dashed;\n    border-color: var(--oruga-variant-gray);\n    border-radius: 4px;\n    margin: 15px;\n    padding: 30px;\n}\n.editor-row {\n    margin: 25px;\n}\n.row-header {\n    cursor:move;\n}\n.card-body {\n    min-height: 75px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-row {\n    margin: 25px;\n}\n.card-body {\n    min-height: 75px;\n}\n.row-handle:hover {\n    cursor:move;\n    background: #ecf0f1;\n    transition: ease-in-out all 0.3s;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -53480,7 +53492,11 @@ var render = function () {
               _c(
                 "draggable",
                 {
-                  attrs: { "ghost-class": "ghost" },
+                  attrs: {
+                    "ghost-class": "ghost",
+                    handle: ".row-handle",
+                    group: { name: "rows" },
+                  },
                   on: {
                     start: function ($event) {
                       _vm.drag = true
@@ -53639,86 +53655,102 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm.columns.length == 0
-      ? _c("div", { staticClass: "text-center lead text-muted" }, [
-          _vm._v("Row is empty"),
-        ])
-      : _c(
-          "div",
-          { staticClass: "row" },
-          _vm._l(_vm.columns, function (column, index) {
-            return _c(
-              "div",
-              { key: index, staticClass: "editor-column col-md" },
-              [
-                _c("div", { staticClass: "card" }, [
-                  _c("div", { staticClass: "card-header" }, [
-                    _c("div", { staticClass: "float-left" }, [
-                      _c("small", { staticClass: "text-muted" }, [
-                        _vm._v("Column - #" + _vm._s(index + 1) + " "),
+  return _c(
+    "div",
+    [
+      _vm.columns.length == 0
+        ? _c("div", { staticClass: "text-center lead text-muted" }, [
+            _vm._v("Row is empty"),
+          ])
+        : _c(
+            "draggable",
+            {
+              staticClass: "row",
+              attrs: {
+                group: { name: "columns", put: "columns", pull: "columns" },
+              },
+              model: {
+                value: _vm.columns,
+                callback: function ($$v) {
+                  _vm.columns = $$v
+                },
+                expression: "columns",
+              },
+            },
+            _vm._l(_vm.columns, function (column, index) {
+              return _c(
+                "div",
+                { key: index, staticClass: "editor-column col-md" },
+                [
+                  _c("div", { staticClass: "card" }, [
+                    _c("div", { staticClass: "card-header" }, [
+                      _c("div", { staticClass: "float-left" }, [
+                        _c("small", { staticClass: "text-muted" }, [
+                          _vm._v("Column - #" + _vm._s(index + 1) + " "),
+                        ]),
                       ]),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "editor-row-menu float-right" },
-                      [
-                        _c(
-                          "b-button",
-                          {
-                            directives: [
-                              {
-                                name: "b-modal",
-                                rawName: "v-b-modal.modal-element",
-                                modifiers: { "modal-element": true },
-                              },
-                            ],
-                            attrs: { size: "xs" },
-                          },
-                          [_c("i", { staticClass: "fa fa-plus" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "b-button",
-                          {
-                            attrs: { size: "xs" },
-                            on: {
-                              click: function ($event) {
-                                return _vm.handleEmit("delete-column", index)
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "editor-row-menu float-right" },
+                        [
+                          _c(
+                            "b-button",
+                            {
+                              directives: [
+                                {
+                                  name: "b-modal",
+                                  rawName: "v-b-modal.modal-element",
+                                  modifiers: { "modal-element": true },
+                                },
+                              ],
+                              attrs: { size: "xs" },
+                            },
+                            [_c("i", { staticClass: "fa fa-plus" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-button",
+                            {
+                              attrs: { size: "xs" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.handleEmit("delete-column", index)
+                                },
                               },
                             },
-                          },
-                          [_c("i", { staticClass: "fa fa-trash-alt" })]
-                        ),
-                      ],
-                      1
-                    ),
+                            [_c("i", { staticClass: "fa fa-trash-alt" })]
+                          ),
+                        ],
+                        1
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-body" }, [
+                      column.elements.length == 0
+                        ? _c("div", { staticClass: "text-center lead" }, [
+                            _vm._v("Column is empty"),
+                          ])
+                        : _c(
+                            "div",
+                            [
+                              _vm._t("default", null, {
+                                c_id: index,
+                                elements: column.elements,
+                              }),
+                            ],
+                            2
+                          ),
+                    ]),
                   ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-body" }, [
-                    column.elements.length == 0
-                      ? _c("div", { staticClass: "text-center lead" }, [
-                          _vm._v("Column is empty"),
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _vm._t("default", null, {
-                              c_id: index,
-                              elements: column.elements,
-                            }),
-                          ],
-                          2
-                        ),
-                  ]),
-                ]),
-              ]
-            )
-          }),
-          0
-        ),
-  ])
+                ]
+              )
+            }),
+            0
+          ),
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -53818,7 +53850,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card editor-row" }, [
-    _c("div", { staticClass: "card-header row-header" }, [
+    _c("div", { staticClass: "card-header row-header row-handle" }, [
       _c("div", { staticClass: "float-left" }, [
         _c("small", { staticClass: "text-muted" }, [
           _vm._v("Row - #" + _vm._s(_vm.r_id + 1) + " "),

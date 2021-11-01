@@ -1,7 +1,12 @@
 <template>
     <div>
     <div v-if="columns.length == 0" class="text-center lead text-muted">Row is empty</div>
-    <div class="row" v-else>
+        
+        <draggable 
+            class="row" v-else
+            v-model="columns"
+            :group="{name: 'columns', put: 'columns', pull: 'columns'}"
+        >
         <div class="editor-column col-md" v-for="(column, index) in columns" :key="index">
             <div class="card">
              <div class="card-header">
@@ -33,13 +38,18 @@
             </div>                            
         </div>
     </div>
-</div>
+    </draggable>
     </div>
 
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+    components: {
+        draggable
+    },
     props: [
         'columns',
         'r_id'

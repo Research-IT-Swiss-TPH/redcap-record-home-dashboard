@@ -15,6 +15,8 @@
             <draggable 
                 ghost-class="ghost"
                 v-model="rows"
+                handle=".row-handle"
+                :group="{name: 'rows'}"
                 @start="drag=true" 
                 @end="drag=false"
             >
@@ -42,7 +44,6 @@
                         >
                         </dashboard-element>
                     </dashboard-column>
-                    
                 </dashboard-row>
             </draggable>
 

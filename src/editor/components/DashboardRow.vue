@@ -1,7 +1,7 @@
 <template>
         <div 
             class="card editor-row">
-            <div class="card-header row-header">
+            <div class="card-header row-header row-handle">
                 <div class="float-left">
                     <small class="text-muted">Row - #{{ r_id + 1}} </small>                
                 </div>                
@@ -48,24 +48,18 @@ export default {
 </script>
 
 <style>
-    .editor-content-row {
-        border: 1px dashed;
-        border-color: var(--oruga-variant-gray);
-        border-radius: 4px;
-        margin: 15px;
-        padding: 30px;
-    }
-
     .editor-row {
-        margin: 25px;;
-    }
-
-    .row-header {
-        cursor:move;
+        margin: 25px;
     }
 
     .card-body {
         min-height: 75px;
+    }
+
+    .row-handle:hover {
+        cursor:move;
+        background: #ecf0f1;
+        transition: ease-in-out all 0.3s;
     }
 
 </style>
