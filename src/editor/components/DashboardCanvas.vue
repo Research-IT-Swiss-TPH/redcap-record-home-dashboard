@@ -1,5 +1,7 @@
 <template>
-    <div class="editor-wrapper mt-3" :class="rows.length == 0 && 'empty'">
+    <div
+        class="editor-wrapper mt-3" 
+        :class="rows.length == 0 && 'empty'">
 
         <div v-if="rows.length == 0" id="content-empty" @click="rowAdd()">
             <div class="text-center " id="add-row-text">
@@ -13,9 +15,10 @@
             <dashboard-row 
                 v-for="(row, index) in rows" 
                 :key="index" 
-                :r_id="index" 
+                :r_id="index"                 
                 @delete-row="rowRemove( $event )" 
-                @add-column="columnAdd( $event )">
+                @add-column="columnAdd( $event )"
+                >
 
                 <dashboard-column 
                     :columns="row.columns"
@@ -122,6 +125,7 @@ export default {
                 e_id: e_id
             }
         }
+
     },
     computed: {
     }

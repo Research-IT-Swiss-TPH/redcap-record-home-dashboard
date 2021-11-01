@@ -1,5 +1,6 @@
 <template>
-        <div class="card editor-row">
+        <div 
+            class="card editor-row">
             <div class="card-header row-header">
                 <div class="float-left">
                     <small class="text-muted">Row - #{{ r_id + 1}} </small>                
@@ -20,8 +21,7 @@
             <div class="card-body">
                 <slot></slot>
             </div>
-        </div>
-        
+        </div>        
 </template>
 
 <script>
