@@ -7,11 +7,11 @@
                 </div>
                 <div class="editor-row-menu float-right">
 
-                    <b-button  @click="handleEmit('edit-element', index)" size="sm">
+                    <b-button  @click="handleEmit('edit-element', index)" size="xs">
                         <i class="fa fa-edit"></i>
                     </b-button>                    
 
-                    <b-button  @click="handleEmit('delete-element', index)" size="sm">
+                    <b-button  @click="handleEmit('delete-element', index)" size="xs">
                         <i class="fa fa-trash-alt"></i>
                     </b-button>
 

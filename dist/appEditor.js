@@ -45162,7 +45162,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-content-row {\n    border: 1px dashed;\n    border-color: var(--oruga-variant-gray);\n    border-radius: 4px;\n    margin: 15px;\n    padding: 30px;\n}\n.editor-row {\n    margin: 25px;\n}\n.card-body {\n    min-height: 75px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-content-row {\n    border: 1px dashed;\n    border-color: var(--oruga-variant-gray);\n    border-radius: 4px;\n    margin: 15px;\n    padding: 30px;\n}\n.editor-row {\n    margin: 25px;\n}\n.row-header {\n    cursor:move;\n}\n.card-body {\n    min-height: 75px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -53674,7 +53674,7 @@ var render = function () {
                                 modifiers: { "modal-element": true },
                               },
                             ],
-                            attrs: { size: "sm" },
+                            attrs: { size: "xs" },
                           },
                           [_c("i", { staticClass: "fa fa-plus" })]
                         ),
@@ -53682,7 +53682,7 @@ var render = function () {
                         _c(
                           "b-button",
                           {
-                            attrs: { size: "sm" },
+                            attrs: { size: "xs" },
                             on: {
                               click: function ($event) {
                                 return _vm.handleEmit("delete-column", index)
@@ -53761,7 +53761,7 @@ var render = function () {
               _c(
                 "b-button",
                 {
-                  attrs: { size: "sm" },
+                  attrs: { size: "xs" },
                   on: {
                     click: function ($event) {
                       return _vm.handleEmit("edit-element", index)
@@ -53774,7 +53774,7 @@ var render = function () {
               _c(
                 "b-button",
                 {
-                  attrs: { size: "sm" },
+                  attrs: { size: "xs" },
                   on: {
                     click: function ($event) {
                       return _vm.handleEmit("delete-element", index)
@@ -53832,7 +53832,7 @@ var render = function () {
           _c(
             "b-button",
             {
-              attrs: { size: "sm" },
+              attrs: { size: "xs" },
               on: {
                 click: function ($event) {
                   return _vm.handleEmit("add-column")
@@ -53845,7 +53845,7 @@ var render = function () {
           _c(
             "b-button",
             {
-              attrs: { size: "sm" },
+              attrs: { size: "xs" },
               on: {
                 click: function ($event) {
                   return _vm.handleEmit("delete-row")

@@ -10,11 +10,11 @@
                 </div>
                 <div class="editor-row-menu float-right">
 
-                    <b-button v-b-modal.modal-element size="sm">
+                    <b-button v-b-modal.modal-element size="xs">
                         <i class="fa fa-plus"></i>
                     </b-button>
 
-                    <b-button @click="handleEmit('delete-column', index)" size="sm">
+                    <b-button @click="handleEmit('delete-column', index)" size="xs">
                         <i class="fa fa-trash-alt"></i>
                     </b-button>                          
 

@@ -14,7 +14,7 @@
 
             <draggable 
                 ghost-class="ghost"
-                v-model="rows"  
+                v-model="rows"
                 @start="drag=true" 
                 @end="drag=false"
             >

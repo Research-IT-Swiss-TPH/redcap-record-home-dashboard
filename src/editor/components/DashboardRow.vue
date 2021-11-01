@@ -7,11 +7,11 @@
                 </div>                
                 <div class="editor-row-menu float-right">
 
-                    <b-button @click="handleEmit('add-column')" size="sm">
+                    <b-button @click="handleEmit('add-column')" size="xs">
                         <i class="fa fa-plus"></i>
                     </b-button>
 
-                    <b-button  @click="handleEmit('delete-row')" size="sm">
+                    <b-button  @click="handleEmit('delete-row')" size="xs">
                         <i class="fa fa-trash-alt"></i>
                     </b-button>
 
@@ -58,6 +58,10 @@ export default {
 
     .editor-row {
         margin: 25px;;
+    }
+
+    .row-header {
+        cursor:move;
     }
 
     .card-body {
