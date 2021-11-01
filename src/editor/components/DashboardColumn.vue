@@ -5,11 +5,13 @@
         <draggable 
             class="row" v-else
             v-model="columns"
+            ghost-class="ghost-column"
+            handle=".column-handle"
             :group="{name: 'columns', put: 'columns', pull: 'columns'}"
         >
         <div class="editor-column col-md" v-for="(column, index) in columns" :key="index">
             <div class="card">
-             <div class="card-header">
+             <div class="card-header column-handle">
                 <div class="float-left">
                     <small class="text-muted">Column - #{{ index + 1}} </small>
                 </div>
@@ -71,5 +73,13 @@ export default {
 </script>
 
 <style>
-
+    .ghost-column .card {
+        opacity: 0.5;
+        background: #c8ebfb;
+    }
+    .column-handle:hover {
+        cursor:move;
+        background: #ecf0f1;
+        transition: ease-in-out all 0.3s;
+    }    
 </style>
