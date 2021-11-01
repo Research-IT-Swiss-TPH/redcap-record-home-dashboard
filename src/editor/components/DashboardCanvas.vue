@@ -41,7 +41,7 @@
                             :c_id="c_id"
                             :elements="elements"
                             @delete-element="elementRemove( $event )"
-                            @edit-element="elementEdit( $event )"
+                            @edit-element="openModalEditElement( $event )"
                         >
                         </dashboard-element>
                     </dashboard-column>
@@ -88,7 +88,22 @@ export default {
                 {
                     columns: [
                         {
-                            elements: []
+                            elements: [
+                                {
+                                    type: "text",
+                                    content: {
+                                        title: "This is a Headline",
+                                        description: "Foo bar."
+                                    }
+                                },
+                                {
+                                    type: "link",
+                                    content: {
+                                        title: "Click me",
+                                        url: "https://google.com"
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }
@@ -96,7 +111,7 @@ export default {
             msg: "Hello World from ",
             page: getPage(),
             selection: [],
-            element: []
+            element: {}
         }
     },
     methods: {
@@ -142,6 +157,11 @@ export default {
         },
         openModalCreateElement({r_id, c_id}) {
             this.setSelection(r_id, c_id, null)
+            this.$bvModal.show('modal-element')
+        },
+        openModalEditElement({r_id, c_id, e_id}) {
+            this.setSelection(r_id, c_id, e_id)
+            this.element = this.rows[r_id].columns[c_id].elements[e_id]
             this.$bvModal.show('modal-element')
         }
 

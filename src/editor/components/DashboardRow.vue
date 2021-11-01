@@ -47,7 +47,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .editor-row {
         margin: 25px;
     }

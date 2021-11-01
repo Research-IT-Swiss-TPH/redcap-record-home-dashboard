@@ -120,7 +120,7 @@ export default {
     data() {
       return {
         selected: {
-            type: "text",
+            type: "foo",
             instrument: null,
             field: null,
             repeating: null
@@ -190,6 +190,9 @@ export default {
         },
         titleState() {
             return true
+        },
+        type() {
+            return this.element.type
         }
     },
     methods: {
@@ -208,6 +211,10 @@ export default {
                 "el": el
             })
         }
+    },
+    mounted() {
+        console.log(this.element.content)
+        this.selected.type =  this.element.content
     }
 
 }
