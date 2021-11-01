@@ -60,10 +60,6 @@ export default {
         margin: 25px;;
     }
 
-    .row-header:hover {
-        cursor:grab;
-    }
-
     .card-body {
         min-height: 75px;
     }

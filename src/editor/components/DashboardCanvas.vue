@@ -12,7 +12,12 @@
 
         <div v-if="rows.length != 0">
 
-            <draggable v-model="rows"  @start="drag=true" @end="drag=false">
+            <draggable 
+                ghost-class="ghost"
+                v-model="rows"  
+                @start="drag=true" 
+                @end="drag=false"
+            >
                 <dashboard-row 
                     v-for="(row, index) in rows" 
                     :key="index" 
@@ -190,6 +195,11 @@ export default {
     .add-row-area:hover {
         border-color: #343a40;
         color: #343a40;
+    }
+
+    .ghost {
+        opacity: 0.5;
+        background: #c8ebfb;
     }
 
 </style>

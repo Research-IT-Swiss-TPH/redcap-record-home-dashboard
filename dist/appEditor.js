@@ -2252,6 +2252,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -45109,7 +45114,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-wrapper {\n        min-height: 500px;\n        width:100%;\n        border:1px solid #dbdbdb;\n        border-radius: 4px;\n        border-style: dashed;\n        position: relative;\n        transition: all ease-in-out 250ms;\n        background: #f8f9fa;\n}\n.editor-wrapper.empty {\n    background: none;\n}\n.editor-wrapper.empty:hover{\n    cursor: pointer;\n    background: #f8f9fa;\n}\n#content-empty {\n    position: absolute;\n    height: 100%;\n    width:100%;\n}\n#add-row-text {\n    display: block;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    font-size: 18px;\n    letter-spacing: 1px;\n    transition: ease-in-out all 0.3s;\n}\n.editor-wrapper.empty:hover #add-row-text {\n    color: #343a40;\n}\n.add-row-area {\n    border: 1px dashed #dbdbdb;\n    border-radius: 4px;\n    color: #dbdbdb;\n    margin: 25px;\n    padding: 45px;\n    cursor: pointer;\n    transition: ease-in-out all 0.2s;\n}\n.add-row-area:hover {\n    border-color: #343a40;\n    color: #343a40;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-wrapper {\n        min-height: 500px;\n        width:100%;\n        border:1px solid #dbdbdb;\n        border-radius: 4px;\n        border-style: dashed;\n        position: relative;\n        transition: all ease-in-out 250ms;\n        background: #f8f9fa;\n}\n.editor-wrapper.empty {\n    background: none;\n}\n.editor-wrapper.empty:hover{\n    cursor: pointer;\n    background: #f8f9fa;\n}\n#content-empty {\n    position: absolute;\n    height: 100%;\n    width:100%;\n}\n#add-row-text {\n    display: block;\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    transform: translate(-50%, -50%);\n    font-size: 18px;\n    letter-spacing: 1px;\n    transition: ease-in-out all 0.3s;\n}\n.editor-wrapper.empty:hover #add-row-text {\n    color: #343a40;\n}\n.add-row-area {\n    border: 1px dashed #dbdbdb;\n    border-radius: 4px;\n    color: #dbdbdb;\n    margin: 25px;\n    padding: 45px;\n    cursor: pointer;\n    transition: ease-in-out all 0.2s;\n}\n.add-row-area:hover {\n    border-color: #343a40;\n    color: #343a40;\n}\n.ghost {\n    opacity: 0.5;\n    background: #c8ebfb;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -45157,7 +45162,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-content-row {\n    border: 1px dashed;\n    border-color: var(--oruga-variant-gray);\n    border-radius: 4px;\n    margin: 15px;\n    padding: 30px;\n}\n.editor-row {\n    margin: 25px;\n}\n.row-header:hover {\n    cursor:-webkit-grab;\n    cursor:grab;\n}\n.card-body {\n    min-height: 75px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-content-row {\n    border: 1px dashed;\n    border-color: var(--oruga-variant-gray);\n    border-radius: 4px;\n    margin: 15px;\n    padding: 30px;\n}\n.editor-row {\n    margin: 25px;\n}\n.card-body {\n    min-height: 75px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -53475,6 +53480,7 @@ var render = function () {
               _c(
                 "draggable",
                 {
+                  attrs: { "ghost-class": "ghost" },
                   on: {
                     start: function ($event) {
                       _vm.drag = true
