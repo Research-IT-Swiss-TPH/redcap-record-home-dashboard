@@ -12,33 +12,34 @@
 
         <div v-if="rows.length != 0">
 
-            <dashboard-row 
-                v-for="(row, index) in rows" 
-                :key="index" 
-                :r_id="index"                 
-                @delete-row="rowRemove( $event )" 
-                @add-column="columnAdd( $event )"
-                >
+            <draggable v-model="rows"  @start="drag=true" @end="drag=false">
+                <dashboard-row 
+                    v-for="(row, index) in rows" 
+                    :key="index" 
+                    :r_id="index"                 
+                    @delete-row="rowRemove( $event )" 
+                    @add-column="columnAdd( $event )"
+                    >
 
                 <dashboard-column 
-                    :columns="row.columns"
-                    :r_id="index"
-                    @add-element="elementAdd( $event )"
-                    @delete-column="columnRemove( $event )"
-                    v-slot="{elements, c_id}">
-
-                    <dashboard-element
+                        :columns="row.columns"
                         :r_id="index"
-                        :c_id="c_id"
-                        :elements="elements"
-                        @delete-element="elementRemove( $event )"
-                        @edit-element="elementEdit( $event )"
-                    >
-                    </dashboard-element>
+                        @add-element="elementAdd( $event )"
+                        @delete-column="columnRemove( $event )"
+                        v-slot="{elements, c_id}">
 
-                </dashboard-column>
-
-            </dashboard-row>
+                        <dashboard-element
+                            :r_id="index"
+                            :c_id="c_id"
+                            :elements="elements"
+                            @delete-element="elementRemove( $event )"
+                            @edit-element="elementEdit( $event )"
+                        >
+                        </dashboard-element>
+                    </dashboard-column>
+                    
+                </dashboard-row>
+            </draggable>
 
             <div  @click="rowAdd()" class="add-row-area">
                 <div class="text-center">
@@ -63,13 +64,15 @@ import DashboardRow from './DashboardRow.vue';
 import DashboardColumn from './DashboardColumn.vue'
 import DashboardElement from './DashboardElement.vue'
 import ModalElement from './ModalElement.vue'
+import draggable from 'vuedraggable'
 
 export default {
     components: {
         DashboardRow,
         DashboardColumn,
         DashboardElement,
-        ModalElement
+        ModalElement,
+        draggable
     },
     data() {
         return {
