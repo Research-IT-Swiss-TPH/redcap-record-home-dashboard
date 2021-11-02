@@ -54038,7 +54038,7 @@ var render = function () {
               _c("div", { staticClass: "float-left" }, [
                 _c(
                   "span",
-                  { staticClass: "badge badge-light text-uppercase p-2" },
+                  { staticClass: "badge badge-light text-uppercase p-1" },
                   [
                     _c("i", { class: _vm.iconClass(element.type) }),
                     _vm._v("  " + _vm._s(element.type)),

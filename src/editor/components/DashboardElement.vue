@@ -6,7 +6,7 @@
 
             <div class="clearfix mb-1" >
                 <div class="float-left">
-                    <span class="badge badge-light text-uppercase p-2"> <i :class="iconClass(element.type)"></i>  {{ element.type }}</span>
+                    <span class="badge badge-light text-uppercase p-1"> <i :class="iconClass(element.type)"></i>  {{ element.type }}</span>
                 </div>
                 <div class="editor-row-menu float-right">
                     <b-button  @click="handleEmit('open-modal-element', index)" size="xs">
