@@ -39,15 +39,15 @@
                             <b-form-group                               
                                 class="text-right font-weight-bold"
                                 label="Title"
-                                label-cols-lg="4"
-                                content-cols-lg="8">
+                                label-cols-lg="3"
+                                content-cols-lg="9">
                                 <b-form-input v-model="content.text.title"></b-form-input>
                             </b-form-group>
                             <b-form-group                                
                                 class="text-right font-weight-bold"
                                 label="Description"
-                                label-cols-lg="4"
-                                content-cols-lg="8">
+                                label-cols-lg="3"
+                                content-cols-lg="9">
                                 <b-form-textarea       
                                 rows="5"
                                 max-rows="5"
@@ -61,16 +61,16 @@
                             <b-form-group
                                 class="text-right font-weight-bold"
                                 label="Title"
-                                label-cols-lg="4"
-                                content-cols-lg="8">
+                                label-cols-lg="3"
+                                content-cols-lg="9">
                                 <b-form-input v-model="content.link.title"></b-form-input>
                                 </b-form-group>
 
                             <b-form-group
                                 class="text-right font-weight-bold"                            
                                 label="URL"
-                                label-cols-lg="4"
-                                content-cols-lg="8">
+                                label-cols-lg="3"
+                                content-cols-lg="9">
                                 <b-form-input       
                                 v-model="content.link.url">
                                 </b-form-input>
@@ -88,7 +88,7 @@
                 <b-button v-if="!isLoading" variant="secondary" @click="cancel()">
                     Cancel
                 </b-button>
-                <b-button v-if="!isLoading" variant="success" @click="ok()">
+                <b-button v-if="!isLoading" variant="info" @click="ok()">
                     Save
                 </b-button>
             </template>

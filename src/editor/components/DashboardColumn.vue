@@ -4,7 +4,7 @@
         
         <draggable 
             class="row" v-else
-            v-model="columns"
+            :list="columns"
             ghost-class="ghost-column"
             handle=".column-handle"
             :group="{name: 'columns', put: 'columns', pull: 'columns'}"

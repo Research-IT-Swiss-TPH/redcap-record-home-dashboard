@@ -1,9 +1,13 @@
 <template>
   <div>
+    <draggable 
+            :list="elements"
+            ghost-class="ghost-element"            
+            :group="{name: 'elements', put: 'elements', pull: 'elements'}"
+       >      
       <div class="card mb-2 mt-2" v-for="(element, index) in elements" :key="index" >
 
           <div class="card-body">
-
             <div class="clearfix mb-1" >
                 <div class="float-left">
                     <span class="badge badge-light text-uppercase p-1"> <i :class="iconClass(element.type)"></i>  {{ element.type }}</span>
@@ -22,14 +26,17 @@
                 :element="element" />
           </div>
       </div>
+        </draggable>
   </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
 import RenderElement from './RenderElement.vue'
 export default {
     components: {
-        RenderElement
+        RenderElement,
+        draggable
     },
     props: [
         'elements',
@@ -57,7 +64,7 @@ export default {
                     return "fa fa-th-list"
                     break;
                 case "table":
-                    return "fa fa-tabe"
+                    return "fa fa-table"
                     break;                                                            
             
                 default:
@@ -72,8 +79,15 @@ export default {
 <style scoped>
     .card {
         margin-bottom: 15px;
-        margin: 0 auto;
+        margin: 0 auto;   
     }
+
+    .card:hover {
+        cursor:move;
+        background: #ecf0f1;
+        transition: ease-in-out all 0.3s;
+    }
+
     .card-body {
         padding: 0.75rem!important;
     }

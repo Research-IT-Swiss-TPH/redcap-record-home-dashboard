@@ -2429,7 +2429,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _RenderElement_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RenderElement.vue */ "./src/Editor/components/RenderElement.vue");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _RenderElement_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RenderElement.vue */ "./src/Editor/components/RenderElement.vue");
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2458,9 +2465,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    RenderElement: _RenderElement_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    RenderElement: _RenderElement_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_0___default())
   },
   props: ['elements', 'c_id', 'r_id', 'col_length'],
   methods: {
@@ -2486,7 +2495,7 @@ __webpack_require__.r(__webpack_exports__);
           break;
 
         case "table":
-          return "fa fa-tabe";
+          return "fa fa-table";
           break;
 
         default:
@@ -45269,7 +45278,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-4a0c5750] {\n    margin-bottom: 15px;\n    margin: 0 auto;\n}\n.card-body[data-v-4a0c5750] {\n    padding: 0.75rem!important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-4a0c5750] {\n    margin-bottom: 15px;\n    margin: 0 auto;\n}\n.card[data-v-4a0c5750]:hover {\n    cursor:move;\n    background: #ecf0f1;\n    transition: ease-in-out all 0.3s;\n}\n.card-body[data-v-4a0c5750] {\n    padding: 0.75rem!important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -53730,6 +53739,7 @@ var render = function () {
                 {
                   attrs: {
                     "ghost-class": "ghost",
+                    list: _vm.rows,
                     handle: ".row-handle",
                     group: { name: "rows" },
                   },
@@ -53740,13 +53750,6 @@ var render = function () {
                     end: function ($event) {
                       _vm.drag = false
                     },
-                  },
-                  model: {
-                    value: _vm.rows,
-                    callback: function ($$v) {
-                      _vm.rows = $$v
-                    },
-                    expression: "rows",
                   },
                 },
                 _vm._l(_vm.rows, function (row, index) {
@@ -53914,16 +53917,10 @@ var render = function () {
             {
               staticClass: "row",
               attrs: {
+                list: _vm.columns,
                 "ghost-class": "ghost-column",
                 handle: ".column-handle",
                 group: { name: "columns", put: "columns", pull: "columns" },
-              },
-              model: {
-                value: _vm.columns,
-                callback: function ($$v) {
-                  _vm.columns = $$v
-                },
-                expression: "columns",
               },
             },
             _vm._l(_vm.columns, function (column, index) {
@@ -54028,65 +54025,78 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.elements, function (element, index) {
-      return _c("div", { key: index, staticClass: "card mb-2 mt-2" }, [
-        _c(
-          "div",
-          { staticClass: "card-body" },
-          [
-            _c("div", { staticClass: "clearfix mb-1" }, [
-              _c("div", { staticClass: "float-left" }, [
-                _c(
-                  "span",
-                  { staticClass: "badge badge-light text-uppercase p-1" },
-                  [
-                    _c("i", { class: _vm.iconClass(element.type) }),
-                    _vm._v("  " + _vm._s(element.type)),
-                  ]
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "editor-row-menu float-right" },
-                [
-                  _c(
-                    "b-button",
-                    {
-                      attrs: { size: "xs" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.handleEmit("open-modal-element", index)
-                        },
-                      },
-                    },
-                    [_c("i", { staticClass: "fa fa-edit" })]
-                  ),
+    [
+      _c(
+        "draggable",
+        {
+          attrs: {
+            list: _vm.elements,
+            "ghost-class": "ghost-element",
+            group: { name: "elements", put: "elements", pull: "elements" },
+          },
+        },
+        _vm._l(_vm.elements, function (element, index) {
+          return _c("div", { key: index, staticClass: "card mb-2 mt-2" }, [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("div", { staticClass: "clearfix mb-1" }, [
+                  _c("div", { staticClass: "float-left" }, [
+                    _c(
+                      "span",
+                      { staticClass: "badge badge-light text-uppercase p-1" },
+                      [
+                        _c("i", { class: _vm.iconClass(element.type) }),
+                        _vm._v("  " + _vm._s(element.type)),
+                      ]
+                    ),
+                  ]),
                   _vm._v(" "),
                   _c(
-                    "b-button",
-                    {
-                      attrs: { size: "xs" },
-                      on: {
-                        click: function ($event) {
-                          return _vm.handleEmit("delete-element", index)
+                    "div",
+                    { staticClass: "editor-row-menu float-right" },
+                    [
+                      _c(
+                        "b-button",
+                        {
+                          attrs: { size: "xs" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.handleEmit("open-modal-element", index)
+                            },
+                          },
                         },
-                      },
-                    },
-                    [_c("i", { staticClass: "fa fa-trash-alt" })]
+                        [_c("i", { staticClass: "fa fa-edit" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-button",
+                        {
+                          attrs: { size: "xs" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.handleEmit("delete-element", index)
+                            },
+                          },
+                        },
+                        [_c("i", { staticClass: "fa fa-trash-alt" })]
+                      ),
+                    ],
+                    1
                   ),
-                ],
-                1
-              ),
-            ]),
-            _vm._v(" "),
-            _c("render-element", { attrs: { element: element } }),
-          ],
-          1
-        ),
-      ])
-    }),
-    0
+                ]),
+                _vm._v(" "),
+                _c("render-element", { attrs: { element: element } }),
+              ],
+              1
+            ),
+          ])
+        }),
+        0
+      ),
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -54231,7 +54241,7 @@ var render = function () {
                     ? _c(
                         "b-button",
                         {
-                          attrs: { variant: "success" },
+                          attrs: { variant: "info" },
                           on: {
                             click: function ($event) {
                               return ok()
@@ -54355,8 +54365,8 @@ var render = function () {
                                   staticClass: "text-right font-weight-bold",
                                   attrs: {
                                     label: "Title",
-                                    "label-cols-lg": "4",
-                                    "content-cols-lg": "8",
+                                    "label-cols-lg": "3",
+                                    "content-cols-lg": "9",
                                   },
                                 },
                                 [
@@ -54379,8 +54389,8 @@ var render = function () {
                                   staticClass: "text-right font-weight-bold",
                                   attrs: {
                                     label: "Description",
-                                    "label-cols-lg": "4",
-                                    "content-cols-lg": "8",
+                                    "label-cols-lg": "3",
+                                    "content-cols-lg": "9",
                                   },
                                 },
                                 [
@@ -54416,8 +54426,8 @@ var render = function () {
                                   staticClass: "text-right font-weight-bold",
                                   attrs: {
                                     label: "Title",
-                                    "label-cols-lg": "4",
-                                    "content-cols-lg": "8",
+                                    "label-cols-lg": "3",
+                                    "content-cols-lg": "9",
                                   },
                                 },
                                 [
@@ -54440,8 +54450,8 @@ var render = function () {
                                   staticClass: "text-right font-weight-bold",
                                   attrs: {
                                     label: "URL",
-                                    "label-cols-lg": "4",
-                                    "content-cols-lg": "8",
+                                    "label-cols-lg": "3",
+                                    "content-cols-lg": "9",
                                   },
                                 },
                                 [

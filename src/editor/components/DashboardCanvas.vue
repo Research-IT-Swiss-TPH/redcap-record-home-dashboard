@@ -14,7 +14,7 @@
 
             <draggable 
                 ghost-class="ghost"
-                v-model="rows"
+                :list="rows"
                 handle=".row-handle"
                 :group="{name: 'rows'}"
                 @start="drag=true" 
@@ -185,7 +185,7 @@ export default {
         letter-spacing: 1px;
         transition: ease-in-out all 0.3s;
     }
-    
+
     .editor-wrapper.empty:hover #add-row-text {
         color: #343a40;
     }
