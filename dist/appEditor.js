@@ -53796,7 +53796,9 @@ var render = function () {
                                       "delete-element": function ($event) {
                                         return _vm.elementRemove($event)
                                       },
-                                      "edit-element": function ($event) {
+                                      "open-modal-edit-element": function (
+                                        $event
+                                      ) {
                                         return _vm.openModalEditElement($event)
                                       },
                                     },
@@ -54049,7 +54051,7 @@ var render = function () {
                   attrs: { size: "xs" },
                   on: {
                     click: function ($event) {
-                      return _vm.handleEmit("edit-element", index)
+                      return _vm.handleEmit("open-modal-edit-element", index)
                     },
                   },
                 },

@@ -33,7 +33,7 @@
                         :r_id="index"
                         @add-element="elementAdd( $event )"
                         @delete-column="columnRemove( $event )"
-                        @open-modal-create-element="openModalCreateElement($event)"
+                        @open-modal-create-element="openModalCreateElement( $event )"
                         v-slot="{elements, c_id}">
 
                         <dashboard-element
@@ -41,7 +41,7 @@
                             :c_id="c_id"
                             :elements="elements"
                             @delete-element="elementRemove( $event )"
-                            @edit-element="openModalEditElement( $event )"
+                            @open-modal-edit-element="openModalEditElement( $event )"
                         >
                         </dashboard-element>
                     </dashboard-column>
