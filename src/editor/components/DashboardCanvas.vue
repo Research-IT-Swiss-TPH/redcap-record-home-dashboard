@@ -160,9 +160,15 @@ export default {
             this.$bvModal.show('modal-element')
         },
         openModalEditElement({r_id, c_id, e_id}) {
-            this.setSelection(r_id, c_id, e_id)
-            this.element = this.rows[r_id].columns[c_id].elements[e_id]
+
+            this.selection = {
+                r_id: r_id,
+                c_id: c_id,
+                e_id: e_id
+            }
+            this.element = this.rows[r_id].columns[c_id].elements[e_id]            
             this.$bvModal.show('modal-element')
+
         }
 
     },

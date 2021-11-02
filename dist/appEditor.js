@@ -2354,7 +2354,11 @@ __webpack_require__.r(__webpack_exports__);
       var r_id = _ref4.r_id,
           c_id = _ref4.c_id,
           e_id = _ref4.e_id;
-      this.setSelection(r_id, c_id, e_id);
+      this.selection = {
+        r_id: r_id,
+        c_id: c_id,
+        e_id: e_id
+      };
       this.element = this.rows[r_id].columns[c_id].elements[e_id];
       this.$bvModal.show('modal-element');
     }
@@ -2690,12 +2694,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['element', 'selection'],
+  props: ['selection'],
   data: function data() {
     return {
       selected: {
-        type: "foo",
+        type: "text",
         instrument: null,
         field: null,
         repeating: null
@@ -2771,11 +2781,10 @@ __webpack_require__.r(__webpack_exports__);
         };
       }
     },
-    titleState: function titleState() {
-      return true;
-    },
-    type: function type() {
-      return this.element.type;
+    modalElementType: function modalElementType() {
+      if (this.modalCase == 'case-edit') {
+        this.selected.type = "table";
+      }
     }
   },
   methods: {
@@ -2793,10 +2802,6 @@ __webpack_require__.r(__webpack_exports__);
         "el": el
       });
     }
-  },
-  mounted: function mounted() {
-    console.log(this.element.content);
-    this.selected.type = this.element.content;
   }
 });
 
@@ -54240,6 +54245,8 @@ var render = function () {
             "div",
             { staticClass: "text-center mt-3" },
             [
+              _c("div", [_vm._v(_vm._s(_vm.element.type))]),
+              _vm._v(" "),
               _c(
                 "b-form-group",
                 [
@@ -54493,6 +54500,10 @@ var render = function () {
                 : _vm._e(),
             ]
           ),
+          _vm._v(" "),
+          _vm.selected.type == "table"
+            ? _c("div", [_vm._v("\n          Hello Success\n      ")])
+            : _vm._e(),
         ]
       ),
     ],

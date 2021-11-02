@@ -8,6 +8,8 @@
 
       <div class="text-center mt-3">
 
+          <div>{{ element.type}}</div>
+
         <b-form-group>
         <b-form-radio-group
             id="btn-radios-2"
@@ -97,6 +99,10 @@
         </div>
       </div>
 
+        <div v-if="selected.type=='table'">
+            Hello Success
+        </div>
+
 
     <template #modal-footer="{ ok, cancel }">
       <b-button variant="secondary" @click="cancel()">
@@ -114,13 +120,13 @@
 <script>
 export default {
     props:[
-        'element',
-        'selection'
+        'selection',
+        
     ],
     data() {
       return {
         selected: {
-            type: "foo",
+            type: "text",
             instrument: null,
             field: null,
             repeating: null
@@ -188,12 +194,12 @@ export default {
                    }
             }
         },
-        titleState() {
-            return true
-        },
-        type() {
-            return this.element.type
+        modalElementType() {
+            if(this.modalCase == 'case-edit') {
+                this.selected.type = "table"
+            }
         }
+        
     },
     methods: {
         handleOk() {
@@ -211,10 +217,6 @@ export default {
                 "el": el
             })
         }
-    },
-    mounted() {
-        console.log(this.element.content)
-        this.selected.type =  this.element.content
     }
 
 }
