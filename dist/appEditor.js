@@ -2397,6 +2397,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2456,15 +2457,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     RenderElement: _RenderElement_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['elements', 'c_id', 'r_id'],
+  props: ['elements', 'c_id', 'r_id', 'col_length'],
   methods: {
     handleEmit: function handleEmit(event, e_id) {
       this.$emit(event, {
@@ -2472,6 +2470,29 @@ __webpack_require__.r(__webpack_exports__);
         "r_id": this.r_id,
         "e_id": e_id
       });
+    },
+    iconClass: function iconClass(type) {
+      switch (type) {
+        case "text":
+          return "fa fa-align-left";
+          break;
+
+        case "link":
+          return "fa fa-link";
+          break;
+
+        case "list":
+          return "fa fa-th-list";
+          break;
+
+        case "table":
+          return "fa fa-tabe";
+          break;
+
+        default:
+          return "fa fa-align-left";
+          break;
+      }
     }
   }
 });
@@ -2791,6 +2812,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
 //
 //
 //
@@ -45247,7 +45269,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-4a0c5750] {\n    margin-bottom: 15px;\n    max-width: 350px;\n    margin: 0 auto;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-4a0c5750] {\n    margin-bottom: 15px;\n    margin: 0 auto;\n}\n.card-body[data-v-4a0c5750] {\n    padding: 0.75rem!important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -53964,6 +53986,7 @@ var render = function () {
                             [
                               _vm._t("default", null, {
                                 c_id: index,
+                                col_length: _vm.columns.length,
                                 elements: column.elements,
                               }),
                             ],
@@ -54007,57 +54030,58 @@ var render = function () {
     "div",
     _vm._l(_vm.elements, function (element, index) {
       return _c("div", { key: index, staticClass: "card mb-2 mt-2" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "float-left" }, [
-            _c("small", { staticClass: "text-muted" }, [
-              _vm._v("Element - # " + _vm._s(index + 1) + " "),
-            ]),
-            _vm._v(" "),
-            _c(
-              "span",
-              { staticClass: "badge badge-secondary text-uppercase pr-1" },
-              [_vm._v(_vm._s(element.type))]
-            ),
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "editor-row-menu float-right" },
-            [
-              _c(
-                "b-button",
-                {
-                  attrs: { size: "xs" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.handleEmit("open-modal-element", index)
-                    },
-                  },
-                },
-                [_c("i", { staticClass: "fa fa-edit" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "b-button",
-                {
-                  attrs: { size: "xs" },
-                  on: {
-                    click: function ($event) {
-                      return _vm.handleEmit("delete-element", index)
-                    },
-                  },
-                },
-                [_c("i", { staticClass: "fa fa-trash-alt" })]
-              ),
-            ],
-            1
-          ),
-        ]),
-        _vm._v(" "),
         _c(
           "div",
           { staticClass: "card-body" },
-          [_c("render-element", { attrs: { element: element } })],
+          [
+            _c("div", { staticClass: "clearfix mb-1" }, [
+              _c("div", { staticClass: "float-left" }, [
+                _c(
+                  "span",
+                  { staticClass: "badge badge-light text-uppercase p-2" },
+                  [
+                    _c("i", { class: _vm.iconClass(element.type) }),
+                    _vm._v("  " + _vm._s(element.type)),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "editor-row-menu float-right" },
+                [
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { size: "xs" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.handleEmit("open-modal-element", index)
+                        },
+                      },
+                    },
+                    [_c("i", { staticClass: "fa fa-edit" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { size: "xs" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.handleEmit("delete-element", index)
+                        },
+                      },
+                    },
+                    [_c("i", { staticClass: "fa fa-trash-alt" })]
+                  ),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c("render-element", { attrs: { element: element } }),
+          ],
           1
         ),
       ])
@@ -54474,17 +54498,22 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "ul",
-    { staticClass: "list-group" },
+    "span",
     _vm._l(_vm.element.content, function (value, key) {
-      return _c("li", { key: key, staticClass: "list-group-item" }, [
-        _c("span", { staticClass: "badge badge-dark text-monospace" }, [
-          _vm._v(_vm._s(key)),
-        ]),
-        _vm._v(" "),
-        _c("span", { staticClass: "text-muted" }, [
-          _vm._v(_vm._s(value.substring(0, 20))),
-        ]),
+      return _c("span", { key: key, staticClass: "ml-1" }, [
+        _c(
+          "abbr",
+          {
+            staticClass: "initialism text-lowercase text-monospace",
+            attrs: { title: value.substring(0, 20) },
+          },
+          [
+            _c("b-badge", { attrs: { pill: "", variant: "info" } }, [
+              _vm._v(_vm._s(key)),
+            ]),
+          ],
+          1
+        ),
       ])
     }),
     0

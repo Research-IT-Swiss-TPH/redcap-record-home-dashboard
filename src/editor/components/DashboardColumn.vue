@@ -33,6 +33,7 @@
                 <div v-else>
                     <slot 
                         :c_id="index"
+                        :col_length="columns.length"
                         :elements="column.elements">
                     </slot>                    
                 </div>

@@ -1,10 +1,11 @@
 <template>
-  <ul class="list-group">
-      <li class="list-group-item" v-for="(value, key) in element.content" :key="key">
-        <span class="badge badge-dark text-monospace">{{key}}</span>
-        <span class="text-muted">{{ value.substring(0, 20) }}</span>
-      </li>
-  </ul>
+    <span>
+        <span class="ml-1" v-for="(value, key) in element.content" :key="key">
+        <abbr :title="value.substring(0, 20)" class="initialism text-lowercase text-monospace">
+            <b-badge pill variant="info">{{key}}</b-badge>
+        </abbr>       
+      </span>
+    </span>
 </template>
 
 <script>
