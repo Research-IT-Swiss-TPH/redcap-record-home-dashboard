@@ -150,14 +150,14 @@ export default {
 
 <style>
     .editor-wrapper {
-            min-height: 500px;
-            width:100%;
-            border:1px solid #dbdbdb;
-            border-radius: 4px;
-            border-style: dashed;
-            position: relative;
-            transition: all ease-in-out 250ms;
-            background: #f8f9fa;
+        min-height: 500px;
+        width:100%;
+        border:1px solid #dbdbdb;
+        border-radius: 4px;
+        border-style: dashed;
+        position: relative;
+        transition: all ease-in-out 250ms;
+        background: #f8f9fa;
     }
 
     .editor-wrapper.empty {
@@ -184,8 +184,8 @@ export default {
         font-size: 18px;
         letter-spacing: 1px;
         transition: ease-in-out all 0.3s;
-
     }
+    
     .editor-wrapper.empty:hover #add-row-text {
         color: #343a40;
     }
