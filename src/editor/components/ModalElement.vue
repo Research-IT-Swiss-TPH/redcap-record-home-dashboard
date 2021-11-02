@@ -4,7 +4,7 @@
         @ok="handleOk()"
         centered scrollable
         title="Create/Edit Dashboard Element"
-        id="modal-test">
+        id="modal-element">
         
             <div class="text-center">
                 <b-skeleton-wrapper :loading="isLoading">
@@ -34,7 +34,7 @@
                             <b-skeleton height="300px" width="400px"></b-skeleton>
                         </div>
                     </template>
-                    <div style="min-height:300px;" class="p-4">
+                    <div style="min-height:300px;" class="p-3">
                         <div v-if="selected.type=='text'">
                             <b-form-group                               
                                 class="text-right font-weight-bold"
@@ -77,6 +77,26 @@
                             </b-form-group>
                         </div>
 
+                        <div v-if="selected.type=='list'">
+
+                            
+                            <draggable tag="ul" :list="content.list" class="list-group" handle=".list-element-handle">
+                                <li
+                                class="list-group-item"
+                                v-for="(element, idx) in content.list"
+                                :key="idx"
+                                >
+                                <i class="fa fa-align-justify list-element-handle mr-2"></i>
+                                <input placeholder="title" class="ml-1 list-element-input" type="text"  v-model="element.title" />
+                                <input placeholder="value" class="ml-1 list-element-input" type="text"  v-model="element.value" />
+                                <i class="fa fa-times close list-element-delete" @click="removeListElement(idx)"></i>
+                                </li>
+                            </draggable>
+                            <div class="mt-2 pb-4 float-right">
+                                <b-button size="sm" @click="addListElement"><i class="fa fa-plus"></i> Add</b-button>
+                            </div>
+                        </div>                        
+
 
                     </div>
                 </b-skeleton-wrapper>
@@ -103,7 +123,7 @@ class ModalContent {
       constructor() {
          this.text = { title: "", description: "" }
          this.link = { title: "", url: "" }
-         this.list = [{title: "", field: ""}]
+         this.list = [{title: "", value: ""}]
          this.table = { instrument: ""}
       }
       getObj() {
@@ -111,7 +131,12 @@ class ModalContent {
       }
 }
 
+import draggable from 'vuedraggable'
+
 export default {
+    components: {
+        draggable
+    },
     props: [
         'selection',
         'rows'
@@ -147,14 +172,24 @@ export default {
         }
     },
     methods: {
+        removeListElement(idx) {
+            if(this.content.list.length > 1) {
+                this.content.list.splice(idx, 1)
+            }            
+        },
+        addListElement() {
+            let lEl = {
+                title: "",
+                value: ""
+            }
+            this.content.list.push(lEl)
+        },
         prefill: function() {            
             this.selected.type = this.preType
-            this.content[this.preType] = this.preContent            
+            this.content[this.preType] = this.preContent
         },
         handleOk() {
 
-            console.log(this.selected.type)
-            console.log(this.content[this.selected.type])
             let el = {
                 "type": this.selected.type,
                 "content": this.content[this.selected.type]
@@ -179,8 +214,12 @@ export default {
     },
     mounted() {
 
-        //  Modal Events - https://bootstrap-vue.org/docs/components/modal#comp-ref-b-modal-events
-        //  Modal Event: shown
+        /*  Modal Events - 
+         *  https://bootstrap-vue.org/docs/components/modal#comp-ref-b-modal-events
+         *  
+         */
+
+        //   shown
         this.$root.$on('bv::modal::shown', (bvEvent, modalId) => {
 
             if(this.element) {
@@ -207,8 +246,30 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.modal-content {
+    height: 400px;
+    max-height: 400px;
+}
  .b-skeleton {
      display: inline-block;
+ }
+ .list-element-input {
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 3px;
+    line-height: 1.5;
+    color: #495057;    
+ }
+
+ .list-element-handle:hover {
+     cursor: move;
+ }
+
+ .list-element-delete:hover {
+     cursor: pointer;
  }
 </style>

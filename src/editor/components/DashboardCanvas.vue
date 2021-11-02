@@ -100,6 +100,19 @@ export default {
                                         title: "Click me",
                                         url: "https://google.com"
                                     }
+                                },
+                                {
+                                    type: "list",
+                                    content: [
+                                        {
+                                            title: "Full Name",
+                                            value: "[firstname] [lastname]"
+                                        },
+                                        {
+                                            title: "Address",
+                                            value: "[street] [number] [code] [place]"
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -142,7 +155,7 @@ export default {
         },
         handleModalElement(selection) {
             this.selection = selection
-            this.$bvModal.show('modal-test')
+            this.$bvModal.show('modal-element')
         }
     }
 }
