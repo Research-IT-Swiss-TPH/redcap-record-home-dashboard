@@ -18,8 +18,7 @@
                 handle=".row-handle"
                 :group="{name: 'rows'}"
                 @start="drag=true" 
-                @end="drag=false"
-            >
+                @end="drag=false">
                 <dashboard-row 
                     v-for="(row, index) in rows" 
                     :key="index" 
@@ -33,18 +32,18 @@
                         :r_id="index"
                         @add-element="elementAdd( $event )"
                         @delete-column="columnRemove( $event )"
-                        @open-modal-create-element="handleModalElement( $event )"
+                        @open-modal-element="handleModalElement( $event )"
                         v-slot="{elements, c_id}">
-
+                        
                         <dashboard-element
                             :r_id="index"
                             :c_id="c_id"
                             :elements="elements"
                             @delete-element="elementRemove( $event )"
-                            @open-modal-edit-element="handleModalElement( $event )"
-                        >
-                        </dashboard-element>
-                    </dashboard-column>
+                            @open-modal-element="handleModalElement( $event )"
+                        />                        
+
+                </dashboard-column>
                 </dashboard-row>
             </draggable>
 
@@ -56,11 +55,11 @@
 
         </div>
 
-        <modal-test
+        <modal-element
             :rows="rows"
             :selection="selection"
-        ></modal-test>
-
+            @add-element="elementAdd( $event )"
+            @edit-element="elementEdit( $event )" />
 
     </div>
 </template>
@@ -70,7 +69,7 @@ import DashboardRow from './DashboardRow.vue';
 import DashboardColumn from './DashboardColumn.vue'
 import DashboardElement from './DashboardElement.vue'
 //import ModalElement from './ModalElement.vue'
-import ModalTest from './ModalTest.vue'
+import ModalElement from './ModalElement.vue'
 import draggable from 'vuedraggable'
 
 export default {
@@ -78,7 +77,7 @@ export default {
         DashboardRow,
         DashboardColumn,
         DashboardElement,
-        ModalTest,
+        ModalElement,
         draggable
     },
     data() {
@@ -107,7 +106,6 @@ export default {
                     ]
                 }
             ],
-            msg: "Hello World from ",
             page: getPage(),
             selection: null,
             element: {}
@@ -115,9 +113,7 @@ export default {
     },
     methods: {
         rowAdd() {
-            let row = {
-                "columns": []
-            }
+            let row = { "columns": []}
             this.rows.push(row)
         },
         rowRemove(r_id) {
@@ -125,34 +121,24 @@ export default {
         },
         columnAdd(r_id) {
             let columns = this.rows[r_id].columns
-            //let col = new DashboardColClass()
-            let col = {
-                "elements": []
-            }
+            let col = { "elements": [] }
             columns.push(col)
         },
-        columnRemove(params) {
-            let r_id = params.r_id
-            let c_id = params.c_id
-            let columns = this.rows[r_id].columns
-            columns.splice(c_id, 1)
+        columnRemove(e) {
+            let columns = this.rows[e.r_id].columns
+            columns.splice(e.c_id, 1)
         },
-        elementAdd({r_id, c_id, e_id, el}) {
-            let column = this.rows[r_id].columns[c_id]
-            column.elements.push(el)
-
+        elementAdd(e) {
+            let column = this.rows[e.r_id].columns[e.c_id]
+            column.elements.push(e.el)
         },
-        elementRemove({r_id, c_id, e_id}) {
-            let elements = this.rows[r_id].columns[c_id].elements
-            elements.splice(e_id,1)
-
+        elementEdit(e) {
+            let element = this.rows[e.r_id].columns[e.c_id].elements[e.e_id]
+            element = e.el
         },
-        setSelection(r_id, c_id, e_id) {
-            this.selection = {
-                r_id: r_id,
-                c_id: c_id,
-                e_id: e_id
-            }
+        elementRemove(e) {
+            let elements = this.rows[e.r_id].columns[e.c_id].elements
+            elements.splice(e.e_id,1)
         },
         handleModalElement(selection) {
             this.selection = selection
