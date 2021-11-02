@@ -8,8 +8,6 @@
 
       <div class="text-center mt-3">
 
-          <div>{{ element.type}}</div>
-
         <b-form-group>
         <b-form-radio-group
             id="btn-radios-2"

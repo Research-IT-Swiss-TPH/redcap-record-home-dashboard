@@ -60,13 +60,11 @@ export default {
         handleEmit(event, c_id) {
             let params = {
                 "c_id": c_id,
-                "r_id": this.r_id
+                "r_id": this.r_id,
+                "e_id": null
             }
             
             this.$emit(event, params)
-        },
-        openElementDialog() {
-            this.$bvModal.show('modal-element')
         }
     }
 }

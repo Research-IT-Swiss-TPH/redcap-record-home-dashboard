@@ -33,7 +33,7 @@
                         :r_id="index"
                         @add-element="elementAdd( $event )"
                         @delete-column="columnRemove( $event )"
-                        @open-modal-create-element="openModalCreateElement( $event )"
+                        @open-modal-create-element="handleModalElement( $event )"
                         v-slot="{elements, c_id}">
 
                         <dashboard-element
@@ -41,7 +41,7 @@
                             :c_id="c_id"
                             :elements="elements"
                             @delete-element="elementRemove( $event )"
-                            @open-modal-edit-element="openModalEditElement( $event )"
+                            @open-modal-edit-element="handleModalElement( $event )"
                         >
                         </dashboard-element>
                     </dashboard-column>
@@ -56,13 +56,11 @@
 
         </div>
 
-        <modal-element
-            :element="element"
+        <modal-test
+            :rows="rows"
             :selection="selection"
-            @add-element="elementAdd($event)"
-        >
-            
-        </modal-element>
+        ></modal-test>
+
 
     </div>
 </template>
@@ -71,7 +69,8 @@
 import DashboardRow from './DashboardRow.vue';
 import DashboardColumn from './DashboardColumn.vue'
 import DashboardElement from './DashboardElement.vue'
-import ModalElement from './ModalElement.vue'
+//import ModalElement from './ModalElement.vue'
+import ModalTest from './ModalTest.vue'
 import draggable from 'vuedraggable'
 
 export default {
@@ -79,7 +78,7 @@ export default {
         DashboardRow,
         DashboardColumn,
         DashboardElement,
-        ModalElement,
+        ModalTest,
         draggable
     },
     data() {
@@ -110,7 +109,7 @@ export default {
             ],
             msg: "Hello World from ",
             page: getPage(),
-            selection: [],
+            selection: null,
             element: {}
         }
     },
@@ -155,24 +154,10 @@ export default {
                 e_id: e_id
             }
         },
-        openModalCreateElement({r_id, c_id}) {
-            this.setSelection(r_id, c_id, null)
-            this.$bvModal.show('modal-element')
-        },
-        openModalEditElement({r_id, c_id, e_id}) {
-
-            this.selection = {
-                r_id: r_id,
-                c_id: c_id,
-                e_id: e_id
-            }
-            this.element = this.rows[r_id].columns[c_id].elements[e_id]            
-            this.$bvModal.show('modal-element')
-
+        handleModalElement(selection) {
+            this.selection = selection
+            this.$bvModal.show('modal-test')
         }
-
-    },
-    computed: {
     }
 }
 </script>
