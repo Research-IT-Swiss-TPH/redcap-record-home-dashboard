@@ -17,6 +17,10 @@ import { BootstrapVue} from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue)
 
+//  Mixin
+import mixin from '../mixin'
+Vue.mixin(mixin)
+
 //  Create Vue Instance and mount our module page container
 new Vue({
   render: h => h(App),

@@ -61,5 +61,6 @@ export default {
         background: #ecf0f1;
         transition: ease-in-out all 0.3s;
     }
+    
 
 </style>

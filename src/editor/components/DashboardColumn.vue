@@ -1,11 +1,10 @@
 <template>
-    <div>
-    <div v-if="columns.length == 0" class="text-center lead text-muted">Row is empty</div>
-        
+    <div>        
         <draggable 
-            class="row" v-else
+            class="row"
             :list="columns"
             ghost-class="ghost-column"
+            :empty-insert-threshold="400"
             handle=".column-handle"
             :group="{name: 'columns', put: 'columns', pull: 'columns'}"
         >
@@ -27,20 +26,18 @@
 
                 </div>                
             </div>
-            <div class="card-body">
-
-                <div v-if="column.elements.length == 0" class="text-center lead">Column is empty</div>
-                <div v-else>
+            <div class="card-body">                
+                <div>
                     <slot 
                         :c_id="index"
                         :col_length="columns.length"
                         :elements="column.elements">
                     </slot>                    
                 </div>
-                
+
             </div>                            
         </div>
-    </div>
+        </div>
     </draggable>
     </div>
 
@@ -71,7 +68,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    .card-body {
+        min-height: 75px;
+    }
     .ghost-column .card {
         opacity: 0.5;
         background: #c8ebfb;

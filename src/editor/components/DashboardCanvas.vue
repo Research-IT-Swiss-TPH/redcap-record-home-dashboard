@@ -1,65 +1,73 @@
 <template>
-    <div
-        class="editor-wrapper mt-3" 
-        :class="rows.length == 0 && 'empty'">
+    <div>
+        <b-overlay variant="light"
+            blur="50px"
+            spinner-variant="dark"
+            spinner-small
+            opacity="0.95"
+            :show="isOverlayed" 
+            rounded="sm">
+            <template #overlay>
+                <loader />
+            </template>
+            
+            <div class="editor-wrapper mt-3" 
+                :class="rows.length == 0 && 'empty'">
 
-        <div v-if="rows.length == 0" id="content-empty" @click="rowAdd()">
-            <div class="text-center " id="add-row-text">
-                <p class="text-muted lead">Dashboard is empty</p>
-                <p class="h2 text-secondary"><i class="fas fa-plus-square"></i> Add row</p>
-            </div>
-        </div>
+                <div v-if="rows.length == 0" id="content-empty" @click="rowAdd()">
+                    <div v-if="!isOverlayed" class="text-center " id="add-row-text">
+                        <p class="text-muted lead">Dashboard is empty</p>
+                        <p class="h2 text-secondary"><i class="fas fa-plus-square"></i> Add row</p>
+                    </div>
+                </div>
+                <div v-if="rows.length != 0">
 
-        <div v-if="rows.length != 0">
+                    <draggable ghost-class="ghost"
+                        :list="rows"
+                        handle=".row-handle"
+                        :group="{name: 'rows'}"
+                        @end="endRowDrag"
+                        >
+                        <dashboard-row v-for="(row, index) in rows" 
+                            :key="index" 
+                            :r_id="index"                 
+                            @delete-row="rowRemove( $event )" 
+                            @add-column="columnAdd( $event )"
+                            >
+                            <dashboard-column :columns="row.columns"
+                                :r_id="index"
+                                @add-element="elementAdd( $event )"
+                                @delete-column="columnRemove( $event )"
+                                @open-modal-element="handleModalElement( $event )"
+                                v-slot="{elements, c_id}">
+                                    
+                                <dashboard-element
+                                    :r_id="index"
+                                    :c_id="c_id"
+                                    :elements="elements"
+                                    @delete-element="elementRemove( $event )"
+                                    @open-modal-element="handleModalElement( $event )"
+                                />                        
 
-            <draggable 
-                ghost-class="ghost"
-                :list="rows"
-                handle=".row-handle"
-                :group="{name: 'rows'}"
-                @start="drag=true" 
-                @end="drag=false">
-                <dashboard-row 
-                    v-for="(row, index) in rows" 
-                    :key="index" 
-                    :r_id="index"                 
-                    @delete-row="rowRemove( $event )" 
-                    @add-column="columnAdd( $event )"
-                    >
+                            </dashboard-column>
+                        </dashboard-row>
+                    </draggable>
 
-                <dashboard-column 
-                        :columns="row.columns"
-                        :r_id="index"
-                        @add-element="elementAdd( $event )"
-                        @delete-column="columnRemove( $event )"
-                        @open-modal-element="handleModalElement( $event )"
-                        v-slot="{elements, c_id}">
-                        
-                        <dashboard-element
-                            :r_id="index"
-                            :c_id="c_id"
-                            :elements="elements"
-                            @delete-element="elementRemove( $event )"
-                            @open-modal-element="handleModalElement( $event )"
-                        />                        
-
-                </dashboard-column>
-                </dashboard-row>
-            </draggable>
-
-            <div  @click="rowAdd()" class="add-row-area">
-                <div class="text-center">
-                    <span class="lead"><i class="fas fa-plus-square"></i> Add row</span>
+                    <div @click="rowAdd()" class="add-row-area">
+                        <div class="text-center">
+                            <span class="lead"><i class="fas fa-plus-square"></i> Add row</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-        </div>
+        </b-overlay>
 
         <modal-element
             :rows="rows"
             :selection="selection"
             @add-element="elementAdd( $event )"
-            @edit-element="elementEdit( $event )" />
+            @edit-element="elementEdit( $event )" 
+        />
 
     </div>
 </template>
@@ -68,9 +76,9 @@
 import DashboardRow from './DashboardRow.vue';
 import DashboardColumn from './DashboardColumn.vue'
 import DashboardElement from './DashboardElement.vue'
-//import ModalElement from './ModalElement.vue'
 import ModalElement from './ModalElement.vue'
 import draggable from 'vuedraggable'
+import loader from '../../loader.vue'
 
 export default {
     components: {
@@ -78,85 +86,61 @@ export default {
         DashboardColumn,
         DashboardElement,
         ModalElement,
-        draggable
+        draggable,
+        loader
     },
     data() {
         return {
-            rows: [
-                {
-                    columns: [
-                        {
-                            elements: [
-                                {
-                                    type: "text",
-                                    content: {
-                                        title: "This is a Headline",
-                                        description: "Foo bar."
-                                    }
-                                },
-                                {
-                                    type: "link",
-                                    content: {
-                                        title: "Click me",
-                                        url: "https://google.com"
-                                    }
-                                },
-                                {
-                                    type: "list",
-                                    content: [
-                                        {
-                                            title: "Full Name",
-                                            value: "[firstname] [lastname]"
-                                        },
-                                        {
-                                            title: "Address",
-                                            value: "[street] [number] [code] [place]"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
+            rows: [],
             page: getPage(),
-            selection: null,            
+            selection: null,
+            isOverlayed: true
         }
     },
     methods: {
         rowAdd() {
             let row = { "columns": []}
             this.rows.push(row)
+            this.saveDashboardData('Row added')
         },
         rowRemove(r_id) {
             this.rows.splice(r_id,1)
+            this.saveDashboardData('Row removed')
         },
         columnAdd(r_id) {
             let columns = this.rows[r_id].columns
             let col = { "elements": [] }
             columns.push(col)
+            this.saveDashboardData('Column added')
         },
         columnRemove(e) {
             let columns = this.rows[e.r_id].columns
             columns.splice(e.c_id, 1)
+            this.saveDashboardData('Column removed')
         },
         elementAdd(e) {
             let column = this.rows[e.r_id].columns[e.c_id]
             column.elements.push(e.el)
-            this.saveDashboardData()
+            this.isOverlayed = true
+            this.saveDashboardData('Element added')
         },
         elementEdit(e) {
             let element = this.rows[e.r_id].columns[e.c_id].elements[e.e_id]
             element.content = e.el.content
             element.type = e.el.type
+            this.saveDashboardData('Element edited')
         },
         elementRemove(e) {
             let elements = this.rows[e.r_id].columns[e.c_id].elements
             elements.splice(e.e_id,1)
+            this.saveDashboardData('Element removed')
         },
         handleModalElement(selection) {
             this.selection = selection
             this.$bvModal.show('modal-element')
+        },
+        endRowDrag() {
+            this.saveDashboardData('Row order changed')
         },
         async loadDashboardData() {
 
@@ -166,31 +150,41 @@ export default {
             }
           })
           .then( response => {
-            console.log(response)
+            let json = response.data;
+            setTimeout(()=> {
+                this.rows = JSON.parse(json)
+                this.toast("Successfully loaded", "Dashboard Data", 'success')
+            }, 500)              
           })
           .catch(e => {
-            this.error = e
+            this.toastError(e)
           })
           .finally(()=> {
+            setTimeout(()=> {
+                this.isOverlayed = false
+            }, 500)              
           })
 
         },
-        async saveDashboardData() {
-
-          this.axios({
-            params: {
-              action: 'save-dashboard-data',
-              new: JSON.stringify(this.rows)
-            }
-          })
-          .then( response => {
-            console.log(response)
-          })
-          .catch(e => {
-            this.error = e
-          })
-          .finally(()=> {
-          })
+        async saveDashboardData(msg) {
+            this.isOverlayed = true
+            this.axios({
+                params: {
+                action: 'save-dashboard-data',
+                new: JSON.stringify(this.rows)
+                }
+            })
+            .then( response => {
+                this.toast(msg, "Changes saved", 'success')
+            })
+            .catch(e => {
+                this.toast(e, "Error", 'danger')
+            })
+            .finally(()=> {
+                setTimeout(() => {
+                    this.isOverlayed = false
+                }, 500)
+            })
 
         },                
     },
@@ -202,7 +196,7 @@ export default {
 
 <style>
     .editor-wrapper {
-        min-height: 500px;
+        min-height: 800px;
         width:100%;
         border:1px solid #dbdbdb;
         border-radius: 4px;
