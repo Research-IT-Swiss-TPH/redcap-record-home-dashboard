@@ -147,7 +147,8 @@ export default {
         },
         elementEdit(e) {
             let element = this.rows[e.r_id].columns[e.c_id].elements[e.e_id]
-            element = e.el
+            element.content = e.el.content
+            element.type = e.el.type
         },
         elementRemove(e) {
             let elements = this.rows[e.r_id].columns[e.c_id].elements

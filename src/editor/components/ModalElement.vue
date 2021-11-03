@@ -77,9 +77,7 @@
                             </b-form-group>
                         </div>
 
-                        <div v-if="selected.type=='list'">
-
-                            
+                        <div v-if="selected.type=='list'">                            
                             <draggable tag="ul" :list="content.list" class="list-group" handle=".list-element-handle">
                                 <li
                                 class="list-group-item"
@@ -95,7 +93,16 @@
                             <div class="mt-2 pb-4 float-right">
                                 <b-button size="sm" @click="addListElement"><i class="fa fa-plus"></i> Add</b-button>
                             </div>
-                        </div>                        
+                        </div>
+                        <div v-if="selected.type=='table'">
+                            <b-form-group
+                                class="text-right font-weight-bold"
+                                label="Instrument (Repeating)"
+                                label-cols-lg="3"
+                                content-cols-lg="9">
+                                <b-form-input v-model="content.table.instrument"></b-form-input>
+                                </b-form-group>
+                        </div>
 
 
                     </div>

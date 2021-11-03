@@ -2331,7 +2331,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     elementEdit: function elementEdit(e) {
       var element = this.rows[e.r_id].columns[e.c_id].elements[e.e_id];
-      element = e.el;
+      element.content = e.el.content;
+      element.type = e.el.type;
     },
     elementRemove: function elementRemove(e) {
       var elements = this.rows[e.r_id].columns[e.c_id].elements;
@@ -2595,6 +2596,13 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -54649,6 +54657,42 @@ var render = function () {
                                       _vm._v(" Add"),
                                     ]
                                   ),
+                                ],
+                                1
+                              ),
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.selected.type == "table"
+                        ? _c(
+                            "div",
+                            [
+                              _c(
+                                "b-form-group",
+                                {
+                                  staticClass: "text-right font-weight-bold",
+                                  attrs: {
+                                    label: "Instrument (Repeating)",
+                                    "label-cols-lg": "3",
+                                    "content-cols-lg": "9",
+                                  },
+                                },
+                                [
+                                  _c("b-form-input", {
+                                    model: {
+                                      value: _vm.content.table.instrument,
+                                      callback: function ($$v) {
+                                        _vm.$set(
+                                          _vm.content.table,
+                                          "instrument",
+                                          $$v
+                                        )
+                                      },
+                                      expression: "content.table.instrument",
+                                    },
+                                  }),
                                 ],
                                 1
                               ),
