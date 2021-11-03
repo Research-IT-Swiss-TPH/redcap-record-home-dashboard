@@ -2722,6 +2722,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
 var ModalContent = /*#__PURE__*/function () {
   function ModalContent() {
     _classCallCheck(this, ModalContent);
@@ -54420,6 +54421,12 @@ var render = function () {
                       staticStyle: { "min-height": "300px" },
                     },
                     [
+                      _c(
+                        "b-alert",
+                        { attrs: { variant: "warning", show: "" } },
+                        [_vm._v("Default Alert")]
+                      ),
+                      _vm._v(" "),
                       _vm.selected.type == "text"
                         ? _c(
                             "div",
@@ -54700,7 +54707,8 @@ var render = function () {
                             1
                           )
                         : _vm._e(),
-                    ]
+                    ],
+                    1
                   ),
                 ]
               ),

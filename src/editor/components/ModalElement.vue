@@ -5,7 +5,6 @@
         centered scrollable
         title="Create/Edit Dashboard Element"
         id="modal-element">
-        
             <div class="text-center">
                 <b-skeleton-wrapper :loading="isLoading">
                     <template #loading>
@@ -35,6 +34,7 @@
                         </div>
                     </template>
                     <div style="min-height:300px;" class="p-3">
+                        <b-alert variant="warning" show>Default Alert</b-alert>
                         <div v-if="selected.type=='text'">
                             <b-form-group                               
                                 class="text-right font-weight-bold"
@@ -94,6 +94,7 @@
                                 <b-button size="sm" @click="addListElement"><i class="fa fa-plus"></i> Add</b-button>
                             </div>
                         </div>
+
                         <div v-if="selected.type=='table'">
                             <b-form-group
                                 class="text-right font-weight-bold"
