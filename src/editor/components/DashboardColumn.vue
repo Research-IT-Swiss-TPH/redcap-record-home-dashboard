@@ -4,9 +4,10 @@
             class="row"
             :list="columns"
             ghost-class="ghost-column"
-            :empty-insert-threshold="400"
+            :empty-insert-threshold="100"
             handle=".column-handle"
             :group="{name: 'columns', put: 'columns', pull: 'columns'}"
+            @end="$emit('end-col-drag')"
         >
         <div class="editor-column col-md" v-for="(column, index) in columns" :key="index">
             <div class="card">

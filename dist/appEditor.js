@@ -2285,6 +2285,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -2354,8 +2356,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.selection = selection;
       this.$bvModal.show('modal-element');
     },
-    endRowDrag: function endRowDrag() {
-      this.saveDashboardData('Row order changed');
+    handleReorderElement: function handleReorderElement(el) {
+      this.saveDashboardData(el + ' order changed');
     },
     loadDashboardData: function loadDashboardData() {
       var _this = this;
@@ -2491,6 +2493,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2525,6 +2528,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _RenderElement_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RenderElement.vue */ "./src/Editor/components/RenderElement.vue");
+//
 //
 //
 //
@@ -3084,7 +3088,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$bvToast.toast(msg, {
         title: title,
         variant: variant,
-        autoHideDelay: 50
+        autoHideDelay: 250,
+        noCloseButton: true
       });
     }
   }
@@ -54905,7 +54910,11 @@ var render = function () {
                             handle: ".row-handle",
                             group: { name: "rows" },
                           },
-                          on: { end: _vm.endRowDrag },
+                          on: {
+                            end: function ($event) {
+                              return _vm.handleReorderElement("Row")
+                            },
+                          },
                         },
                         _vm._l(_vm.rows, function (row, index) {
                           return _c(
@@ -54935,6 +54944,9 @@ var render = function () {
                                   "open-modal-element": function ($event) {
                                     return _vm.handleModalElement($event)
                                   },
+                                  "end-col-drag": function ($event) {
+                                    return _vm.handleReorderElement("Column")
+                                  },
                                 },
                                 scopedSlots: _vm._u(
                                   [
@@ -54961,6 +54973,13 @@ var render = function () {
                                               ) {
                                                 return _vm.handleModalElement(
                                                   $event
+                                                )
+                                              },
+                                              "end-element-drag": function (
+                                                $event
+                                              ) {
+                                                return _vm.handleReorderElement(
+                                                  "Element"
                                                 )
                                               },
                                             },
@@ -55056,9 +55075,14 @@ var render = function () {
           attrs: {
             list: _vm.columns,
             "ghost-class": "ghost-column",
-            "empty-insert-threshold": 400,
+            "empty-insert-threshold": 100,
             handle: ".column-handle",
             group: { name: "columns", put: "columns", pull: "columns" },
+          },
+          on: {
+            end: function ($event) {
+              return _vm.$emit("end-col-drag")
+            },
           },
         },
         _vm._l(_vm.columns, function (column, index) {
@@ -55164,6 +55188,11 @@ var render = function () {
             list: _vm.elements,
             "ghost-class": "ghost-element",
             group: { name: "elements", put: "elements", pull: "elements" },
+          },
+          on: {
+            end: function ($event) {
+              return _vm.$emit("end-element-drag")
+            },
           },
         },
         _vm._l(_vm.elements, function (element, index) {

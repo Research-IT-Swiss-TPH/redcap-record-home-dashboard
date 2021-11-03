@@ -5,7 +5,8 @@ export default {
         this.$bvToast.toast(msg, {
             title: title,
             variant: variant,
-            autoHideDelay: 50
+            autoHideDelay: 250,
+            noCloseButton: true
         })
      }}
      

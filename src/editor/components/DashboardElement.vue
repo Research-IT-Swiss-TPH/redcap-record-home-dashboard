@@ -4,6 +4,7 @@
             :list="elements"
             ghost-class="ghost-element"            
             :group="{name: 'elements', put: 'elements', pull: 'elements'}"
+            @end="$emit('end-element-drag')"
        >      
       <div class="card mb-2 mt-2" v-for="(element, index) in elements" :key="index" >
 

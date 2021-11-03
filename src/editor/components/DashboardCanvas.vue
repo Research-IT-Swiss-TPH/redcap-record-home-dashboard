@@ -26,7 +26,7 @@
                         :list="rows"
                         handle=".row-handle"
                         :group="{name: 'rows'}"
-                        @end="endRowDrag"
+                        @end="handleReorderElement('Row')"
                         >
                         <dashboard-row v-for="(row, index) in rows" 
                             :key="index" 
@@ -39,6 +39,7 @@
                                 @add-element="elementAdd( $event )"
                                 @delete-column="columnRemove( $event )"
                                 @open-modal-element="handleModalElement( $event )"
+                                @end-col-drag="handleReorderElement('Column')"
                                 v-slot="{elements, c_id}">
                                     
                                 <dashboard-element
@@ -47,6 +48,7 @@
                                     :elements="elements"
                                     @delete-element="elementRemove( $event )"
                                     @open-modal-element="handleModalElement( $event )"
+                                    @end-element-drag="handleReorderElement('Element')"
                                 />                        
 
                             </dashboard-column>
@@ -139,8 +141,8 @@ export default {
             this.selection = selection
             this.$bvModal.show('modal-element')
         },
-        endRowDrag() {
-            this.saveDashboardData('Row order changed')
+        handleReorderElement(el) {
+            this.saveDashboardData( el + ' order changed' )
         },
         async loadDashboardData() {
 
