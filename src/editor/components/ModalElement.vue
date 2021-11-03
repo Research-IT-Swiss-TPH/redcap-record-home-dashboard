@@ -34,7 +34,7 @@
                         </div>
                     </template>
                     <div style="min-height:300px;" class="p-3">
-                        <b-alert variant="warning" show>Default Alert</b-alert>
+                        <b-alert v-if="hasTypeChange" variant="warning" show><b>Warning:</b> If you save as a new element type, all data of former element type will be deleted.</b-alert>
                         <div v-if="selected.type=='text'">
                             <b-form-group                               
                                 class="text-right font-weight-bold"
@@ -177,6 +177,12 @@ export default {
         },
         preContent: function() {
             return this.element.content
+        },
+        hasTypeChange: function() {
+            if( this.element && this.preType != this.selected.type) {
+                return true
+            }
+            return false
         }
     },
     methods: {

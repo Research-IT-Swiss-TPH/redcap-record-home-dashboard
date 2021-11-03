@@ -2795,6 +2795,13 @@ var ModalContent = /*#__PURE__*/function () {
     },
     preContent: function preContent() {
       return this.element.content;
+    },
+    hasTypeChange: function hasTypeChange() {
+      if (this.element && this.preType != this.selected.type) {
+        return true;
+      }
+
+      return false;
     }
   },
   methods: {
@@ -54421,11 +54428,18 @@ var render = function () {
                       staticStyle: { "min-height": "300px" },
                     },
                     [
-                      _c(
-                        "b-alert",
-                        { attrs: { variant: "warning", show: "" } },
-                        [_vm._v("Default Alert")]
-                      ),
+                      _vm.hasTypeChange
+                        ? _c(
+                            "b-alert",
+                            { attrs: { variant: "warning", show: "" } },
+                            [
+                              _c("b", [_vm._v("Warning:")]),
+                              _vm._v(
+                                " If you save as a new element type, all data of former element type will be deleted."
+                              ),
+                            ]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _vm.selected.type == "text"
                         ? _c(
