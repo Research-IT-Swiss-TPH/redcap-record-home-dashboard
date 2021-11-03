@@ -42,5 +42,23 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     public function getBaseUrl(){
         return $this->getUrl("requestHandler.php");
     }
+
+
+    private function sendResponse($response) {
+        header('Content-Type: application/json; charset=UTF-8');        
+        echo json_encode($response);
+        exit();
+    }
+
+
+    public function getDashboardData() {
+        $data = $this->getProjectSetting("dashboard-data");
+        $this->sendResponse($data);
+    }
+    
+    public function saveDashboardData($new) {
+        $this->setProjectSetting("dashboard-data", $new);
+        $this->getDashboardData();
+    }
     
 }

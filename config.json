@@ -39,7 +39,14 @@
 
     "system-settings": [],
 
-    "project-settings": [],
+    "project-settings": [
+        {
+            "key": "dashboard-data",
+            "type": "json",
+            "name": "Dashboard Data (JSON)",
+            "hidden": false
+        }
+    ],
 
     "crons": [],
 

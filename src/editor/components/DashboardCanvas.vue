@@ -120,8 +120,7 @@ export default {
                 }
             ],
             page: getPage(),
-            selection: null,
-            element: {}
+            selection: null,            
         }
     },
     methods: {
@@ -144,6 +143,7 @@ export default {
         elementAdd(e) {
             let column = this.rows[e.r_id].columns[e.c_id]
             column.elements.push(e.el)
+            this.saveDashboardData()
         },
         elementEdit(e) {
             let element = this.rows[e.r_id].columns[e.c_id].elements[e.e_id]
@@ -157,7 +157,45 @@ export default {
         handleModalElement(selection) {
             this.selection = selection
             this.$bvModal.show('modal-element')
-        }
+        },
+        async loadDashboardData() {
+
+          this.axios({
+            params: {
+              action: 'get-dashboard-data'
+            }
+          })
+          .then( response => {
+            console.log(response)
+          })
+          .catch(e => {
+            this.error = e
+          })
+          .finally(()=> {
+          })
+
+        },
+        async saveDashboardData() {
+
+          this.axios({
+            params: {
+              action: 'save-dashboard-data',
+              new: JSON.stringify(this.rows)
+            }
+          })
+          .then( response => {
+            console.log(response)
+          })
+          .catch(e => {
+            this.error = e
+          })
+          .finally(()=> {
+          })
+
+        },                
+    },
+    mounted() {
+        this.loadDashboardData()
     }
 }
 </script>
