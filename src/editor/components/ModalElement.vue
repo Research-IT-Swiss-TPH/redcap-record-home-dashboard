@@ -34,7 +34,7 @@
                         </div>
                     </template>
                     <div style="min-height:300px;" class="p-3">
-                        <b-alert v-if="hasTypeChange" variant="warning" show><b>Warning:</b> If you save as a new element type, all data of former element type will be deleted.</b-alert>
+                        <b-alert v-if="hasTypeChange" variant="warning" show><b>Warning:</b> Saving as new type removes all data from type <b class="text-capitalize">{{ preType}}</b>.</b-alert>
                         <div v-if="selected.type=='text'">
                             <b-form-group                               
                                 class="text-right font-weight-bold"

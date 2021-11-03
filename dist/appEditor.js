@@ -54435,8 +54435,12 @@ var render = function () {
                             [
                               _c("b", [_vm._v("Warning:")]),
                               _vm._v(
-                                " If you save as a new element type, all data of former element type will be deleted."
+                                " Saving as new type removes all data from type "
                               ),
+                              _c("b", { staticClass: "text-capitalize" }, [
+                                _vm._v(_vm._s(_vm.preType)),
+                              ]),
+                              _vm._v("."),
                             ]
                           )
                         : _vm._e(),
