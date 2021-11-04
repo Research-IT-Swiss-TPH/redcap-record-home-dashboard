@@ -9,7 +9,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios.create({
-  baseURL: getBaseUrlFromBackend()
+  baseURL: stph_rhd_getBaseUrlFromBackend()
 }))
 
 //  Bootstrap Vue
@@ -26,5 +26,5 @@ new Vue({
   render: h => h(App),
   store
 })
-.$mount('#appEditor');
+.$mount('#STPH_DASHBOARD_EDITOR');
 

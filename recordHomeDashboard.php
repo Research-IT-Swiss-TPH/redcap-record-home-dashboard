@@ -26,7 +26,14 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     *
     */
     public function redcap_every_page_top($project_id = null) {
-        $this->renderModule();
+        //  Check if is Record Home Page for record with id
+        if( $this->isPage('DataEntry/record_home.php') && isset($_GET['id'])) {
+            
+            $this->renderDashboard();
+        
+            
+        }
+
     }
 
    /**
@@ -34,22 +41,48 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     *
     * @since 1.0.0
     */
-    private function renderModule() {
-        
-        //  check settings
-    }   
+    private function renderDashboard() {
+        ?>
+        <!-- Insert Dashboard Render Wrapper so Vue.js can mount it -->
+        <div id="STPH_DASHBOARD_WRAPPER" style="display: none;">
+            <div id="STPH_DASHBOARD_RENDER"></div>            
+        </div>
+        <style>
+            
+            #record_home_dashboard_title {
+            margin: 20px 0 10px;
+            font-size: 15px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px !important;
+            }
+        </style>
+        <script>
+            $(function() {
+                $(document).ready(function(){
+                    $('#event_grid_table').after('<div id="record_home_dashboard_title">Record Home Dashboard</div>');
+                    //  We have to move our wrapper element to the correct position and then show it
+                    let wrapper = $('#STPH_DASHBOARD_WRAPPER');
+                    $('#record_home_dashboard_title').after(wrapper)
+                    wrapper.show()
+                })
+            });
+        </script>        
+        <script>
+            const stph_rhd_getBaseUrlFromBackend = function() {
+                    return '<?= $this->getBaseUrl() ?>'
+            }            
+        </script>        
+        <script src="<?= $this->getUrl("./dist/appRender.js") ?>"></script>
 
+        <?php
+    }   
+    
+    /** 
+     * Public Methods accessible via Ajax
+     */
     public function getBaseUrl(){
         return $this->getUrl("requestHandler.php");
     }
-
-
-    private function sendResponse($response) {
-        header('Content-Type: application/json; charset=UTF-8');        
-        echo json_encode($response);
-        exit();
-    }
-
 
     public function getDashboardData() {
         $data = $this->getProjectSetting("dashboard-data");
@@ -59,6 +92,16 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     public function saveDashboardData($new) {
         $this->setProjectSetting("dashboard-data", $new);
         $this->getDashboardData();
+    }
+
+    /**
+     * Helpers
+     */
+
+    private function sendResponse($response) {
+        header('Content-Type: application/json; charset=UTF-8');        
+        echo json_encode($response);
+        exit();
     }
     
 }

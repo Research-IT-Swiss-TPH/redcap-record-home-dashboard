@@ -9,13 +9,10 @@ print '<div style="width:950px;max-width:960px;" class="d-none d-md-block mt-3 m
 ?>
 
 
-<div id="appEditor"></div>
+<div id="STPH_DASHBOARD_EDITOR"></div>
 <script>
-    const getPage = function () {
-        return '<?= PAGE ?>';
-    }
-    
-    const getBaseUrlFromBackend = function() {
+   
+    const stph_rhd_getBaseUrlFromBackend = function() {
         return '<?= $module->getBaseUrl() ?>'
     }
 

@@ -94,7 +94,6 @@ export default {
     data() {
         return {
             rows: [],
-            page: getPage(),
             selection: null,
             isOverlayed: true
         }
