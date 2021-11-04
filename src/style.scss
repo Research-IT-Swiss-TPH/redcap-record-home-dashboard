@@ -1,10 +1,34 @@
-.container-redcap {
-  max-width: 950px;
+.editor-container {
+  /* max-width: 960px; */
+  min-width: 960px;
   margin-right: 20px;
 }
 
+.render-container {
+  min-width: 960px;
+  margin-right: 20px;
+}
+
+#record_home_dashboard_title {
+  margin: 20px 0 10px;
+  font-size: 15px;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 5px !important;
+}
+
+
+/* Bootstrap Fixing  since REDCap breaks some of the base classes .. */
 .btn {
   outline: none!important;
+}
+
+.btn-secondary,
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-info,
+.btn-dark {
+  color: #fff!important;
 }
 
 .alert.alert-info{
@@ -39,9 +63,3 @@
   border-color: #c6c8ca!important;
 }
 
-#record_home_dashboard_title {
-  margin: 20px 0 10px;
-  font-size: 15px;
-  border-bottom: 1px dashed #ccc;
-  padding-bottom: 5px !important;
-  }

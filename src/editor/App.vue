@@ -1,5 +1,5 @@
 <template>
-    <section class="container-redcap">
+    <section class="editor-container">
         <dashboard-canvas></dashboard-canvas>
     </section>
 </template>

@@ -1,6 +1,7 @@
 export default {
 
     methods: {
+        
      toast(msg, title, variant) {
         this.$bvToast.toast(msg, {
             title: title,

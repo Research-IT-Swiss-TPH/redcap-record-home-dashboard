@@ -1,15 +1,15 @@
 <template>
-    <section class="container-redcap">
-        <dashboard />
+    <section class="render-container">
+        <dashboard-wrapper />
     </section>
 </template>
 
 <script>
-import Dashboard from './components/Dashboard.vue'
+import DashboardWrapper from './components/DashboardWrapper.vue'
 
 export default {
     components: {
-        Dashboard
+        DashboardWrapper
     }
 }
 </script>

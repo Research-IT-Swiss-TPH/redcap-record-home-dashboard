@@ -165,7 +165,6 @@ export default {
                 this.isOverlayed = false
             }, 500)              
           })
-
         },
         async saveDashboardData(msg) {
             this.isOverlayed = true
@@ -187,7 +186,7 @@ export default {
                 }, 500)
             })
 
-        },                
+        }               
     },
     mounted() {
         this.loadDashboardData()

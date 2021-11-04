@@ -54799,7 +54799,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "section",
-    { staticClass: "container-redcap" },
+    { staticClass: "editor-container" },
     [_c("dashboard-canvas")],
     1
   )
