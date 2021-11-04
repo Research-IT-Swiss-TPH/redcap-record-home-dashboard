@@ -1,11 +1,11 @@
 .editor-container {
   /* max-width: 960px; */
-  min-width: 960px;
+  min-width: 920px;
   margin-right: 20px;
 }
 
 .render-container {
-  min-width: 960px;
+  min-width: 920px;
   margin-right: 20px;
 }
 
@@ -21,6 +21,11 @@
   outline: none !important;
 }
 
+@media (max-width: 1399.98px) {
+  .render-container .btn {
+    font-size: 10px !important;
+  }
+}
 .btn-secondary,
 .btn-primary,
 .btn-success,

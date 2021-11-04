@@ -52,6 +52,16 @@ export default {
         margin: 25px;
     }
 
+    @media (max-width: 1399.98px) { 
+        .editor-row{
+            margin: 7px;
+        }
+
+        .card-body {
+            padding: 7px;
+        }
+    }
+
     .card-body {
         min-height: 75px;
     }

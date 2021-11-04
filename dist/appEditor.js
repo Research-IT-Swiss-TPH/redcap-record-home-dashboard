@@ -45468,7 +45468,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.card-body[data-v-372d5c6c] {\n    min-height: 75px;\n}\n.ghost-column .card[data-v-372d5c6c] {\n    opacity: 0.5;\n    background: #c8ebfb;\n}\n.column-handle[data-v-372d5c6c]:hover {\n    cursor:move;\n    background: #ecf0f1;\n    transition: ease-in-out all 0.3s;\n}    \n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.card-body[data-v-372d5c6c] {\n    min-height: 75px;\n}\n.ghost-column .card[data-v-372d5c6c] {\n    opacity: 0.5;\n    background: #c8ebfb;\n}\n.column-handle[data-v-372d5c6c]:hover {\n    cursor:move;\n    background: #ecf0f1;\n    transition: ease-in-out all 0.3s;\n}\n@media (max-width: 1399.98px) {\n.card-body[data-v-372d5c6c], .card-header[data-v-372d5c6c] {\n        padding: 7px!important;\n}\n.card-header .btn[data-v-372d5c6c] {\n        font-size: 8px!important;\n        padding: 0 2px 0 2px;\n}\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -45492,7 +45492,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-054d6838] {\n    margin-bottom: 15px;\n    margin: 0 auto;\n}\n.card[data-v-054d6838]:hover {\n    cursor:move;\n    background: #ecf0f1;\n    transition: ease-in-out all 0.3s;\n}\n.card-body[data-v-054d6838] {\n    padding: 0.75rem!important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.card[data-v-054d6838] {\n    margin-bottom: 15px;\n    margin: 0 auto;\n}\n.card[data-v-054d6838]:hover {\n    cursor:move;\n    background: #ecf0f1;\n    transition: ease-in-out all 0.3s;\n}\n.card-body[data-v-054d6838] {\n    padding: 0.75rem!important;\n}\n@media (max-width: 1399.98px) {\n.card-body[data-v-054d6838], .card-header[data-v-054d6838] {\n        padding: 7px!important;\n}\n.card-body .btn[data-v-054d6838] {\n        font-size: 8px!important;\n        padding: 0 2px 0 2px;\n}\n.card-body .badge[data-v-054d6838] {\n        font-size: 8px;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -45516,7 +45516,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-row[data-v-48e35616] {\n    margin: 25px;\n}\n.card-body[data-v-48e35616] {\n    min-height: 75px;\n}\n.row-handle[data-v-48e35616]:hover {\n    cursor:move;\n    background: #ecf0f1;\n    transition: ease-in-out all 0.3s;\n}\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-row[data-v-48e35616] {\n    margin: 25px;\n}\n@media (max-width: 1399.98px) {\n.editor-row[data-v-48e35616]{\n        margin: 7px;\n}\n.card-body[data-v-48e35616] {\n        padding: 7px;\n}\n}\n.card-body[data-v-48e35616] {\n    min-height: 75px;\n}\n.row-handle[data-v-48e35616]:hover {\n    cursor:move;\n    background: #ecf0f1;\n    transition: ease-in-out all 0.3s;\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

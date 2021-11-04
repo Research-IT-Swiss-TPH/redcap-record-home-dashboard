@@ -81,5 +81,16 @@ export default {
         cursor:move;
         background: #ecf0f1;
         transition: ease-in-out all 0.3s;
-    }    
+    }
+    
+    @media (max-width: 1399.98px) { 
+        .card-body, .card-header {
+            padding: 7px!important;
+        }
+        .card-header .btn {
+            font-size: 8px!important;
+            padding: 0 2px 0 2px;
+        }        
+    }
+
 </style>

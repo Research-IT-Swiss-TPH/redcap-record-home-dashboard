@@ -92,6 +92,22 @@ export default {
     .card-body {
         padding: 0.75rem!important;
     }
+
+    @media (max-width: 1399.98px) { 
+        .card-body, .card-header {
+            padding: 7px!important;
+        }
+
+        .card-body .btn {
+            font-size: 8px!important;
+            padding: 0 2px 0 2px;
+        }
+
+        .card-body .badge {
+            font-size: 8px;
+        }
+
+    }
 </style>>
 
 </style>
