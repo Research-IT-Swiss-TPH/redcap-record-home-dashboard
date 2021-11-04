@@ -28,10 +28,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     public function redcap_every_page_top($project_id = null) {
         //  Check if is Record Home Page for record with id
         if( $this->isPage('DataEntry/record_home.php') && isset($_GET['id'])) {
-            
-            $this->renderDashboard();
-        
-            
+            $this->renderDashboard();            
         }
 
     }
@@ -47,15 +44,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         <div id="STPH_DASHBOARD_WRAPPER" style="display: none;">
             <div id="STPH_DASHBOARD_RENDER"></div>            
         </div>
-        <style>
-            
-            #record_home_dashboard_title {
-            margin: 20px 0 10px;
-            font-size: 15px;
-            border-bottom: 1px dashed #ccc;
-            padding-bottom: 5px !important;
-            }
-        </style>
+        <link rel="stylesheet" href="<?= $this->getUrl('dist/style.css')?>">
         <script>
             $(function() {
                 $(document).ready(function(){
