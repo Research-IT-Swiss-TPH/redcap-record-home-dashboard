@@ -2239,21 +2239,35 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       items: [{
-        age: 40,
-        first_name: 'Dickerson',
-        last_name: 'Macdonald'
+        contact_date: '07-02-2020',
+        communication_channel: 'see comment',
+        reached: 'see comment',
+        substudy: 'CHRONOS',
+        fw_info: 'Edit Address Check Information',
+        contact_later: '',
+        comment: 'Fake participant created',
+        health_info: 'rofl',
+        edit_user: 'vermth'
       }, {
-        age: 21,
-        first_name: 'Larsen',
-        last_name: 'Shaw'
+        contact_date: '12-06-2020',
+        communication_channel: 'paper',
+        reached: 'paarticipant reached',
+        substudy: '',
+        fw_info: 'Paper Questionaires or other documents received back',
+        contact_later: '',
+        comment: 'QAB',
+        health_info: 'QAB',
+        edit_user: 'vermth'
       }, {
-        age: 89,
-        first_name: 'Geneva',
-        last_name: 'Wilson'
-      }, {
-        age: 38,
-        first_name: 'Jami',
-        last_name: 'Carney'
+        contact_date: '01-10-2021',
+        communication_channel: 'paper',
+        reached: 'foo',
+        fw_info: 'foo',
+        substudy: '',
+        contact_later: '',
+        comment: 'lmao',
+        health_info: 'rofl',
+        edit_user: 'dnmda'
       }]
     };
   }
