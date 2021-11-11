@@ -44,7 +44,8 @@ export default {
     data() {
         return {
             isOverlayed: true,
-            rows: []
+            rows: [],
+            elementData: null
         }
     },
     methods: {
@@ -57,21 +58,38 @@ export default {
           })
           .then( response => {
             let json = response.data;
-            setTimeout(()=> {
+              setTimeout(()=> {
                 this.rows = JSON.parse(json)
-                
+                this.isOverlayed = false
+              }, 500);
+          })
+          .catch(e => {
+            this.toastError(e)
+          })
+        },
+
+        async loadElementData() {
+
+          this.axios({
+            params: {
+              action: 'get-element-data',
+              params: stph_rhd_getBaseParametersFromBackend()
+            }
+          })
+          .then( response => {
+            let json = response.data;
+            setTimeout(()=> {
+                this.elementData = json
+                console.log(this.elementData)
+                this.isOverlayed = false
             }, 500)              
           })
           .catch(e => {
             this.toastError(e)
           })
-          .finally(()=> {
-            setTimeout(()=> {
-                this.isOverlayed = false
-            }, 500)              
-          })
         },
     },
+
 
     mounted() {
         this.loadDashboardData()

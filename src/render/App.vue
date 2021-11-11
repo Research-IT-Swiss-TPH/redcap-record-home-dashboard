@@ -10,7 +10,7 @@ import DashboardWrapper from './components/DashboardWrapper.vue'
 export default {
     components: {
         DashboardWrapper
-    }
+    }   
 }
 </script>
 

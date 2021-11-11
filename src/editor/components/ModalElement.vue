@@ -35,6 +35,7 @@
                     </template>
                     <div style="min-height:300px;" class="p-3">
                         <b-alert v-if="hasTypeChange" variant="warning" show><b>Warning:</b> Saving as new type removes all data from type <b class="text-capitalize">{{ preType}}</b>.</b-alert>
+                        
                         <div v-if="selected.type=='text'">
                             <b-form-group                               
                                 class="text-right font-weight-bold"
@@ -71,10 +72,48 @@
                                 label="URL"
                                 label-cols-lg="3"
                                 content-cols-lg="9">
-                                <b-form-input       
+                                <b-form-input
+                                class="text-monospace"
                                 v-model="content.link.url">
                                 </b-form-input>
                             </b-form-group>
+
+                            <b-form-group
+                                class="text-right font-weight-bold"                            
+                                label="Icon"
+                                label-cols-lg="3"
+                                content-cols-lg="9">
+                                <b-input-group>
+                                    
+                                    <b-form-input
+                                    class="text-monospace"
+                                    v-model="content.link.icon">
+                                    </b-form-input>
+
+                                    <b-input-group-append>
+                                        <b-button 
+                                            variant="info"                                            
+                                            style="display:flex;align-items: center;" 
+                                            target="_blank" 
+                                            href="https://fontawesome.com/v5/cheatsheet">
+                                            <i class="fa fa-search"></i>
+                                        </b-button>
+                                    </b-input-group-append>
+
+                                </b-input-group>
+                            </b-form-group>
+
+                            <b-form-group
+                                class="text-right font-weight-bold"                            
+                                label="Target"
+                                label-cols-lg="3"
+                                content-cols-lg="9">
+                                <b-form-select v-model="content.link.target">
+                                    <b-form-select-option value="_self">Same window</b-form-select-option>
+                                    <b-form-select-option value="_blank">New window</b-form-select-option>
+                                </b-form-select>
+                            </b-form-group>                            
+
                         </div>
 
                         <div v-if="selected.type=='list'">                            
@@ -130,7 +169,7 @@
 class ModalContent {
       constructor() {
          this.text = { title: "", description: "" }
-         this.link = { title: "", url: "" }
+         this.link = { title: "", url: "", icon: "", target: "_self" }
          this.list = [{title: "", value: ""}]
          this.table = { instrument: ""}
       }
@@ -286,4 +325,5 @@ export default {
  .list-element-delete:hover {
      cursor: pointer;
  }
+
 </style>

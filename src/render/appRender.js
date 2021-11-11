@@ -6,7 +6,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios.create({
-    baseURL: stph_rhd_getBaseUrlFromBackend()
+    baseURL: stph_rhd_getBaseUrlFromBackend(),
   }))
 
 

@@ -9,7 +9,7 @@ import DashboardCanvas from './components/DashboardCanvas.vue'
 export default {
     components: {
         DashboardCanvas
-    }
+    } 
 }
 </script>
 

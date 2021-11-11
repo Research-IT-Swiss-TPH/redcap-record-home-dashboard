@@ -57,20 +57,14 @@ export default {
             switch (type) {
                 case "text":
                     return "fa fa-align-left"
-                    break;
                 case "link":
                     return "fa fa-link"
-                    break;
                 case "list":
                     return "fa fa-th-list"
-                    break;
                 case "table":
-                    return "fa fa-table"
-                    break;                                                            
-            
+                    return "fa fa-table"           
                 default:
                     return "fa fa-align-left"
-                    break;
             }
         }
     }

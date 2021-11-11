@@ -2580,23 +2580,18 @@ __webpack_require__.r(__webpack_exports__);
       switch (type) {
         case "text":
           return "fa fa-align-left";
-          break;
 
         case "link":
           return "fa fa-link";
-          break;
 
         case "list":
           return "fa fa-th-list";
-          break;
 
         case "table":
           return "fa fa-table";
-          break;
 
         default:
           return "fa fa-align-left";
-          break;
       }
     }
   }
@@ -2809,6 +2804,45 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var ModalContent = /*#__PURE__*/function () {
   function ModalContent() {
     _classCallCheck(this, ModalContent);
@@ -2819,7 +2853,9 @@ var ModalContent = /*#__PURE__*/function () {
     };
     this.link = {
       title: "",
-      url: ""
+      url: "",
+      icon: "",
+      target: "_self"
     };
     this.list = [{
       title: "",
@@ -45540,7 +45576,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content[data-v-6ea9ab02] {\r\n    height: 400px;\r\n    max-height: 400px;\n}\n.b-skeleton[data-v-6ea9ab02] {\r\n     display: inline-block;\n}\n.list-element-input[data-v-6ea9ab02] {\r\n    background-color: #fff;\r\n    background-clip: padding-box;\r\n    border: 1px solid #ced4da;\r\n    \r\n    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;\r\n    padding: 3px;\r\n    line-height: 1.5;\r\n    color: #495057;\n}\n.list-element-handle[data-v-6ea9ab02]:hover {\r\n     cursor: move;\n}\n.list-element-delete[data-v-6ea9ab02]:hover {\r\n     cursor: pointer;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content[data-v-6ea9ab02] {\r\n    height: 400px;\r\n    max-height: 400px;\n}\n.b-skeleton[data-v-6ea9ab02] {\r\n     display: inline-block;\n}\n.list-element-input[data-v-6ea9ab02] {\r\n    background-color: #fff;\r\n    background-clip: padding-box;\r\n    border: 1px solid #ced4da;\r\n    \r\n    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;\r\n    padding: 3px;\r\n    line-height: 1.5;\r\n    color: #495057;\n}\n.list-element-handle[data-v-6ea9ab02]:hover {\r\n     cursor: move;\n}\n.list-element-delete[data-v-6ea9ab02]:hover {\r\n     cursor: pointer;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -55632,6 +55668,7 @@ var render = function () {
                                 },
                                 [
                                   _c("b-form-input", {
+                                    staticClass: "text-monospace",
                                     model: {
                                       value: _vm.content.link.url,
                                       callback: function ($$v) {
@@ -55640,6 +55677,112 @@ var render = function () {
                                       expression: "content.link.url",
                                     },
                                   }),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-form-group",
+                                {
+                                  staticClass: "text-right font-weight-bold",
+                                  attrs: {
+                                    label: "Icon",
+                                    "label-cols-lg": "3",
+                                    "content-cols-lg": "9",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "b-input-group",
+                                    [
+                                      _c("b-form-input", {
+                                        staticClass: "text-monospace",
+                                        model: {
+                                          value: _vm.content.link.icon,
+                                          callback: function ($$v) {
+                                            _vm.$set(
+                                              _vm.content.link,
+                                              "icon",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "content.link.icon",
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "b-input-group-append",
+                                        [
+                                          _c(
+                                            "b-button",
+                                            {
+                                              staticStyle: {
+                                                display: "flex",
+                                                "align-items": "center",
+                                              },
+                                              attrs: {
+                                                variant: "info",
+                                                target: "_blank",
+                                                href: "https://fontawesome.com/v5/cheatsheet",
+                                              },
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fa fa-search",
+                                              }),
+                                            ]
+                                          ),
+                                        ],
+                                        1
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-form-group",
+                                {
+                                  staticClass: "text-right font-weight-bold",
+                                  attrs: {
+                                    label: "Target",
+                                    "label-cols-lg": "3",
+                                    "content-cols-lg": "9",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "b-form-select",
+                                    {
+                                      model: {
+                                        value: _vm.content.link.target,
+                                        callback: function ($$v) {
+                                          _vm.$set(
+                                            _vm.content.link,
+                                            "target",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "content.link.target",
+                                      },
+                                    },
+                                    [
+                                      _c(
+                                        "b-form-select-option",
+                                        { attrs: { value: "_self" } },
+                                        [_vm._v("Same window")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "b-form-select-option",
+                                        { attrs: { value: "_blank" } },
+                                        [_vm._v("New window")]
+                                      ),
+                                    ],
+                                    1
+                                  ),
                                 ],
                                 1
                               ),
