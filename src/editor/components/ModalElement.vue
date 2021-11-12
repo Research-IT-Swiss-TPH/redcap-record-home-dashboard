@@ -293,6 +293,7 @@ export default {
         this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
             this.isLoading = true
             this.content = (new ModalContent).getObj()
+            this.selection = null
         })
     }
 

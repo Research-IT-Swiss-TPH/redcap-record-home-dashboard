@@ -65,7 +65,7 @@
         </b-overlay>
 
         <modal-element
-            :rows="rows"
+            :rows="JSON.parse(JSON.stringify(rows))"
             :selection="selection"
             @add-element="elementAdd( $event )"
             @edit-element="elementEdit( $event )" 

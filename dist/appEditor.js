@@ -2990,6 +2990,7 @@ var ModalContent = /*#__PURE__*/function () {
     this.$root.$on('bv::modal::hidden', function (bvEvent, modalId) {
       _this.isLoading = true;
       _this.content = new ModalContent().getObj();
+      _this.selection = null;
     });
   }
 });
@@ -55063,7 +55064,10 @@ var render = function () {
       ),
       _vm._v(" "),
       _c("modal-element", {
-        attrs: { rows: _vm.rows, selection: _vm.selection },
+        attrs: {
+          rows: JSON.parse(JSON.stringify(_vm.rows)),
+          selection: _vm.selection,
+        },
         on: {
           "add-element": function ($event) {
             return _vm.elementAdd($event)
