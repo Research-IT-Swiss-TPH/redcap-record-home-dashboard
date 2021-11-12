@@ -2250,6 +2250,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element'],
   data: function data() {
@@ -50053,12 +50062,21 @@ var render = function () {
                       "d-flex justify-content-between align-items-center",
                   },
                   [
-                    _c("small", { staticClass: "font-weight-bold" }, [
-                      _vm._v(_vm._s(li.title) + ":"),
-                    ]),
-                    _vm._v(" "),
-                    _c("span", [_vm._v(_vm._s(li.value))]),
-                  ]
+                    _vm.isRendering
+                      ? [
+                          _c("b-skeleton", { attrs: { width: "75px" } }),
+                          _vm._v(" "),
+                          _c("b-skeleton", { attrs: { width: "50px" } }),
+                        ]
+                      : [
+                          _c("small", { staticClass: "font-weight-bold" }, [
+                            _vm._v(_vm._s(li.title) + ":"),
+                          ]),
+                          _vm._v(" "),
+                          _c("span", [_vm._v(_vm._s(li.value))]),
+                        ],
+                  ],
+                  2
                 )
               }),
               1

@@ -29,8 +29,17 @@
             <b-list-group-item
                 class="d-flex justify-content-between align-items-center"
                 v-for="li in element.content" :key="li.title" >
+
+                <template v-if="isRendering">
+                  <b-skeleton width="75px"></b-skeleton>
+                  <b-skeleton width="50px"></b-skeleton>
+                </template>
+                
+                <template v-else>
                  <small class="font-weight-bold">{{ li.title}}:</small>
                  <span>{{ li.value }}</span>
+                </template>
+
         </b-list-group-item>
         </b-list-group>
 
