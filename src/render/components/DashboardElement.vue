@@ -28,7 +28,7 @@
         <b-list-group>
             <b-list-group-item
                 class="d-flex justify-content-between align-items-center"
-                v-for="li in element.content" :key="li.title" >
+                v-for="(li, idx) in element.content" :key="li.title" >
 
                 <template v-if="isRendering">
                   <b-skeleton width="75px"></b-skeleton>
@@ -37,7 +37,7 @@
                 
                 <template v-else>
                  <small class="font-weight-bold">{{ li.title}}:</small>
-                 <span>{{ li.value }}</span>
+                 <span>{{ render[idx] }}</span>
                 </template>
 
         </b-list-group-item>
@@ -46,7 +46,16 @@
     </div>
 
     <div v-else-if="element.type == 'table'">
-        <b-table striped hover :items="items"></b-table>
+        <template v-if="isRendering">
+          <b-skeleton-table
+            :rows="3"
+            :columns="9"
+            :table-props="{ striped: true }"
+          ></b-skeleton-table>
+        </template>
+        <template v-else>
+          <b-table striped hover :items="render"></b-table>
+        </template>
     </div>
 
   </div>
@@ -60,11 +69,7 @@ export default {
     ],
      data() {
       return {
-        items: [          
-          { contact_date: '07-02-2020', communication_channel: 'see comment', reached: 'see comment', substudy: 'CHRONOS', fw_info: 'Edit Address Check Information', contact_later: '', comment: 'Fake participant created', health_info: 'rofl', edit_user: 'vermth' },
-          { contact_date: '12-06-2020', communication_channel: 'paper', reached: 'paarticipant reached', substudy: '' ,fw_info: 'Paper Questionaires or other documents received back', contact_later: '', comment: 'QAB', health_info: 'QAB', edit_user: 'vermth' },
-          { contact_date: '01-10-2021', communication_channel: 'paper', reached: 'foo', fw_info: 'foo', substudy: '',contact_later: '', comment: 'lmao', health_info: 'rofl', edit_user: 'dnmda' },
-        ],
+        
         isRendering: true,
         render: "",
         error: ""
@@ -77,13 +82,13 @@ export default {
             params: {
               action: 'render-element-content',
               type: this.element.type,
-              content: this.element.content,
+              content: JSON.stringify(this.element.content),
               params: stph_rhd_getBaseParametersFromBackend()
             }
           })
           .then( response => {
             let json = response.data
-            this.render = response.data
+            this.render = response.data            
     
           })
           .catch(error => {
@@ -99,9 +104,11 @@ export default {
       }
     },
     mounted() {
-      if(this.element.type != "text") {
+
+      if( ["link", "list", "table"].includes(this.element.type)) {
         this.renderElement()
       }      
+      
     }
 }
 </script>

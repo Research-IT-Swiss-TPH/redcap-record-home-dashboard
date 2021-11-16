@@ -2259,41 +2259,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element'],
   data: function data() {
     return {
-      items: [{
-        contact_date: '07-02-2020',
-        communication_channel: 'see comment',
-        reached: 'see comment',
-        substudy: 'CHRONOS',
-        fw_info: 'Edit Address Check Information',
-        contact_later: '',
-        comment: 'Fake participant created',
-        health_info: 'rofl',
-        edit_user: 'vermth'
-      }, {
-        contact_date: '12-06-2020',
-        communication_channel: 'paper',
-        reached: 'paarticipant reached',
-        substudy: '',
-        fw_info: 'Paper Questionaires or other documents received back',
-        contact_later: '',
-        comment: 'QAB',
-        health_info: 'QAB',
-        edit_user: 'vermth'
-      }, {
-        contact_date: '01-10-2021',
-        communication_channel: 'paper',
-        reached: 'foo',
-        fw_info: 'foo',
-        substudy: '',
-        contact_later: '',
-        comment: 'lmao',
-        health_info: 'rofl',
-        edit_user: 'dnmda'
-      }],
       isRendering: true,
       render: "",
       error: ""
@@ -2312,7 +2290,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   params: {
                     action: 'render-element-content',
                     type: _this.element.type,
-                    content: _this.element.content,
+                    content: JSON.stringify(_this.element.content),
                     params: stph_rhd_getBaseParametersFromBackend()
                   }
                 }).then(function (response) {
@@ -2336,7 +2314,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    if (this.element.type != "text") {
+    if (["link", "list", "table"].includes(this.element.type)) {
       this.renderElement();
     }
   }
@@ -2365,8 +2343,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
 //
 //
 //
@@ -50053,7 +50029,7 @@ var render = function () {
           [
             _c(
               "b-list-group",
-              _vm._l(_vm.element.content, function (li) {
+              _vm._l(_vm.element.content, function (li, idx) {
                 return _c(
                   "b-list-group-item",
                   {
@@ -50073,7 +50049,7 @@ var render = function () {
                             _vm._v(_vm._s(li.title) + ":"),
                           ]),
                           _vm._v(" "),
-                          _c("span", [_vm._v(_vm._s(li.value))]),
+                          _c("span", [_vm._v(_vm._s(_vm.render[idx]))]),
                         ],
                   ],
                   2
@@ -50088,11 +50064,23 @@ var render = function () {
       ? _c(
           "div",
           [
-            _c("b-table", {
-              attrs: { striped: "", hover: "", items: _vm.items },
-            }),
+            _vm.isRendering
+              ? [
+                  _c("b-skeleton-table", {
+                    attrs: {
+                      rows: 3,
+                      columns: 9,
+                      "table-props": { striped: true },
+                    },
+                  }),
+                ]
+              : [
+                  _c("b-table", {
+                    attrs: { striped: "", hover: "", items: _vm.render },
+                  }),
+                ],
           ],
-          1
+          2
         )
       : _vm._e(),
   ])

@@ -2428,7 +2428,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
+    var _this3 = this;
+
     this.loadDashboardData();
+    this.$root.$on('bv::modal::hidden', function (bvEvent, modalId) {
+      //  Cleanup selection from parent (otherwise Vue warns of props modification from child component)
+      _this3.selection = null;
+    });
   }
 });
 
@@ -2669,14 +2675,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2862,7 +2903,8 @@ var ModalContent = /*#__PURE__*/function () {
       value: ""
     }];
     this.table = {
-      instrument: ""
+      instrument: "",
+      columns: []
     };
   }
 
@@ -2879,7 +2921,7 @@ var ModalContent = /*#__PURE__*/function () {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_0___default())
+    draggable: (vuedraggable__WEBPACK_IMPORTED_MODULE_1___default())
   },
   props: ['selection', 'rows'],
   data: function data() {
@@ -2887,7 +2929,9 @@ var ModalContent = /*#__PURE__*/function () {
       isLoading: true,
       content: new ModalContent().getObj(),
       selected: {
-        type: "text"
+        type: "text",
+        instrument: "",
+        fields: []
       },
       options: {
         type: [{
@@ -2903,7 +2947,8 @@ var ModalContent = /*#__PURE__*/function () {
           html: '<i class="fas fa-table"></i> Table',
           value: 'table'
         }]
-      }
+      },
+      fields: []
     };
   },
   computed: {
@@ -2912,18 +2957,23 @@ var ModalContent = /*#__PURE__*/function () {
         return this.rows[this.selection.r_id].columns[this.selection.c_id].elements[this.selection.e_id];
       }
     },
-    preType: function preType() {
-      return this.element.type;
-    },
-    preContent: function preContent() {
-      return this.element.content;
-    },
     hasTypeChange: function hasTypeChange() {
-      if (this.element && this.preType != this.selected.type) {
+      if (this.element && this.element.type != this.selected.type) {
         return true;
       }
 
       return false;
+    },
+    columns: function columns() {
+      var _this = this;
+
+      return this.selected.fields.map(function (field, idx) {
+        if (field == true) {
+          return _this.fields[idx];
+        }
+      }).filter(function (name) {
+        return typeof name !== 'undefined';
+      });
     }
   },
   methods: {
@@ -2940,8 +2990,59 @@ var ModalContent = /*#__PURE__*/function () {
       this.content.list.push(lEl);
     },
     prefill: function prefill() {
-      this.selected.type = this.preType;
-      this.content[this.preType] = this.preContent;
+      this.selected.type = this.element.type;
+      this.content[this.element.type] = this.element.content;
+
+      if (this.selected.type == 'table' && this.content["table"].instrument.length > 0) {
+        this.getFieldsForInstrument();
+      }
+    },
+    changeInstrument: function changeInstrument() {
+      this.selected.fields = [];
+      this.getFieldsForInstrument();
+    },
+    getRepeatingInstruments: function getRepeatingInstruments() {
+      return stph_rhd_getRepeatingInstruments();
+    },
+    getFieldsForInstrument: function getFieldsForInstrument() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this2.axios({
+                  params: {
+                    action: "get-field-for-instrument",
+                    instrument: _this2.content.table.instrument
+                  }
+                }).then(function (response) {
+                  _this2.fields = response.data;
+
+                  _this2.setInitialFields();
+                })["catch"](function (error) {
+                  console.log(error);
+                });
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    setInitialFields: function setInitialFields() {
+      var _this3 = this;
+
+      this.fields.forEach(function (element, idx) {
+        if (_this3.content.table.columns.includes(element)) {
+          //this.selected.fields[idx] = true
+          //  Use set to overcome #Change-Detection-Caveats
+          _this3.$set(_this3.selected.fields, idx, true);
+        }
+      });
     },
     handleOk: function handleOk() {
       var el = {
@@ -2966,7 +3067,7 @@ var ModalContent = /*#__PURE__*/function () {
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this4 = this;
 
     /*  Modal Events - 
      *  https://bootstrap-vue.org/docs/components/modal#comp-ref-b-modal-events
@@ -2974,24 +3075,30 @@ var ModalContent = /*#__PURE__*/function () {
      */
     //   shown
     this.$root.$on('bv::modal::shown', function (bvEvent, modalId) {
-      if (_this.element) {
-        _this.prefill();
+      if (_this4.element) {
+        _this4.prefill();
 
         setTimeout(function () {
-          _this.isLoading = false;
+          _this4.isLoading = false;
         }, 500);
       } else {
         setTimeout(function () {
-          _this.isLoading = false;
+          _this4.isLoading = false;
         }, 250);
       }
     }); //  Modal Event: hidden
 
     this.$root.$on('bv::modal::hidden', function (bvEvent, modalId) {
-      _this.isLoading = true;
-      _this.content = new ModalContent().getObj();
-      _this.selection = null;
+      _this4.isLoading = true;
+      _this4.content = new ModalContent().getObj();
+      _this4.selected.instrument = "";
+      _this4.selected.fields = [];
     });
+  },
+  watch: {
+    columns: function columns(val) {
+      this.content.table.columns = val;
+    }
   }
 });
 
@@ -3008,6 +3115,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -55564,7 +55683,7 @@ var render = function () {
                                 " Saving as new type removes all data from type "
                               ),
                               _c("b", { staticClass: "text-capitalize" }, [
-                                _vm._v(_vm._s(_vm.preType)),
+                                _vm._v(_vm._s(_vm.element.type)),
                               ]),
                               _vm._v("."),
                             ]
@@ -55938,7 +56057,15 @@ var render = function () {
                                   },
                                 },
                                 [
-                                  _c("b-form-input", {
+                                  _c("b-form-select", {
+                                    attrs: {
+                                      options: _vm.getRepeatingInstruments(),
+                                    },
+                                    on: {
+                                      change: function ($event) {
+                                        return _vm.changeInstrument()
+                                      },
+                                    },
                                     model: {
                                       value: _vm.content.table.instrument,
                                       callback: function ($$v) {
@@ -55954,6 +56081,83 @@ var render = function () {
                                 ],
                                 1
                               ),
+                              _vm._v(" "),
+                              _vm.content.table.instrument && _vm.fields
+                                ? _c(
+                                    "div",
+                                    [
+                                      _c(
+                                        "b-form-group",
+                                        {
+                                          staticClass:
+                                            "text-right font-weight-bold",
+                                          attrs: {
+                                            label: "Columns",
+                                            "label-cols-lg": "3",
+                                            "content-cols-lg": "9",
+                                          },
+                                        },
+                                        _vm._l(
+                                          _vm.fields,
+                                          function (field, idx) {
+                                            return _c(
+                                              "div",
+                                              { key: idx },
+                                              [
+                                                _c(
+                                                  "b-form-checkbox",
+                                                  {
+                                                    staticClass:
+                                                      "text-left font-weight-light",
+                                                    attrs: {
+                                                      name: "check-button",
+                                                      switch: "",
+                                                    },
+                                                    model: {
+                                                      value:
+                                                        _vm.selected.fields[
+                                                          idx
+                                                        ],
+                                                      callback: function ($$v) {
+                                                        _vm.$set(
+                                                          _vm.selected.fields,
+                                                          idx,
+                                                          $$v
+                                                        )
+                                                      },
+                                                      expression:
+                                                        "selected.fields[idx]",
+                                                    },
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                    " +
+                                                        _vm._s(field) +
+                                                        "\n                                "
+                                                    ),
+                                                  ]
+                                                ),
+                                              ],
+                                              1
+                                            )
+                                          }
+                                        ),
+                                        0
+                                      ),
+                                      _vm._v(" "),
+                                      _vm.columns && _vm.columns.length > 0
+                                        ? _c("div", [
+                                            _vm._v(
+                                              "\n                             Selected Columns: " +
+                                                _vm._s(_vm.columns.length) +
+                                                "\n                           "
+                                            ),
+                                          ])
+                                        : _vm._e(),
+                                    ],
+                                    1
+                                  )
+                                : _vm._e(),
                             ],
                             1
                           )
@@ -55996,7 +56200,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.type != "list"
+    _vm.type == "text" || _vm.type == "link"
       ? _c(
           "span",
           _vm._l(_vm.element.content, function (value, key) {
@@ -56040,6 +56244,40 @@ var render = function () {
           }),
           0
         )
+      : _vm.type == "table"
+      ? _c("span", [
+          _c("span", [
+            _c(
+              "abbr",
+              {
+                staticClass: "initialism text-lowercase text-monospace",
+                attrs: { title: _vm.element.content.instrument },
+              },
+              [
+                _c("b-badge", { attrs: { pill: "", variant: "info" } }, [
+                  _vm._v("instrument"),
+                ]),
+              ],
+              1
+            ),
+          ]),
+          _vm._v(" "),
+          _c("span", [
+            _c(
+              "abbr",
+              {
+                staticClass: "initialism text-lowercase text-monospace",
+                attrs: { title: _vm.element.content.columns.join(", ") },
+              },
+              [
+                _c("b-badge", { attrs: { pill: "", variant: "info" } }, [
+                  _vm._v("columns"),
+                ]),
+              ],
+              1
+            ),
+          ]),
+        ])
       : _vm._e(),
   ])
 }

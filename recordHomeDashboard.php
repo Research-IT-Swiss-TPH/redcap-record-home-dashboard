@@ -44,7 +44,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         $replaceWithUnderlineIfMissing=false, $project_id, $wrapValueInSpan=false, 
         $repeat_instrument="", $recursiveCount=1, $simulation=false, $applyDeIdExportRights=false,
         $form=null, $participant_id=null, $returnDatesAsYMD=false, $ignoreIdentifiers=false);
-        //dump($test);
+        
 
     }
 
@@ -129,12 +129,72 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
                 $this->sendError();
             }
 
+        } 
+
+        if ($type == "list") {
+
+            $response = [];
+            foreach ($content as $key => $el) {
+                $response[] = Piping::replaceVariablesInLabel($el->value, $record, $event_id, 1, array(), true, $project_id, false);
+            }
+
+        }
+
+        if($type == "table") {
+
+            //  get data for repeating instrument
+ 
+            $items = [
+                [
+                    "contact_date" => '07-02-2020',
+                    "communication_channel" => "see comment",
+                    "reached" => "see comment",
+                    "substudy" => "CHRONOS",
+                    "fw_info" => "Edit Address Check Information",
+                    "contact_later" => "",
+                    "comment" => "Fake participant created",
+                    "health_info" => "rofl",
+                    "edit_user" => "vermth"
+                ],
+                [
+                    "contact_date" => '12-06-2020',
+                    "communication_channel" => "paper",
+                    "reached" => "paarticipant reached",
+                    "substudy" => "CHRONOS",
+                    "fw_info" => "Edit Address Check Information",
+                    "contact_later" => "",
+                    "comment" => "Fake participant created",
+                    "health_info" => "lmao",
+                    "edit_user" => "tertek"
+                ],
+                [
+                    "contact_date" => '01-10-2021',
+                    "communication_channel" => "paper",
+                    "reached" => "see comment",
+                    "substudy" => "CHRONOS",
+                    "fw_info" => "Edit Address Check Information",
+                    "contact_later" => "",
+                    "comment" => "Fake participant created",
+                    "health_info" => "ngmi",
+                    "edit_user" => "vermth"
+                ]                
+            ];
+
+            $response = $items;
+
         }
 
 
         //  Send JSON Response
         $this->sendResponse($response);
 
+    }
+
+    public function getFieldForInstrument($instrument) {
+
+        $response =  $this->getFieldNames($instrument);
+        //  Send JSON Response
+        $this->sendResponse($response);
     }
 
     /**

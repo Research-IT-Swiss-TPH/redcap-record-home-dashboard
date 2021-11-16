@@ -25,6 +25,11 @@ else if($_REQUEST['action'] == 'render-element-content') {
     $module->renderElementContent($type, $content, $params);
 }
 
+else if($_REQUEST['action'] == 'get-field-for-instrument') {
+    $instrument = htmlentities($_REQUEST['instrument'], ENT_QUOTES);
+    $module->getFieldForInstrument($instrument);
+
+}
 
 else {
     header("HTTP/1.1 400 Bad Request");

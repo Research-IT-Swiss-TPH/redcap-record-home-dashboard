@@ -190,6 +190,11 @@ export default {
     },
     mounted() {
         this.loadDashboardData()
+
+        this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
+            //  Cleanup selection from parent (otherwise Vue warns of props modification from child component)
+            this.selection = null
+        })
     }
 }
 </script>

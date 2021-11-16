@@ -34,7 +34,7 @@
                         </div>
                     </template>
                     <div style="min-height:300px;" class="p-3">
-                        <b-alert v-if="hasTypeChange" variant="warning" show><b>Warning:</b> Saving as new type removes all data from type <b class="text-capitalize">{{ preType}}</b>.</b-alert>
+                        <b-alert v-if="hasTypeChange" variant="warning" show><b>Warning:</b> Saving as new type removes all data from type <b class="text-capitalize">{{ element.type}}</b>.</b-alert>
                         
                         <div v-if="selected.type=='text'">
                             <b-form-group                               
@@ -135,13 +135,40 @@
                         </div>
 
                         <div v-if="selected.type=='table'">
-                            <b-form-group
+                            <b-form-group                               
                                 class="text-right font-weight-bold"
                                 label="Instrument (Repeating)"
                                 label-cols-lg="3"
-                                content-cols-lg="9">
-                                <b-form-input v-model="content.table.instrument"></b-form-input>
+                                content-cols-lg="9">                                
+                                <b-form-select 
+                                v-model="content.table.instrument"
+                                @change="changeInstrument()"
+                                :options="getRepeatingInstruments()"></b-form-select>
+                            </b-form-group>
+
+                            <div  v-if="content.table.instrument && fields" >
+
+                                <b-form-group                               
+                                class="text-right font-weight-bold"
+                                label="Columns"
+                                label-cols-lg="3"
+                                content-cols-lg="9">                                
+
+                                <div v-for="field,idx in fields" :key="idx">
+                                    <b-form-checkbox  class="text-left font-weight-light" v-model="selected.fields[idx]"  name="check-button" switch>
+                                        {{ field }}
+                                    </b-form-checkbox>
+                                </div>                              
                                 </b-form-group>
+
+                               <div v-if="columns && columns.length > 0">
+                                 Selected Columns: {{ columns.length }}
+                               </div>
+
+                            </div>
+                        
+                        
+                                                                
                         </div>
 
 
@@ -171,7 +198,7 @@ class ModalContent {
          this.text = { title: "", description: "" }
          this.link = { title: "", url: "", icon: "", target: "_self" }
          this.list = [{title: "", value: ""}]
-         this.table = { instrument: ""}
+         this.table = { instrument: "", columns: [] }
       }
       getObj() {
           return this
@@ -193,7 +220,9 @@ export default {
             isLoading: true,
             content: (new ModalContent).getObj(),
             selected: {
-                type: "text"
+                type: "text",
+                instrument: "",
+                fields: []
             },
             options: {
                 type: [
@@ -203,26 +232,33 @@ export default {
                         { html: '<i class="fas fa-table"></i> Table', value: 'table' }
                     ]
             },
+            fields: []
+            
         }
     },
     computed: {
         element: function() {
             if(this.selection) {
                 return this.rows[this.selection.r_id].columns[this.selection.c_id].elements[this.selection.e_id]
-            }
-        },
-        preType: function() {
-            return this.element.type
-        },
-        preContent: function() {
-            return this.element.content
+            } 
         },
         hasTypeChange: function() {
-            if( this.element && this.preType != this.selected.type) {
+            if( this.element && this.element.type != this.selected.type) {
                 return true
             }
             return false
-        }
+        },
+
+        columns: function() {
+            return this.selected.fields.map( (field, idx) => {
+                if(field == true) {
+                    return this.fields[idx]
+                }
+            }).filter( (name) => {
+                return typeof name !== 'undefined'
+            })
+        },
+
     },
     methods: {
         removeListElement(idx) {
@@ -237,10 +273,46 @@ export default {
             }
             this.content.list.push(lEl)
         },
-        prefill: function() {            
-            this.selected.type = this.preType
-            this.content[this.preType] = this.preContent
+        prefill: function() {
+            this.selected.type = this.element.type            
+            this.content[this.element.type] = this.element.content
+            if(this.selected.type == 'table' && this.content["table"].instrument.length > 0) {
+                this.getFieldsForInstrument()                
+            }
         },
+        changeInstrument() {
+            this.selected.fields = []
+            this.getFieldsForInstrument()
+        },
+        getRepeatingInstruments: function() {
+            return stph_rhd_getRepeatingInstruments()
+        },
+        async getFieldsForInstrument() {            
+            this.axios({
+            params: {
+                action: "get-field-for-instrument",
+                instrument: this.content.table.instrument
+                }
+            })
+            .then( response => {
+                this.fields = response.data
+                this.setInitialFields()                
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        },
+
+        setInitialFields() {
+            this.fields.forEach( (element,idx) => {
+                if(this.content.table.columns.includes(element)) {
+                    //this.selected.fields[idx] = true
+                    //  Use set to overcome #Change-Detection-Caveats
+                    this.$set(this.selected.fields, idx, true)
+                }                
+            });
+        },
+
         handleOk() {
 
             let el = {
@@ -293,8 +365,16 @@ export default {
         this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
             this.isLoading = true
             this.content = (new ModalContent).getObj()
-            this.selection = null
+            this.selected.instrument = ""
+            this.selected.fields = []
         })
+
+    },
+
+    watch: {
+        columns: function (val) {
+            this.content.table.columns = val
+        }
     }
 
 }
