@@ -50069,7 +50069,7 @@ var render = function () {
                   _c("b-skeleton-table", {
                     attrs: {
                       rows: 3,
-                      columns: 9,
+                      columns: _vm.element.content.columns.length,
                       "table-props": { striped: true },
                     },
                   }),

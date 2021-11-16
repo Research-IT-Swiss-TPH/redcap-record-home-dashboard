@@ -49,7 +49,7 @@
         <template v-if="isRendering">
           <b-skeleton-table
             :rows="3"
-            :columns="9"
+            :columns="element.content.columns.length"
             :table-props="{ striped: true }"
           ></b-skeleton-table>
         </template>

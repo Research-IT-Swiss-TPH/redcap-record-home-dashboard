@@ -34,18 +34,6 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $this->renderDashboard();            
         }
 
-        $label = '[current-instance]';
-
-        $test = Piping::pipeSpecialTags($label, $project_id, 1, $event_id=null, $instance=1, null, false, 
-        $participant_id=null, $form=null, $replaceWithUnderlineIfMissing=false);
-
-
-        $response= Piping::replaceVariablesInLabel($label, 1, $event_id=null, $instance=2, array(),
-        $replaceWithUnderlineIfMissing=false, $project_id, $wrapValueInSpan=false, 
-        $repeat_instrument="", $recursiveCount=1, $simulation=false, $applyDeIdExportRights=false,
-        $form=null, $participant_id=null, $returnDatesAsYMD=false, $ignoreIdentifiers=false);
-        
-
     }
 
    /**
@@ -142,46 +130,26 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
 
         if($type == "table") {
 
-            //  get data for repeating instrument
- 
-            $items = [
-                [
-                    "contact_date" => '07-02-2020',
-                    "communication_channel" => "see comment",
-                    "reached" => "see comment",
-                    "substudy" => "CHRONOS",
-                    "fw_info" => "Edit Address Check Information",
-                    "contact_later" => "",
-                    "comment" => "Fake participant created",
-                    "health_info" => "rofl",
-                    "edit_user" => "vermth"
-                ],
-                [
-                    "contact_date" => '12-06-2020',
-                    "communication_channel" => "paper",
-                    "reached" => "paarticipant reached",
-                    "substudy" => "CHRONOS",
-                    "fw_info" => "Edit Address Check Information",
-                    "contact_later" => "",
-                    "comment" => "Fake participant created",
-                    "health_info" => "lmao",
-                    "edit_user" => "tertek"
-                ],
-                [
-                    "contact_date" => '01-10-2021',
-                    "communication_channel" => "paper",
-                    "reached" => "see comment",
-                    "substudy" => "CHRONOS",
-                    "fw_info" => "Edit Address Check Information",
-                    "contact_later" => "",
-                    "comment" => "Fake participant created",
-                    "health_info" => "ngmi",
-                    "edit_user" => "vermth"
-                ]                
-            ];
+            //  Fetch the data
+            $params = array(
+                "project_id" => $project_id,
+                "records" => $record,
+                "fields" => $content->columns,
+                "exportAsLabels" => true,
+                "exportDataAccessGroups" => true
+            );
 
-            $response = $items;
+            $data = \Redcap::getData($params);
 
+
+            //  Generate Response Array from static return structure
+            //  see redcap::getData documentation for "Return Values"
+            $response = [];
+            $instances = $data[$record]["repeat_instances"][$event_id][$content->instrument];
+
+            foreach ($instances as $key => $instance) {
+                $response[] = $instance;
+            }
         }
 
 
