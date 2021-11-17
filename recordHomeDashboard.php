@@ -34,7 +34,72 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $this->renderDashboard();            
         }
 
+        $fields = ["contact_date", "contact_later", "foo"];
+        $record = 1;
+        $instances = $this->getInstancesData($project_id, $record, "contact_activity", null);
+        dump($instances);
+
     }
+
+    private function getInstancesData( $project_id , $record, $instrument, $fields=null) {
+
+            //  Proj needed for reducing array
+            //  taken form Records::getData with $exportAsLabel
+            global $Proj;
+            $instrument_menu_name = $Proj->forms[$instrument]["menu"];
+
+            $field_names_array = [];
+            //  Get a list of all fields for a form if not specified
+            if($fields == null) {
+                $fields = $this->getFieldNames($instrument);
+            } 
+            //  prepare for fields query
+            foreach ($fields as $key => $field) {
+                $field_names_array[] = '"'.$field . '"';
+             }
+             $field_names = implode(",", $field_names_array);
+
+            //  Gets all element validation types (mainly to support text field formatting)
+            $sql = 'SELECT element_validation_type, field_name FROM redcap_metadata WHERE project_id = ? AND field_name IN('.$field_names.') AND element_validation_type IS NOT NULL';
+            $result = $this->query($sql, [$project_id]);
+
+            //  Prepare of fields to formatted
+            $array_to_format = [];
+            while($row = $result->fetch_object()) {               
+                if($row->element_validation_type) {
+                    $array_to_format[$row->field_name] = $row->element_validation_type;
+                }
+            }         
+
+            //  Fetch all data as json so that labels are exported..
+            $params = array(
+                "project_id" => $project_id,
+                "records" =>$record,
+                "exportAsLabels" => true,
+                "exportDataAccessGroups" => true,
+                "return_format" => "json",
+                "fields" => $fields
+            );
+
+            $data = json_decode(\Redcap::getData($params), true);
+
+            if (!class_exists("Formatter")) include_once("classes/Formatter.php");
+            $formatter = new Formatter;
+
+            //  Reset array and handle field formatting
+            foreach ($data as $key => $instance) {
+                //  Adjust formatting (dates)
+                foreach ($array_to_format as $field_to_format => $valtype) {                    
+                    $instance[$field_to_format] = $formatter::renderDateFormat($instance[$field_to_format], $valtype);
+                }
+
+                $instances[] = $instance;
+            }
+
+            return $instances;
+
+    }
+
 
    /**
     * Renders the module
@@ -130,26 +195,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
 
         if($type == "table") {
 
-            //  Fetch the data
-            $params = array(
-                "project_id" => $project_id,
-                "records" => $record,
-                "fields" => $content->columns,
-                "exportAsLabels" => true,
-                "exportDataAccessGroups" => true
-            );
 
-            $data = \Redcap::getData($params);
+            $response = $this->getInstancesData($project_id, $record, "contact_activity", $content->columns);
 
-
-            //  Generate Response Array from static return structure
-            //  see redcap::getData documentation for "Return Values"
-            $response = [];
-            $instances = $data[$record]["repeat_instances"][$event_id][$content->instrument];
-
-            foreach ($instances as $key => $instance) {
-                $response[] = $instance;
-            }
         }
 
 
