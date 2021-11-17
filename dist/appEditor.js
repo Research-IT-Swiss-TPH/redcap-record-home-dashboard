@@ -3097,7 +3097,10 @@ var ModalContent = /*#__PURE__*/function () {
   },
   watch: {
     columns: function columns(val) {
-      this.content.table.columns = val;
+      //  Do not watch when setting initial values
+      if (val.length !== 0) {
+        this.content.table.columns = val;
+      }
     }
   }
 });
