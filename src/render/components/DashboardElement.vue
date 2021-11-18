@@ -2,7 +2,7 @@
   <div>
 
     <div v-if="element.type == 'text'">        
-        <h2 v-if="element.content.title" class="lead mt-3">{{ element.content.title }}</h2>
+        <h2 v-if="element.content.title" class="lead mt-3" :class="textDecorations(element.content.decoration)">{{ element.content.title }}</h2>
         <div class="empty-text" v-else></div>
     </div>
 
@@ -100,7 +100,16 @@ export default {
               this.isRendering = false
             }, 500)              
           })
-
+      },
+      textDecorations(content){
+        let textDecorations = ""
+        if(content) {
+        content.forEach(decoration => {
+          textDecorations += "decoration-" + decoration +" "
+        });
+        }
+        
+        return textDecorations
 
       }
     },
@@ -122,6 +131,19 @@ export default {
     height: 24px;
     width:100%;
     margin-top: 1rem;
-    margin-bottom: 0.5rem;
+    margin-bottom:
+     0.5rem;
+  }
+
+  .decoration-bold {
+    font-weight: bold;
+  }
+
+  .decoration-italic {
+    font-style: italic;
+  }
+
+  .decoration-underline {
+    text-decoration: underline;
   }
 </style>

@@ -2312,6 +2312,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    textDecorations: function textDecorations(content) {
+      var textDecorations = "";
+
+      if (content) {
+        content.forEach(function (decoration) {
+          textDecorations += "decoration-" + decoration + " ";
+        });
+      }
+
+      return textDecorations;
     }
   },
   mounted: function mounted() {
@@ -44818,7 +44829,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.alert.alert-warning[data-v-54461081] {\n  padding: .5rem 1rem;\n}\n.empty-text[data-v-54461081] {\n  height: 24px;\n  width:100%;\n  margin-top: 1rem;\n  margin-bottom: 0.5rem;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.alert.alert-warning[data-v-54461081] {\n  padding: .5rem 1rem;\n}\n.empty-text[data-v-54461081] {\n  height: 24px;\n  width:100%;\n  margin-top: 1rem;\n  margin-bottom:\n   0.5rem;\n}\n.decoration-bold[data-v-54461081] {\n  font-weight: bold;\n}\n.decoration-italic[data-v-54461081] {\n  font-style: italic;\n}\n.decoration-underline[data-v-54461081] {\n  text-decoration: underline;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -49980,9 +49991,14 @@ var render = function () {
     _vm.element.type == "text"
       ? _c("div", [
           _vm.element.content.title
-            ? _c("h2", { staticClass: "lead mt-3" }, [
-                _vm._v(_vm._s(_vm.element.content.title)),
-              ])
+            ? _c(
+                "h2",
+                {
+                  staticClass: "lead mt-3",
+                  class: _vm.textDecorations(_vm.element.content.decoration),
+                },
+                [_vm._v(_vm._s(_vm.element.content.title))]
+              )
             : _c("div", { staticClass: "empty-text" }),
         ])
       : _vm.element.type == "link"

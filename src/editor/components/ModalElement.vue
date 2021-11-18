@@ -197,7 +197,7 @@
 class ModalContent {
       constructor() {
          this.text = { title: "", decoration: [] }
-         this.link = { title: "", url: "", icon: "", target: "_self" }
+         this.link = { title: "", url: "", color:"", target: "_self" }
          this.list = [{title: "", value: ""}]
          this.table = { instrument: "", columns: [] }
       }

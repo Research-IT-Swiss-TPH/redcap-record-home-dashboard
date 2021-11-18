@@ -2896,7 +2896,7 @@ var ModalContent = /*#__PURE__*/function () {
     this.link = {
       title: "",
       url: "",
-      icon: "",
+      color: "",
       target: "_self"
     };
     this.list = [{
