@@ -44,18 +44,19 @@
                                 content-cols-lg="9">
                                 <b-form-input v-model="content.text.title"></b-form-input>
                             </b-form-group>
-                            <b-form-group                                
+                            <b-form-group                               
                                 class="text-right font-weight-bold"
-                                label="Description"
+                                label="Decoration"
                                 label-cols-lg="3"
                                 content-cols-lg="9">
-                                <b-form-textarea       
-                                rows="5"
-                                max-rows="5"
-                                v-model="content.text.description"
-                                >
-                                </b-form-textarea>
-                            </b-form-group>
+                                <b-form-checkbox-group                                    
+                                    v-model="content.text.decoration"
+                                    :options="options.decoration"
+                                    button-variant="outline-info"                                    
+                                    name="text-decoration"
+                                    buttons
+                                ></b-form-checkbox-group>
+                            </b-form-group>                            
                         </div>
 
                         <div v-if="selected.type=='link'">
@@ -195,7 +196,7 @@
 
 class ModalContent {
       constructor() {
-         this.text = { title: "", description: "" }
+         this.text = { title: "", decoration: [] }
          this.link = { title: "", url: "", icon: "", target: "_self" }
          this.list = [{title: "", value: ""}]
          this.table = { instrument: "", columns: [] }
@@ -230,7 +231,12 @@ export default {
                         { html: '<i class="fas fa-link"></i> Link', value: 'link' },
                         { html: '<i class="fas fa-th-list"></i> List', value: 'list' },
                         { html: '<i class="fas fa-table"></i> Table', value: 'table' }
-                    ]
+                    ],
+                decoration: [
+                    { html: '<i class="fas fa-bold"><i/>', value: 'bold' },
+                    { html: '<i class="fas fa-italic"><i/>', value: 'italic' },
+                    { html: '<i class="fas fa-underline"><i/>', value: 'underline' }
+                ]
             },
             fields: []
             

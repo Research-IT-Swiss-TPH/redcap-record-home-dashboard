@@ -1,8 +1,9 @@
 <template>
   <div>
 
-    <div v-if="element.type == 'text'">
-        <h2 class="lead mt-3">{{ element.content.title }}</h2>
+    <div v-if="element.type == 'text'">        
+        <h2 v-if="element.content.title" class="lead mt-3">{{ element.content.title }}</h2>
+        <div class="empty-text" v-else></div>
     </div>
 
     <div v-else-if="element.type=='link'">
@@ -116,5 +117,11 @@ export default {
 <style scoped>
   .alert.alert-warning {
     padding: .5rem 1rem;
+  }
+  .empty-text {
+    height: 24px;
+    width:100%;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
   }
 </style>

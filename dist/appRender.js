@@ -2268,6 +2268,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element'],
   data: function data() {
@@ -44817,7 +44818,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.alert.alert-warning[data-v-54461081] {\n  padding: .5rem 1rem;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.alert.alert-warning[data-v-54461081] {\n  padding: .5rem 1rem;\n}\n.empty-text[data-v-54461081] {\n  height: 24px;\n  width:100%;\n  margin-top: 1rem;\n  margin-bottom: 0.5rem;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -49978,9 +49979,11 @@ var render = function () {
   return _c("div", [
     _vm.element.type == "text"
       ? _c("div", [
-          _c("h2", { staticClass: "lead mt-3" }, [
-            _vm._v(_vm._s(_vm.element.content.title)),
-          ]),
+          _vm.element.content.title
+            ? _c("h2", { staticClass: "lead mt-3" }, [
+                _vm._v(_vm._s(_vm.element.content.title)),
+              ])
+            : _c("div", { staticClass: "empty-text" }),
         ])
       : _vm.element.type == "link"
       ? _c("div", [

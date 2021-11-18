@@ -2884,13 +2884,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
 var ModalContent = /*#__PURE__*/function () {
   function ModalContent() {
     _classCallCheck(this, ModalContent);
 
     this.text = {
       title: "",
-      description: ""
+      decoration: []
     };
     this.link = {
       title: "",
@@ -2946,6 +2947,16 @@ var ModalContent = /*#__PURE__*/function () {
         }, {
           html: '<i class="fas fa-table"></i> Table',
           value: 'table'
+        }],
+        decoration: [{
+          html: '<i class="fas fa-bold"><i/>',
+          value: 'bold'
+        }, {
+          html: '<i class="fas fa-italic"><i/>',
+          value: 'italic'
+        }, {
+          html: '<i class="fas fa-underline"><i/>',
+          value: 'underline'
         }]
       },
       fields: []
@@ -3118,6 +3129,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -55726,24 +55753,29 @@ var render = function () {
                                 {
                                   staticClass: "text-right font-weight-bold",
                                   attrs: {
-                                    label: "Description",
+                                    label: "Decoration",
                                     "label-cols-lg": "3",
                                     "content-cols-lg": "9",
                                   },
                                 },
                                 [
-                                  _c("b-form-textarea", {
-                                    attrs: { rows: "5", "max-rows": "5" },
+                                  _c("b-form-checkbox-group", {
+                                    attrs: {
+                                      options: _vm.options.decoration,
+                                      "button-variant": "outline-info",
+                                      name: "text-decoration",
+                                      buttons: "",
+                                    },
                                     model: {
-                                      value: _vm.content.text.description,
+                                      value: _vm.content.text.decoration,
                                       callback: function ($$v) {
                                         _vm.$set(
                                           _vm.content.text,
-                                          "description",
+                                          "decoration",
                                           $$v
                                         )
                                       },
-                                      expression: "content.text.description",
+                                      expression: "content.text.decoration",
                                     },
                                   }),
                                 ],
@@ -56203,7 +56235,54 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.type == "text" || _vm.type == "link"
+    _vm.type == "text"
+      ? _c("span", [
+          _c(
+            "span",
+            { staticClass: "ml-1" },
+            [
+              _vm.element.content.title.length > 0
+                ? _c(
+                    "abbr",
+                    {
+                      staticClass: "initialism text-lowercase text-monospace",
+                      attrs: {
+                        title: _vm.element.content.title.substring(0, 50),
+                      },
+                    },
+                    [
+                      _c("b-badge", { attrs: { pill: "", variant: "info" } }, [
+                        _vm._v("title"),
+                      ]),
+                    ],
+                    1
+                  )
+                : _c("b-badge", { attrs: { pill: "", variant: "light" } }, [
+                    _vm._v("empty"),
+                  ]),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.element.content.decoration
+            ? _c("span", { staticClass: "ml-1" }, [
+                _c(
+                  "abbr",
+                  {
+                    staticClass: "initialism text-lowercase text-monospace",
+                    attrs: { title: _vm.element.content.decoration.join(", ") },
+                  },
+                  [
+                    _c("b-badge", { attrs: { pill: "", variant: "info" } }, [
+                      _vm._v("deco"),
+                    ]),
+                  ],
+                  1
+                ),
+              ])
+            : _vm._e(),
+        ])
+      : _vm.type == "link"
       ? _c(
           "span",
           _vm._l(_vm.element.content, function (value, key) {

@@ -1,12 +1,28 @@
 <template>
 <div>
-    <span v-if="type == 'text' || type == 'link'">
+
+    <span v-if="type == 'text'">
+        <span  class="ml-1" >
+        <abbr v-if="element.content.title.length > 0" :title="element.content.title.substring(0, 50)" class="initialism text-lowercase text-monospace">
+            <b-badge pill variant="info">title</b-badge>
+        </abbr>
+        <b-badge v-else pill variant="light">empty</b-badge>
+      </span>
+        <span v-if="element.content.decoration"  class="ml-1">
+        <abbr :title="element.content.decoration.join(', ')" class="initialism text-lowercase text-monospace">
+            <b-badge pill variant="info">deco</b-badge>
+        </abbr>       
+      </span>
+    </span>
+
+    <span v-else-if="type == 'link'">
         <span  class="ml-1" v-for="(value, key) in element.content" :key="key">
         <abbr :title="value.substring(0, 50)" class="initialism text-lowercase text-monospace">
             <b-badge pill variant="info">{{key}}</b-badge>
         </abbr>       
       </span>
-    </span>
+    </span>    
+
     <span v-else-if="type == 'list'">
         <span  class="ml-1" v-for="(element, key) in element.content" :key="key">
             <abbr :title="element.value" class="initialism text-lowercase text-monospace">
