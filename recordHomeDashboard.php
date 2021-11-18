@@ -34,11 +34,6 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $this->renderDashboard();            
         }
 
-        $fields = ["contact_date", "contact_later", "foo"];
-        $record = 1;
-        $instances = $this->getInstancesData($project_id, $record, "contact_activity", null);
-        dump($instances);
-
     }
 
     private function getInstancesData( $project_id , $record, $instrument, $fields=null) {
