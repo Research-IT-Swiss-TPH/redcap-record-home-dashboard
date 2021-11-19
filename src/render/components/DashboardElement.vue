@@ -13,7 +13,7 @@
             v-else-if="!isRendering && render.length > 0"
             :href="render"
             :target="element.content.target || '_self'"
-            variant="info"
+            :variant="element.content.variant"
             class="text-center"
             block
             size="lg"
@@ -26,7 +26,7 @@
     </div>
 
     <div v-else-if="element.type=='list'">
-        <b-list-group>
+        <b-list-group class="mt-1">
             <b-list-group-item
                 class="d-flex justify-content-between align-items-center"
                 v-for="(li, idx) in element.content" :key="li.title" >
@@ -49,13 +49,27 @@
     <div v-else-if="element.type == 'table'">
         <template v-if="isRendering">
           <b-skeleton-table
-            :rows="3"
+            :rows="perPage"
             :columns="element.content.columns.length"
             :table-props="{ striped: true }"
           ></b-skeleton-table>
         </template>
         <template v-else>
-          <b-table striped hover :items="render"></b-table>
+          <b-table
+            id="my-table"
+            :per-page="perPage"
+            striped
+            hover
+            size="sm"
+            :current-page="currentPage"
+            :items="render">
+          </b-table>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="render.length"
+          :per-page="perPage"
+          aria-controls="my-table"
+        ></b-pagination>                    
         </template>
     </div>
 
@@ -73,7 +87,9 @@ export default {
         
         isRendering: true,
         render: "",
-        error: ""
+        error: "",
+        perPage: 5,
+        currentPage: 1
       }
     },
     methods: {
@@ -98,7 +114,7 @@ export default {
           .finally(()=> {
             setTimeout(()=> {
               this.isRendering = false
-            }, 500)              
+            }, 750) // smooth loading
           })
       },
       textDecorations(content){

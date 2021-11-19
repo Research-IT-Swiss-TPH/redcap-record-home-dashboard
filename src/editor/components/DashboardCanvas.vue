@@ -30,7 +30,8 @@
                         >
                         <dashboard-row v-for="(row, index) in rows" 
                             :key="index" 
-                            :r_id="index"                 
+                            :r_id="index"
+                            :col_num="row.columns.length"
                             @delete-row="rowRemove( $event )" 
                             @add-column="columnAdd( $event )"
                             >

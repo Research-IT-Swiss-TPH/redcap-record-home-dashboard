@@ -7,8 +7,11 @@
                 </div>                
                 <div class="editor-row-menu float-right">
 
-                    <b-button @click="handleEmit('add-column')" size="xs">
-                        <i class="fa fa-plus"></i>
+                    <small class="text-muted text-monospace mr-1" v-if="isDisabled">Columns limit reached</small>
+
+                    <b-button :disabled="isDisabled" @click="handleEmit('add-column')" size="xs">
+                        <i v-if="!isDisabled" class="fa fa-plus"></i>
+                        <i v-else class="fa fa-ban"></i>
                     </b-button>
 
                     <b-button  @click="handleEmit('delete-row')" size="xs">
@@ -26,8 +29,14 @@
 
 <script>
 export default {
+    data(){
+        return {
+            max_col_per_row: 6
+        }
+    },
     props: [
-        'r_id'
+        'r_id',
+        'col_num'
     ],
     methods: {
         handleEmit(event) {
@@ -41,6 +50,11 @@ export default {
                 default:
                     break
             }
+        }
+    },
+    computed: {
+        isDisabled() {
+            return this.col_num >= this.max_col_per_row
         }
     }
 

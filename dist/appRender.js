@@ -2269,13 +2269,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element'],
   data: function data() {
     return {
       isRendering: true,
       render: "",
-      error: ""
+      error: "",
+      perPage: 5,
+      currentPage: 1
     };
   },
   methods: {
@@ -2302,7 +2318,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 })["finally"](function () {
                   setTimeout(function () {
                     _this.isRendering = false;
-                  }, 500);
+                  }, 750); // smooth loading
                 });
 
               case 1:
@@ -50019,7 +50035,7 @@ var render = function () {
                       attrs: {
                         href: _vm.render,
                         target: _vm.element.content.target || "_self",
-                        variant: "info",
+                        variant: _vm.element.content.variant,
                         block: "",
                         size: "lg",
                       },
@@ -50048,6 +50064,7 @@ var render = function () {
           [
             _c(
               "b-list-group",
+              { staticClass: "mt-1" },
               _vm._l(_vm.element.content, function (li, idx) {
                 return _c(
                   "b-list-group-item",
@@ -50087,7 +50104,7 @@ var render = function () {
               ? [
                   _c("b-skeleton-table", {
                     attrs: {
-                      rows: 3,
+                      rows: _vm.perPage,
                       columns: _vm.element.content.columns.length,
                       "table-props": { striped: true },
                     },
@@ -50095,7 +50112,30 @@ var render = function () {
                 ]
               : [
                   _c("b-table", {
-                    attrs: { striped: "", hover: "", items: _vm.render },
+                    attrs: {
+                      id: "my-table",
+                      "per-page": _vm.perPage,
+                      striped: "",
+                      hover: "",
+                      size: "sm",
+                      "current-page": _vm.currentPage,
+                      items: _vm.render,
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("b-pagination", {
+                    attrs: {
+                      "total-rows": _vm.render.length,
+                      "per-page": _vm.perPage,
+                      "aria-controls": "my-table",
+                    },
+                    model: {
+                      value: _vm.currentPage,
+                      callback: function ($$v) {
+                        _vm.currentPage = $$v
+                      },
+                      expression: "currentPage",
+                    },
                   }),
                 ],
           ],

@@ -2287,6 +2287,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -2642,8 +2643,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['r_id'],
+  data: function data() {
+    return {
+      max_col_per_row: 6
+    };
+  },
+  props: ['r_id', 'col_num'],
   methods: {
     handleEmit: function handleEmit(event) {
       switch (event) {
@@ -2658,6 +2667,11 @@ __webpack_require__.r(__webpack_exports__);
         default:
           break;
       }
+    }
+  },
+  computed: {
+    isDisabled: function isDisabled() {
+      return this.col_num >= this.max_col_per_row;
     }
   }
 });
@@ -2885,6 +2899,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var ModalContent = /*#__PURE__*/function () {
   function ModalContent() {
     _classCallCheck(this, ModalContent);
@@ -2896,7 +2924,7 @@ var ModalContent = /*#__PURE__*/function () {
     this.link = {
       title: "",
       url: "",
-      color: "",
+      variant: "info",
       target: "_self"
     };
     this.list = [{
@@ -55106,7 +55134,10 @@ var render = function () {
                             "dashboard-row",
                             {
                               key: index,
-                              attrs: { r_id: index },
+                              attrs: {
+                                r_id: index,
+                                col_num: row.columns.length,
+                              },
                               on: {
                                 "delete-row": function ($event) {
                                   return _vm.rowRemove($event)
@@ -55482,17 +55513,27 @@ var render = function () {
         "div",
         { staticClass: "editor-row-menu float-right" },
         [
+          _vm.isDisabled
+            ? _c("small", { staticClass: "text-muted text-monospace mr-1" }, [
+                _vm._v("Columns limit reached"),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "b-button",
             {
-              attrs: { size: "xs" },
+              attrs: { disabled: _vm.isDisabled, size: "xs" },
               on: {
                 click: function ($event) {
                   return _vm.handleEmit("add-column")
                 },
               },
             },
-            [_c("i", { staticClass: "fa fa-plus" })]
+            [
+              !_vm.isDisabled
+                ? _c("i", { staticClass: "fa fa-plus" })
+                : _c("i", { staticClass: "fa fa-ban" }),
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -55892,6 +55933,84 @@ var render = function () {
                                           ),
                                         ],
                                         1
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-form-group",
+                                {
+                                  staticClass: "text-right font-weight-bold",
+                                  attrs: {
+                                    label: "Variant",
+                                    "label-cols-lg": "3",
+                                    "content-cols-lg": "9",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "b-form-select",
+                                    {
+                                      model: {
+                                        value: _vm.content.link.variant,
+                                        callback: function ($$v) {
+                                          _vm.$set(
+                                            _vm.content.link,
+                                            "variant",
+                                            $$v
+                                          )
+                                        },
+                                        expression: "content.link.variant",
+                                      },
+                                    },
+                                    [
+                                      _c(
+                                        "b-form-select-option",
+                                        {
+                                          staticClass: "text-info",
+                                          attrs: { value: "info" },
+                                        },
+                                        [_vm._v("Info")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "b-form-select-option",
+                                        {
+                                          staticClass: "text-warning",
+                                          attrs: { value: "warning" },
+                                        },
+                                        [_vm._v("Warning")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "b-form-select-option",
+                                        {
+                                          staticClass: "text-success",
+                                          attrs: { value: "warning" },
+                                        },
+                                        [_vm._v("Success")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "b-form-select-option",
+                                        {
+                                          staticClass: "text-danger",
+                                          attrs: { value: "danger" },
+                                        },
+                                        [_vm._v("Danger")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "b-form-select-option",
+                                        {
+                                          staticClass: "text-secondary",
+                                          attrs: { value: "secondary" },
+                                        },
+                                        [_vm._v("Secondary")]
                                       ),
                                     ],
                                     1
