@@ -2288,6 +2288,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -55044,6 +55050,52 @@ var render = function () {
   return _c(
     "div",
     [
+      _c(
+        "div",
+        { staticClass: "text-right" },
+        [
+          _c(
+            "b-button-group",
+            [
+              _c(
+                "b-button",
+                {
+                  directives: [
+                    {
+                      name: "b-tooltip",
+                      rawName: "v-b-tooltip.hover.v-secondary",
+                      modifiers: { hover: true, "v-secondary": true },
+                    },
+                  ],
+                  attrs: { title: "Star Tour", variant: "outline-secondary" },
+                },
+                [_c("i", { staticClass: "fa fa-info-circle" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-button",
+                {
+                  directives: [
+                    {
+                      name: "b-tooltip",
+                      rawName: "v-b-tooltip.hover.v-secondary",
+                      modifiers: { hover: true, "v-secondary": true },
+                    },
+                  ],
+                  attrs: {
+                    title: "Import/Export",
+                    variant: "outline-secondary",
+                  },
+                },
+                [_c("i", { staticClass: "fa fa-folder-open" })]
+              ),
+            ],
+            1
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c(
         "b-overlay",
         {

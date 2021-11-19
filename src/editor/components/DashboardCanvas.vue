@@ -1,5 +1,11 @@
 <template>
     <div>
+        <div class="text-right">
+            <b-button-group >
+                <b-button v-b-tooltip.hover.v-secondary title="Star Tour" variant="outline-secondary"><i class="fa fa-info-circle"></i></b-button>
+                <b-button v-b-tooltip.hover.v-secondary title="Import/Export" variant="outline-secondary"><i class="fa fa-folder-open"></i></b-button>                
+            </b-button-group>
+        </div>
         <b-overlay variant="light"
             blur="50px"
             spinner-variant="dark"
