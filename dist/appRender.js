@@ -2283,6 +2283,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element'],
   data: function data() {
@@ -44845,7 +44846,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.alert.alert-warning[data-v-54461081] {\n  padding: .5rem 1rem;\n}\n.empty-text[data-v-54461081] {\n  height: 24px;\n  width:100%;\n  margin-top: 1rem;\n  margin-bottom:\n   0.5rem;\n}\n.decoration-bold[data-v-54461081] {\n  font-weight: bold;\n}\n.decoration-italic[data-v-54461081] {\n  font-style: italic;\n}\n.decoration-underline[data-v-54461081] {\n  text-decoration: underline;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.alert.alert-warning[data-v-54461081] {\n  padding: .5rem 1rem;\n}\n.empty-text[data-v-54461081] {\n  height: 24px;\n  width:100%;\n  margin-top: 1rem;\n  margin-bottom:\n   0.5rem;\n}\n.decoration-bold[data-v-54461081] {\n  font-weight: bold;\n}\n.decoration-italic[data-v-54461081] {\n  font-style: italic;\n}\n.decoration-underline[data-v-54461081] {\n  text-decoration: underline;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -50126,6 +50127,7 @@ var render = function () {
                   _c("b-pagination", {
                     attrs: {
                       "total-rows": _vm.render.length,
+                      variant: "info",
                       "per-page": _vm.perPage,
                       "aria-controls": "my-table",
                     },

@@ -78,3 +78,22 @@
 .alert.alert-dark {
   border-color: #c6c8ca !important;
 }
+
+.page-item.active .page-link {
+  color: #fff !important;
+  background-color: #17a2b8 !important;
+  border-color: #17a2b8 !important;
+}
+
+.page-item.active:hover .page-link {
+  outline: 1px solid #138496;
+}
+
+.page-link {
+  color: #17a2b8 !important;
+}
+
+.page-link:hover {
+  color: #138496 !important;
+  outline: 1px solid #138496;
+}

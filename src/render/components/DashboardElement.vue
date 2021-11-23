@@ -67,6 +67,7 @@
         <b-pagination
           v-model="currentPage"
           :total-rows="render.length"
+          variant="info"
           :per-page="perPage"
           aria-controls="my-table"
         ></b-pagination>                    
@@ -162,4 +163,5 @@ export default {
   .decoration-underline {
     text-decoration: underline;
   }
+
 </style>
