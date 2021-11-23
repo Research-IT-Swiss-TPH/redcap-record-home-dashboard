@@ -51,6 +51,39 @@
             "type": "text",
             "name": "<b>Dashboard Title</b><br>Add your custom title that will be shown in Record Home View",
             "default": "Record Home Dashboard"
+        },
+        {
+            "key": "descr-display-options",
+            "type": "descriptive",
+            "name": "<b>Display Options</b><br>Define how the editor view should be displayed for different user groups."
+        },
+        {
+            "key": "display-option",
+            "name": "User Group",
+            "repeatable": true,
+            "type": "sub_settings",
+            "sub_settings": [
+                {
+                    "key": "user-group",
+                    "type": "user-role-list",
+                    "name": "User Group"
+                },
+                {
+                    "key": "disable-editor",
+                    "name": "Disable Editor",
+                    "type": "checkbox"
+                },
+                {
+                    "key": "hide-top-render",
+                    "name": "Hide data tables",
+                    "type": "checkbox"
+                },
+                {                   
+                    "key": "hide-bottom-render",
+                    "name": "Hide repeating tables",
+                    "type": "checkbox"
+                }
+            ]
         }
     ],
 
