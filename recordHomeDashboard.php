@@ -111,7 +111,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         <script>
             $(function() {
                 $(document).ready(function(){
-                    $('#center').addClass("hide-data_table hide-repeating_forms_table")
+                    $('#center').addClass("<?= $this->displayClasses() ?>")
                     $('#event_grid_table').after('<div id="record_home_dashboard_title"><?= $this->getProjectSetting('dashboard-title') == "" ? "Record Home Dashboard" : $this->getProjectSetting('dashboard-title') ?></div>');
                     //  We have to move our wrapper element to the correct position and then show it
                     let wrapper = $('#STPH_DASHBOARD_WRAPPER');
@@ -209,6 +209,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         $this->sendResponse($response);
     }
 
+
+    //  Display Option Methods
+
     public function isDisabledEditor() {
 
         $displayOptions = $this->getDisplayOptions();
@@ -216,6 +219,21 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             return false;
         }
         return $displayOptions["disable-editor"];
+    }
+
+    public function displayClasses() {
+        $displayOptions = $this->getDisplayOptions();
+
+        $classes = "";
+
+        if($displayOptions["hide-top-render"]) {
+            $classes .= " hide-data_table";
+        }
+
+        if($displayOptions["hide-bottom-render"]) {
+            $classes .= " hide-repeating_forms_table";
+        }
+        return $classes;
     }
 
     /**
