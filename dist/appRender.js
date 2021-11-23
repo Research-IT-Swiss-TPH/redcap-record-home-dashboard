@@ -2449,38 +2449,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
-    },
-    loadElementData: function loadElementData() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _this2.axios({
-                  params: {
-                    action: 'get-element-data',
-                    params: stph_rhd_getBaseParametersFromBackend()
-                  }
-                }).then(function (response) {
-                  var json = response.data;
-                  setTimeout(function () {
-                    _this2.elementData = json;
-                    console.log(_this2.elementData);
-                    _this2.isOverlayed = false;
-                  }, 500);
-                })["catch"](function (e) {
-                  _this2.toastError(e);
-                });
-
-              case 1:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
     }
   },
   mounted: function mounted() {

@@ -3,7 +3,7 @@
 
     "namespace": "STPH\\recordHomeDashboard", 
 
-    "description": "Another module made with create-redcap-module.",
+    "description": "A REDCap External Module that enables to add a customized Dashboard to the Record Homepage.",
 
     "documentation": "README.md",
 
@@ -26,10 +26,10 @@
     "links":{
         "project": [
             {
-                "name": "Record Home Dashboard",
-                "key": "record-home-dashboard",
+                "name": "Dashboard Editor",
+                "key": "dashboard-editor",
                 "icon": "fas fa-columns",
-                "url": "page.php",
+                "url": "editor.php",
                 "show-header-and-footer": true
             }
         ]

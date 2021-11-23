@@ -39,6 +39,7 @@ export default {
         DashboardElement,
         loader
     },
+    
     data() {
         return {
             isOverlayed: true,
@@ -46,6 +47,7 @@ export default {
             elementData: null
         }
     },
+
     methods: {
         async loadDashboardData() {
 
@@ -64,30 +66,8 @@ export default {
           .catch(e => {
             this.toastError(e)
           })
-        },
-
-        async loadElementData() {
-
-          this.axios({
-            params: {
-              action: 'get-element-data',
-              params: stph_rhd_getBaseParametersFromBackend()
-            }
-          })
-          .then( response => {
-            let json = response.data;
-            setTimeout(()=> {
-                this.elementData = json
-                console.log(this.elementData)
-                this.isOverlayed = false
-            }, 500)              
-          })
-          .catch(e => {
-            this.toastError(e)
-          })
-        },
+        }
     },
-
 
     mounted() {
         this.loadDashboardData()
