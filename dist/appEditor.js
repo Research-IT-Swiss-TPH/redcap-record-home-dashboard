@@ -55212,7 +55212,7 @@ var render = function () {
               attrs: {
                 disabled: _vm.isOverlayed,
                 right: "",
-                text: "Organize",
+                text: "Manage",
                 variant: "outline-secondary",
               },
             },
