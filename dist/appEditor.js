@@ -2333,6 +2333,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2484,7 +2495,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       link.click();
       URL.revokeObjectURL(link.href);
     },
-    checkImportFileValid: function checkImportFileValid() {
+    handleImport: function handleImport() {
+      console.log("Dashboard imported.");
+    },
+    resetImport: function resetImport() {
+      this.error = false;
+      this.importFile = null;
+      console.log("Import reset.");
+    },
+    validateImportFile: function validateImportFile() {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
@@ -2493,42 +2512,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                _this3.error = false;
                 read = new FileReader();
                 read.readAsBinaryString(_this3.importFile);
 
                 read.onloadend = function () {
                   var json = JSON.parse(read.result);
-                  console.log(json);
 
                   for (var i = 0; i < json.length; i++) {
-                    console.log(json[i]); //  check if contains columns
-
+                    //  check if has columns
                     if (!('columns' in json[i])) {
-                      console.log("no columns");
                       _this3.error = true;
                       break;
                     }
 
-                    var columns = json[i].columns; //  check if contains elements
+                    var columns = json[i].columns; //  check if has elements
 
                     for (var j = 0; j < columns.length; j++) {
-                      console.log(columns[j]);
-
                       if (!('elements' in columns[j])) {
                         _this3.error = true;
                         break;
                       }
-                    }
-                  }
 
-                  if (!_this3.error) {
-                    console.log("File is valid");
-                  } else {
-                    console.log("File is invalid");
+                      var elements = columns[j].elements;
+                      var allowedElTypes = ["text", "link", "list", "table"]; //  Only if elements contain any element
+
+                      if (elements.length > 0) {
+                        for (var k = 0; k < elements.length; k++) {
+                          //  Check if element types are allowed
+                          //  we could also check for content structure here but let's leave it for another time..
+                          var elType = elements[k].type;
+
+                          if (!allowedElTypes.includes(elType)) {
+                            _this3.error = true;
+                            break;
+                          }
+                        }
+                      }
+                    }
                   }
                 };
 
-              case 3:
+              case 4:
               case "end":
                 return _context3.stop();
             }
@@ -55470,30 +55495,68 @@ var render = function () {
         "b-modal",
         {
           attrs: {
-            "ok-title-html": "<i class='fa fa-file-export'></i> Import",
             centered: "",
             scrollable: "",
             id: "import-modal",
             title: "Import Dashboard",
           },
-          on: {
-            ok: function ($event) {
-              return _vm.handleImport()
+          on: { ok: _vm.handleImport, hidden: _vm.resetImport },
+          scopedSlots: _vm._u([
+            {
+              key: "modal-footer",
+              fn: function (ref) {
+                var ok = ref.ok
+                var cancel = ref.cancel
+                return [
+                  _c(
+                    "b-button",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return cancel()
+                        },
+                      },
+                    },
+                    [_vm._v("\n            Cancel\n        ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      attrs: {
+                        disabled: _vm.error || _vm.importFile == null,
+                        variant: "primary",
+                      },
+                      on: {
+                        click: function ($event) {
+                          return ok()
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-file-export" }),
+                      _vm._v(" Import\n        "),
+                    ]
+                  ),
+                ]
+              },
             },
-          },
+          ]),
         },
         [
           _c("b-form-file", {
             staticClass: "mt-2",
             attrs: {
               accept: ".json",
-              state: Boolean(_vm.importFile),
+              state: !_vm.error,
+              required: "",
+              "invalid-feedback": "File is invalid",
               placeholder: "Choose a file or drop it here...",
               "drop-placeholder": "Drop file here...",
             },
             on: {
               input: function ($event) {
-                return _vm.checkImportFileValid()
+                return _vm.validateImportFile()
               },
             },
             model: {
@@ -55505,17 +55568,33 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "mt-3" }, [
-            _vm._v(
-              "Selected file: " +
-                _vm._s(_vm.importFile ? _vm.importFile.name : "")
-            ),
-          ]),
+          !_vm.error && _vm.importFile != null
+            ? _c(
+                "b-alert",
+                {
+                  staticClass: "mt-3",
+                  attrs: { variant: "success", show: "" },
+                },
+                [
+                  _c("b", [_vm._v("Valid file:")]),
+                  _vm._v(
+                    " " + _vm._s(_vm.importFile ? _vm.importFile.name : "")
+                  ),
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _vm.importFile
-            ? _c("div", { staticClass: "mt-3" }, [
-                _vm._v("Valid?: " + _vm._s(this.error)),
-              ])
+          _vm.error && _vm.importFile != null
+            ? _c(
+                "b-alert",
+                { staticClass: "mt-3", attrs: { variant: "danger", show: "" } },
+                [
+                  _c("b", [_vm._v("File is invalid.")]),
+                  _vm._v(
+                    " Please verify that your json file is correctly formatted."
+                  ),
+                ]
+              )
             : _vm._e(),
         ],
         1

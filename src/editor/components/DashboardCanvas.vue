@@ -95,9 +95,9 @@
         </b-modal>
 
         <!-- Import modal -->
-        <b-modal
-            @ok="handleImport()"
-            ok-title-html="<i class='fa fa-file-export'></i> Import"
+        <b-modal            
+            @ok="handleImport"
+            @hidden="resetImport"
             centered scrollable
             id="import-modal" 
             title="Import Dashboard">            
@@ -106,13 +106,24 @@
                 class="mt-2"
                 accept=".json"
                 v-model="importFile"
-                @input="checkImportFileValid()"
-                :state="Boolean(importFile)"
+                @input="validateImportFile()"
+                :state="!error"
+                required
+                invalid-feedback="File is invalid"
                 placeholder="Choose a file or drop it here..."
                 drop-placeholder="Drop file here..."
                 ></b-form-file>
-                <div class="mt-3">Selected file: {{ importFile ? importFile.name : '' }}</div>
-                <div v-if="importFile" class="mt-3">Valid?: {{ this.error }}</div>
+                <b-alert class="mt-3" v-if="!error && importFile != null" variant="success" show><b>Valid file:</b> {{ importFile ? importFile.name : '' }}</b-alert>
+                <b-alert class="mt-3" v-if="error && importFile != null" variant="danger" show><b>File is invalid.</b> Please verify that your json file is correctly formatted.</b-alert>
+
+        <template #modal-footer="{ ok, cancel }">
+            <b-button @click="cancel()">
+                Cancel
+            </b-button>
+            <b-button :disabled="error || importFile==null" variant="primary" @click="ok()">
+                <i class='fa fa-file-export'></i> Import
+            </b-button>            
+        </template>                
 
 
         </b-modal>        
@@ -244,38 +255,55 @@ export default {
             URL.revokeObjectURL(link.href)
         },
 
-        async checkImportFileValid() {
+        handleImport() {
+            console.log("Dashboard imported.")
+        },
+
+        resetImport() {
+            this.error = false
+            this.importFile = null
+            console.log("Import reset.")
+        },
+
+        async validateImportFile() {
+            this.error = false
             let read = new FileReader()
             read.readAsBinaryString(this.importFile)
             read.onloadend = () => {
-                let json = JSON.parse(read.result)
-                console.log(json)
 
-                for( var i = 0; i < json.length; i++) {
-                    console.log(json[i])
-                    //  check if contains columns
-                    if( !('columns' in json[i]) ) {
-                        console.log("no columns")
+                let json = JSON.parse(read.result)                
+
+                for( var i = 0; i < json.length; i++) {                    
+                    //  check if has columns
+                    if( !('columns' in json[i]) ) {                        
                         this.error = true
                         break
                     } 
                     let columns = json[i].columns
-                    //  check if contains elements
-                    for(var j = 0; j < columns.length; j++) {
-                        console.log(columns[j])
+                    //  check if has elements
+                    for(var j = 0; j < columns.length; j++) {                        
                         if(!('elements' in columns[j])) {
                             this.error = true
                             break
                         }
+
+                        let elements = columns[j].elements
+                        const allowedElTypes = ["text", "link", "list", "table"]
+                        //  Only if elements contain any element
+                        if(elements.length > 0) {
+                        
+                            for(var k=0; k < elements.length; k++) {
+                                //  Check if element types are allowed
+                                //  we could also check for content structure here but let's leave it for another time..
+                                let elType = elements[k].type
+                                if( !allowedElTypes.includes(elType) ) {
+                                    this.error = true
+                                    break
+                                }
+                            }
+                        }
                     }                    
                 }
-
-                if( !this.error) {
-                    console.log("File is valid")
-                } else {
-                    console.log("File is invalid")
-                }
-
             }
         }        
     },
