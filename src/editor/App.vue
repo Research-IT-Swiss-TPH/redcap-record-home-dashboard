@@ -1,6 +1,6 @@
 <template>
     <section class="editor-container">
-        <dashboard-canvas></dashboard-canvas>
+        <dashboard-canvas></dashboard-canvas>        
     </section>
 </template>
 

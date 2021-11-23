@@ -2358,8 +2358,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 
@@ -55246,12 +55244,15 @@ var render = function () {
                       modifiers: { "export-modal": true },
                     },
                   ],
+                  attrs: { disabled: _vm.rows.length == 0 },
                 },
                 [
                   _c("i", { staticClass: "fa fa-file-export" }),
                   _vm._v(" Export"),
                 ]
               ),
+              _vm._v(" "),
+              _c("b-dropdown-divider"),
               _vm._v(" "),
               _c(
                 "b-dropdown-item",
@@ -55263,16 +55264,10 @@ var render = function () {
                       modifiers: { "reset-modal": true },
                     },
                   ],
+                  attrs: { disabled: _vm.rows.length == 0 },
                 },
                 [_c("i", { staticClass: "fa fa-eraser" }), _vm._v(" Reset")]
               ),
-              _vm._v(" "),
-              _c("b-dropdown-divider"),
-              _vm._v(" "),
-              _c("b-dropdown-item", [
-                _c("i", { staticClass: "fa fa-play-circle" }),
-                _vm._v(" Start Tour"),
-              ]),
             ],
             1
           ),
