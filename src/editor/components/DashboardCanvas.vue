@@ -101,7 +101,7 @@
             centered scrollable
             id="import-modal" 
             title="Import Dashboard">            
-            
+            Select a valid file to be imported. <br>The import overwrites the current data and <b>cannot be undone</b>.
             <b-form-file                
                 class="mt-2"
                 accept=".json"
@@ -112,21 +112,37 @@
                 invalid-feedback="File is invalid"
                 placeholder="Choose a file or drop it here..."
                 drop-placeholder="Drop file here..."
-                ></b-form-file>
-                <b-alert class="mt-3" v-if="!error && importFile != null" variant="success" show><b>Valid file:</b> {{ importFile ? importFile.name : '' }}</b-alert>
-                <b-alert class="mt-3" v-if="error && importFile != null" variant="danger" show><b>File is invalid.</b> Please verify that your json file is correctly formatted.</b-alert>
+            ></b-form-file>
 
+            <b-alert class="mt-3" v-if="!error && importFile != null" variant="success" show><b>Valid file:</b> {{ importFile ? importFile.name : '' }}</b-alert>
+            <b-alert class="mt-3" v-if="error && importFile != null" variant="danger" show><b>File is invalid.</b> Please verify that your json file is correctly formatted.</b-alert>
+
+            <template #modal-footer="{ ok, cancel }">
+                <b-button @click="cancel()">
+                    Cancel
+                </b-button>
+                <b-button :disabled="error || importFile==null" variant="primary" @click="ok()">
+                    <i class='fa fa-file-export'></i> Import
+                </b-button>            
+            </template>
+        </b-modal>
+
+        <b-modal
+            @ok="handleReset"            
+            centered scrollable
+            id="reset-modal" 
+            title="Reset Dashboard"
+        >
+        Are you sure you want to delete all data and reset the Dashboard? <br>This <b>cannot be undone.</b>
         <template #modal-footer="{ ok, cancel }">
             <b-button @click="cancel()">
                 Cancel
             </b-button>
-            <b-button :disabled="error || importFile==null" variant="primary" @click="ok()">
-                <i class='fa fa-file-export'></i> Import
+            <b-button variant="danger" @click="ok()">
+                <i class='fa fa-exclamation-circle'></i> Delete data
             </b-button>            
-        </template>                
-
-
-        </b-modal>        
+        </template>        
+        </b-modal>
 
     </div>
 </template>
@@ -154,6 +170,7 @@ export default {
             selection: null,
             isOverlayed: true,
             importFile: null,
+            importJSON: "",
             error: false
         }
     },
@@ -255,14 +272,22 @@ export default {
             URL.revokeObjectURL(link.href)
         },
 
-        handleImport() {
+        handleImport() {        
+            this.rows = this.importJSON
+            this.saveDashboardData("Dashboard imported.")
             console.log("Dashboard imported.")
+        },
+
+        handleReset() {
+            this.rows = []
+            this.saveDashboardData("Dashboard reset.")
+            console.log("Dashboard reset.")
         },
 
         resetImport() {
             this.error = false
             this.importFile = null
-            console.log("Import reset.")
+            this.importJSON = ""
         },
 
         async validateImportFile() {
@@ -304,6 +329,8 @@ export default {
                         }
                     }                    
                 }
+
+                this.importJSON = json
             }
         }        
     },

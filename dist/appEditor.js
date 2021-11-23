@@ -2344,6 +2344,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2365,6 +2381,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       selection: null,
       isOverlayed: true,
       importFile: null,
+      importJSON: "",
       error: false
     };
   },
@@ -2496,12 +2513,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       URL.revokeObjectURL(link.href);
     },
     handleImport: function handleImport() {
+      this.rows = this.importJSON;
+      this.saveDashboardData("Dashboard imported.");
       console.log("Dashboard imported.");
+    },
+    handleReset: function handleReset() {
+      this.rows = [];
+      this.saveDashboardData("Dashboard reset.");
+      console.log("Dashboard reset.");
     },
     resetImport: function resetImport() {
       this.error = false;
       this.importFile = null;
-      console.log("Import reset.");
+      this.importJSON = "";
     },
     validateImportFile: function validateImportFile() {
       var _this3 = this;
@@ -2551,6 +2575,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       }
                     }
                   }
+
+                  _this3.importJSON = json;
                 };
 
               case 4:
@@ -55517,7 +55543,7 @@ var render = function () {
                         },
                       },
                     },
-                    [_vm._v("\n            Cancel\n        ")]
+                    [_vm._v("\n                Cancel\n            ")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -55535,7 +55561,7 @@ var render = function () {
                     },
                     [
                       _c("i", { staticClass: "fa fa-file-export" }),
-                      _vm._v(" Import\n        "),
+                      _vm._v(" Import\n            "),
                     ]
                   ),
                 ]
@@ -55544,6 +55570,11 @@ var render = function () {
           ]),
         },
         [
+          _vm._v("            \n        Select a valid file to be imported. "),
+          _c("br"),
+          _vm._v("The import overwrites the current data and "),
+          _c("b", [_vm._v("cannot be undone")]),
+          _vm._v(".\n        "),
           _c("b-form-file", {
             staticClass: "mt-2",
             attrs: {
@@ -55598,6 +55629,65 @@ var render = function () {
             : _vm._e(),
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            centered: "",
+            scrollable: "",
+            id: "reset-modal",
+            title: "Reset Dashboard",
+          },
+          on: { ok: _vm.handleReset },
+          scopedSlots: _vm._u([
+            {
+              key: "modal-footer",
+              fn: function (ref) {
+                var ok = ref.ok
+                var cancel = ref.cancel
+                return [
+                  _c(
+                    "b-button",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return cancel()
+                        },
+                      },
+                    },
+                    [_vm._v("\n            Cancel\n        ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { variant: "danger" },
+                      on: {
+                        click: function ($event) {
+                          return ok()
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-exclamation-circle" }),
+                      _vm._v(" Delete data\n        "),
+                    ]
+                  ),
+                ]
+              },
+            },
+          ]),
+        },
+        [
+          _vm._v(
+            "\n    Are you sure you want to delete all data and reset the Dashboard? "
+          ),
+          _c("br"),
+          _vm._v("This "),
+          _c("b", [_vm._v("cannot be undone.")]),
+        ]
       ),
     ],
     1
