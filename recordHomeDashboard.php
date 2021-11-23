@@ -209,6 +209,15 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         $this->sendResponse($response);
     }
 
+    public function isDisabledEditor() {
+
+        $displayOptions = $this->getDisplayOptions();
+        if($displayOptions == null) {
+            return false;
+        }
+        return $displayOptions["disable-editor"];
+    }
+
     /**
      * Helpers
      */
@@ -223,6 +232,34 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         header('Content-Type: application/json; charset=UTF-8');
         header("HTTP/1.1 400 Bad Request");
         die();
+    }
+
+    private function getDisplayOptions() {
+
+        $current_user = $this->getUser();
+        # Check if Impersonification is active (trumps super-user)
+        if(\UserRights::isImpersonatingUser()){
+            $current_user = $_SESSION['impersonate_user'][PROJECT_ID]['impersonating'];
+        }
+
+        $userRights = \REDCap::getUserRights($current_user);
+        if($userRights) {
+            $userRole = $userRights[$current_user]["role_id"];
+        }
+
+        if($userRole) {
+            $allDisplayOptions = $this->getSubSettings("display-option");
+            $displayOptions = reset(array_filter( $allDisplayOptions, function($e) use ($userRole) {
+                    return $e["user-role"] == $userRole;
+                })
+            );
+        }
+
+        if($displayOptions) {
+            return $displayOptions;
+        }
+
+        return null;
     }
     
 }

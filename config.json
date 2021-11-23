@@ -55,16 +55,16 @@
         {
             "key": "descr-display-options",
             "type": "descriptive",
-            "name": "<b>Display Options</b><br>Define how the editor view should be displayed for different user groups."
+            "name": "<b>Display Options</b><br>Define how the editor view should be displayed for different user roles."
         },
         {
             "key": "display-option",
-            "name": "User Group",
+            "name": "User Role",
             "repeatable": true,
             "type": "sub_settings",
             "sub_settings": [
                 {
-                    "key": "user-group",
+                    "key": "user-role",
                     "type": "user-role-list",
                     "name": "User Group"
                 },
