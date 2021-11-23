@@ -4,17 +4,13 @@ import App from './App.vue';
 //  Axios  
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
 Vue.use(VueAxios, axios.create({
-    baseURL: stph_rhd_getBaseUrlFromBackend(),
-  }))
-
+  baseURL: stph_rhd_getBaseUrlFromBackend(),
+}))
 
 //  Bootstrap Vue
 import { BootstrapVue} from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-//import '../custom-bootstrap.scss'
-
 Vue.use(BootstrapVue)
 
 //  Mixin
@@ -25,4 +21,4 @@ Vue.mixin(mixin)
 new Vue({
     render: h => h(App)
   })
-  .$mount('#STPH_DASHBOARD_RENDER');
+.$mount('#STPH_DASHBOARD_RENDER');

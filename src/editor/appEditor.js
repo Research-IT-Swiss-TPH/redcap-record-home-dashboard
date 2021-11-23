@@ -1,9 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
 
-//  Vuex Storage
-import store from '../store'
-
 //  Axios  
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -23,8 +20,7 @@ Vue.mixin(mixin)
 
 //  Create Vue Instance and mount our module page container
 new Vue({
-  render: h => h(App),
-  store
+  render: h => h(App)
 })
 .$mount('#STPH_DASHBOARD_EDITOR');
 

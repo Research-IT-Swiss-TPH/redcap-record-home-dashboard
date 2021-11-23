@@ -27,7 +27,7 @@ class Formatter
      *  https://www.php.net/manual/en/datetime.format.php
      *  @param string $valtype
      *  @return string 
-     *  @since 1.3.1
+     *  @since 1.0.0
      * 
      */     
 	private static function getDateFormatDisplay($valtype)

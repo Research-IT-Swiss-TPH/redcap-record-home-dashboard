@@ -62566,7 +62566,6 @@ vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(vue_axios__WEBPACK_IMPORTED_MODU
 })); //  Bootstrap Vue
 
 
- //import '../custom-bootstrap.scss'
 
 vue__WEBPACK_IMPORTED_MODULE_3__["default"].use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_5__.BootstrapVue); //  Mixin
 

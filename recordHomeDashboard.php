@@ -30,7 +30,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     */
     public function redcap_every_page_top($project_id = null) {
         //  Check if is Record Home Page for record with id
-        if( $this->isPage('DataEntry/record_home.php') && isset($_GET['id'])) {
+        if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) ) {
             $this->renderDashboard();            
         }
 
@@ -128,7 +128,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             const stph_rhd_getBaseParametersFromBackend = function() {
                 return {
                     project_id: '<?= $this->getProjectId() ?>',
-                    record: '<?= $_GET['id'] ?>',
+                    record: '<?= htmlentities($_GET['id'], ENT_QUOTES) ?>',
                     event: '<?= $this->getEventId() ?>'
                 }
             }
