@@ -55229,7 +55229,7 @@ var render = function () {
                   ],
                 },
                 [
-                  _c("i", { staticClass: "fa fa-file-import" }),
+                  _c("i", { staticClass: "fa fa-file-upload" }),
                   _vm._v(" Import"),
                 ]
               ),
@@ -55247,7 +55247,7 @@ var render = function () {
                   attrs: { disabled: _vm.rows.length == 0 },
                 },
                 [
-                  _c("i", { staticClass: "fa fa-file-export" }),
+                  _c("i", { staticClass: "fa fa-file-download" }),
                   _vm._v(" Export"),
                 ]
               ),

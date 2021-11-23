@@ -2,8 +2,8 @@
     <div>
         <div class="text-right">            
             <b-dropdown :disabled="isOverlayed" right  text="Manage" variant="outline-secondary">
-                <b-dropdown-item v-b-modal.import-modal><i class="fa fa-file-import"></i> Import</b-dropdown-item>
-                <b-dropdown-item :disabled="rows.length==0" v-b-modal.export-modal><i class="fa fa-file-export"></i> Export</b-dropdown-item>
+                <b-dropdown-item v-b-modal.import-modal><i class="fa fa-file-upload"></i> Import</b-dropdown-item>
+                <b-dropdown-item :disabled="rows.length==0" v-b-modal.export-modal><i class="fa fa-file-download"></i> Export</b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item :disabled="rows.length==0" v-b-modal.reset-modal><i class="fa fa-eraser"></i> Reset</b-dropdown-item>
             </b-dropdown>
