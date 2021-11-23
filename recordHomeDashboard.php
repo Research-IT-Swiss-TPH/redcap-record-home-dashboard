@@ -111,7 +111,8 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         <script>
             $(function() {
                 $(document).ready(function(){
-                    $('#event_grid_table').after('<div id="record_home_dashboard_title">Record Home Dashboard</div>');
+                    $('#center').addClass("hide-data_table hide-repeating_forms_table")
+                    $('#event_grid_table').after('<div id="record_home_dashboard_title"><?= $this->getProjectSetting('dashboard-title') == "" ? "Record Home Dashboard" : $this->getProjectSetting('dashboard-title') ?></div>');
                     //  We have to move our wrapper element to the correct position and then show it
                     let wrapper = $('#STPH_DASHBOARD_WRAPPER');
                     $('#record_home_dashboard_title').after(wrapper)

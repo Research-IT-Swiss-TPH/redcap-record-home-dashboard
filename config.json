@@ -44,7 +44,13 @@
             "key": "dashboard-data",
             "type": "json",
             "name": "Dashboard Data (JSON)",
-            "hidden": false
+            "hidden": true
+        },
+        {
+            "key": "dashboard-title",
+            "type": "text",
+            "name": "<b>Dashboard Title</b><br>Add your custom title that will be shown in Record Home View",
+            "default": "Record Home Dashboard"
         }
     ],
 

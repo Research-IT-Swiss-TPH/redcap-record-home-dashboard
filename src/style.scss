@@ -16,6 +16,17 @@
   padding-bottom: 5px !important;
 }
 
+/* 
+ * Hide Record Home Dashboard elements
+ *
+ */
+ #center.hide-data_table > table, #center.hide-data_table #record_display_name, #center.hide-data_table #event_grid_table {
+  display: none;
+}
+
+#center.hide-repeating_forms_table #repeating_forms_table_parent_title, #center.hide-repeating_forms_table #repeating_forms_table_parent {
+  display: none;
+}
 
 /* Bootstrap Fixing  since REDCap breaks some of the base classes .. */
 .btn {
