@@ -2294,6 +2294,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2313,7 +2352,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       rows: [],
       selection: null,
-      isOverlayed: true
+      isOverlayed: true,
+      importFile: null,
+      error: false
     };
   },
   methods: {
@@ -2432,15 +2473,77 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    handleExport: function handleExport() {
+      var blob = new Blob([JSON.stringify(this.rows)], {
+        type: 'application/json'
+      });
+      var link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = "record_home_dashboard_" + new Date().getTime() + ".json";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    },
+    checkImportFileValid: function checkImportFileValid() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var read;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                read = new FileReader();
+                read.readAsBinaryString(_this3.importFile);
+
+                read.onloadend = function () {
+                  var json = JSON.parse(read.result);
+                  console.log(json);
+
+                  for (var i = 0; i < json.length; i++) {
+                    console.log(json[i]); //  check if contains columns
+
+                    if (!('columns' in json[i])) {
+                      console.log("no columns");
+                      _this3.error = true;
+                      break;
+                    }
+
+                    var columns = json[i].columns; //  check if contains elements
+
+                    for (var j = 0; j < columns.length; j++) {
+                      console.log(columns[j]);
+
+                      if (!('elements' in columns[j])) {
+                        _this3.error = true;
+                        break;
+                      }
+                    }
+                  }
+
+                  if (!_this3.error) {
+                    console.log("File is valid");
+                  } else {
+                    console.log("File is invalid");
+                  }
+                };
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.loadDashboardData();
     this.$root.$on('bv::modal::hidden', function (bvEvent, modalId) {
       //  Cleanup selection from parent (otherwise Vue warns of props modification from child component)
-      _this3.selection = null;
+      _this4.selection = null;
     });
   }
 });
@@ -55055,40 +55158,70 @@ var render = function () {
         { staticClass: "text-right" },
         [
           _c(
-            "b-button-group",
+            "b-dropdown",
+            {
+              attrs: {
+                disabled: _vm.isOverlayed,
+                right: "",
+                text: "Organize",
+                variant: "outline-secondary",
+              },
+            },
             [
               _c(
-                "b-button",
+                "b-dropdown-item",
                 {
                   directives: [
                     {
-                      name: "b-tooltip",
-                      rawName: "v-b-tooltip.hover.v-secondary",
-                      modifiers: { hover: true, "v-secondary": true },
+                      name: "b-modal",
+                      rawName: "v-b-modal.import-modal",
+                      modifiers: { "import-modal": true },
                     },
                   ],
-                  attrs: { title: "Star Tour", variant: "outline-secondary" },
                 },
-                [_c("i", { staticClass: "fa fa-info-circle" })]
+                [
+                  _c("i", { staticClass: "fa fa-file-import" }),
+                  _vm._v(" Import"),
+                ]
               ),
               _vm._v(" "),
               _c(
-                "b-button",
+                "b-dropdown-item",
                 {
                   directives: [
                     {
-                      name: "b-tooltip",
-                      rawName: "v-b-tooltip.hover.v-secondary",
-                      modifiers: { hover: true, "v-secondary": true },
+                      name: "b-modal",
+                      rawName: "v-b-modal.export-modal",
+                      modifiers: { "export-modal": true },
                     },
                   ],
-                  attrs: {
-                    title: "Import/Export",
-                    variant: "outline-secondary",
-                  },
                 },
-                [_c("i", { staticClass: "fa fa-folder-open" })]
+                [
+                  _c("i", { staticClass: "fa fa-file-export" }),
+                  _vm._v(" Export"),
+                ]
               ),
+              _vm._v(" "),
+              _c(
+                "b-dropdown-item",
+                {
+                  directives: [
+                    {
+                      name: "b-modal",
+                      rawName: "v-b-modal.reset-modal",
+                      modifiers: { "reset-modal": true },
+                    },
+                  ],
+                },
+                [_c("i", { staticClass: "fa fa-eraser" }), _vm._v(" Reset")]
+              ),
+              _vm._v(" "),
+              _c("b-dropdown-divider"),
+              _vm._v(" "),
+              _c("b-dropdown-item", [
+                _c("i", { staticClass: "fa fa-play-circle" }),
+                _vm._v(" Start Tour"),
+              ]),
             ],
             1
           ),
@@ -55309,6 +55442,84 @@ var render = function () {
           },
         },
       }),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            "ok-title-html": "<i class='fa fa-file-export'></i> Export",
+            centered: "",
+            scrollable: "",
+            id: "export-modal",
+            title: "Export Dashboard",
+          },
+          on: {
+            ok: function ($event) {
+              return _vm.handleExport()
+            },
+          },
+        },
+        [
+          _vm._v(
+            "            \n        Click Download to export current Dashboard as .json file. You can use this file to import it in any Record Home Dashboard.\n    "
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            "ok-title-html": "<i class='fa fa-file-export'></i> Import",
+            centered: "",
+            scrollable: "",
+            id: "import-modal",
+            title: "Import Dashboard",
+          },
+          on: {
+            ok: function ($event) {
+              return _vm.handleImport()
+            },
+          },
+        },
+        [
+          _c("b-form-file", {
+            staticClass: "mt-2",
+            attrs: {
+              accept: ".json",
+              state: Boolean(_vm.importFile),
+              placeholder: "Choose a file or drop it here...",
+              "drop-placeholder": "Drop file here...",
+            },
+            on: {
+              input: function ($event) {
+                return _vm.checkImportFileValid()
+              },
+            },
+            model: {
+              value: _vm.importFile,
+              callback: function ($$v) {
+                _vm.importFile = $$v
+              },
+              expression: "importFile",
+            },
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "mt-3" }, [
+            _vm._v(
+              "Selected file: " +
+                _vm._s(_vm.importFile ? _vm.importFile.name : "")
+            ),
+          ]),
+          _vm._v(" "),
+          _vm.importFile
+            ? _c("div", { staticClass: "mt-3" }, [
+                _vm._v("Valid?: " + _vm._s(this.error)),
+              ])
+            : _vm._e(),
+        ],
+        1
+      ),
     ],
     1
   )

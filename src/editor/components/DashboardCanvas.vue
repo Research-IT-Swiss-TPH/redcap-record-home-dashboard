@@ -1,11 +1,16 @@
 <template>
     <div>
-        <div class="text-right">
-            <b-button-group >
-                <b-button v-b-tooltip.hover.v-secondary title="Star Tour" variant="outline-secondary"><i class="fa fa-info-circle"></i></b-button>
-                <b-button v-b-tooltip.hover.v-secondary title="Import/Export" variant="outline-secondary"><i class="fa fa-folder-open"></i></b-button>                
-            </b-button-group>
+
+        <div class="text-right">            
+            <b-dropdown :disabled="isOverlayed" right  text="Organize" variant="outline-secondary">
+                <b-dropdown-item v-b-modal.import-modal><i class="fa fa-file-import"></i> Import</b-dropdown-item>
+                <b-dropdown-item v-b-modal.export-modal><i class="fa fa-file-export"></i> Export</b-dropdown-item>
+                <b-dropdown-item v-b-modal.reset-modal><i class="fa fa-eraser"></i> Reset</b-dropdown-item>
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-item><i class="fa fa-play-circle"></i> Start Tour</b-dropdown-item>
+            </b-dropdown>
         </div>
+
         <b-overlay variant="light"
             blur="50px"
             spinner-variant="dark"
@@ -71,12 +76,46 @@
             </div>
         </b-overlay>
 
+        <!-- Element modal component -->
         <modal-element
             :rows="JSON.parse(JSON.stringify(rows))"
             :selection="selection"
             @add-element="elementAdd( $event )"
             @edit-element="elementEdit( $event )" 
         />
+
+        <!-- Export modal -->
+        <b-modal
+            @ok="handleExport()"
+            ok-title-html="<i class='fa fa-file-export'></i> Export"
+            centered scrollable
+            id="export-modal" 
+            title="Export Dashboard">            
+            Click Download to export current Dashboard as .json file. You can use this file to import it in any Record Home Dashboard.
+        </b-modal>
+
+        <!-- Import modal -->
+        <b-modal
+            @ok="handleImport()"
+            ok-title-html="<i class='fa fa-file-export'></i> Import"
+            centered scrollable
+            id="import-modal" 
+            title="Import Dashboard">            
+            
+            <b-form-file                
+                class="mt-2"
+                accept=".json"
+                v-model="importFile"
+                @input="checkImportFileValid()"
+                :state="Boolean(importFile)"
+                placeholder="Choose a file or drop it here..."
+                drop-placeholder="Drop file here..."
+                ></b-form-file>
+                <div class="mt-3">Selected file: {{ importFile ? importFile.name : '' }}</div>
+                <div v-if="importFile" class="mt-3">Valid?: {{ this.error }}</div>
+
+
+        </b-modal>        
 
     </div>
 </template>
@@ -102,7 +141,9 @@ export default {
         return {
             rows: [],
             selection: null,
-            isOverlayed: true
+            isOverlayed: true,
+            importFile: null,
+            error: false
         }
     },
     methods: {
@@ -192,8 +233,51 @@ export default {
                     this.isOverlayed = false
                 }, 500)
             })
+        },
 
-        }               
+        handleExport() {
+            const blob = new Blob([JSON.stringify(this.rows)], { type: 'application/json' })
+            const link = document.createElement('a')
+            link.href = URL.createObjectURL(blob)
+            link.download = "record_home_dashboard_"+(new Date()).getTime()+".json"
+            link.click()
+            URL.revokeObjectURL(link.href)
+        },
+
+        async checkImportFileValid() {
+            let read = new FileReader()
+            read.readAsBinaryString(this.importFile)
+            read.onloadend = () => {
+                let json = JSON.parse(read.result)
+                console.log(json)
+
+                for( var i = 0; i < json.length; i++) {
+                    console.log(json[i])
+                    //  check if contains columns
+                    if( !('columns' in json[i]) ) {
+                        console.log("no columns")
+                        this.error = true
+                        break
+                    } 
+                    let columns = json[i].columns
+                    //  check if contains elements
+                    for(var j = 0; j < columns.length; j++) {
+                        console.log(columns[j])
+                        if(!('elements' in columns[j])) {
+                            this.error = true
+                            break
+                        }
+                    }                    
+                }
+
+                if( !this.error) {
+                    console.log("File is valid")
+                } else {
+                    console.log("File is invalid")
+                }
+
+            }
+        }        
     },
     mounted() {
         this.loadDashboardData()
