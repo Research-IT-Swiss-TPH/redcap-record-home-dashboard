@@ -3,9 +3,9 @@
 
     "namespace": "STPH\\recordHomeDashboard", 
 
-    "description": "A REDCap External Module that enables to add a customized Dashboard to the Record Homepage.",
+    "description": "Create fully customizable dashboards with a grid based, drag-and-drop editor and render them on the Record Home Page.",
 
-    "documentation": "README.md",
+    "documentation": "https://tertek.github.io/redcap-record-home-dashboard/",
 
     "authors": [
         {
