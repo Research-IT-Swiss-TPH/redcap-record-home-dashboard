@@ -1,6 +1,12 @@
 ## Documentation
 This is the documentation for Record Home Dashboard external module.
 
+### Overview
+
+1. [Introduction](#introduction)
+2. [Editor Usage](#editor-usage)
+3. [Manage Dashboard](#manage-dashboard)
+
 ### Introduction
 Before starting to create Dashboard it is important to know about the basic module design.
 
@@ -81,9 +87,9 @@ Renders a paginable table from repeating instrument data. Repeating instruments 
 *Instrument (Repeating)*: drop-select of repeating insrument that is the source of the table.
 *Columns*: multiple switch-select of columns that should be included into the table rendering. Maximum columns per table is 10!
 
-
-
 ![image](https://user-images.githubusercontent.com/75415872/143245183-5e9c85d5-74f5-486b-a873-6e548563035a.png)
+
+### Manage Dashboard
 
 
 
