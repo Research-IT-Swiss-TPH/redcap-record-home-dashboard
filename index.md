@@ -85,10 +85,9 @@ List elements whose value is empty will be omitted and not saved to the database
 ##### Table
 Renders a paginable table from repeating instrument data. Repeating instruments have to be enable through REDCap project settings and to be added in the project designer/dictionary. <br \>
 *Instrument (Repeating)*: drop-select of repeating insrument that is the source of the table.
-*Columns*: multiple switch-select of columns that should be included into the table rendering. Maximum columns per table is 10!
+*Columns*: multiple switch-select of columns that should be included into the table rendering. If none is selected, all columns will be rendered. Maximum columns per table is 10!
 
-![image](https://user-images.githubusercontent.com/75415872/143245183-5e9c85d5-74f5-486b-a873-6e548563035a.png)
-
+![image](https://user-images.githubusercontent.com/75415872/143249917-014e0e2c-77e4-4bc2-b634-0bd064d8a013.png)
 ### Manage Dashboard
 
 
