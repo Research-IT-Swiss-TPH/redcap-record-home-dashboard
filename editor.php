@@ -8,6 +8,7 @@ namespace STPH\recordHomeDashboard;
 
 renderPageTitle('<i class="fas fa-columns"></i> Dashboard Editor');
 
+/** @var \STPH\recordHomeDashboard\recordHomeDashboard $module */
 if( $module->isDisabledEditor() ) : ?>
 
     <!-- Dashboard Editor Disabled Message -->

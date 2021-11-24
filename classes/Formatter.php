@@ -13,7 +13,15 @@ namespace STPH\recordHomeDashboard;
 class Formatter
 {
 
-
+	/**
+	 * 
+	 * Renders date format
+	 * @param string $value
+	 * @param string $valtype
+	 * @return string
+	 * @since 1.0.0
+	 * 
+	 */
     public static function renderDateFormat($value, $valtype) {
         
         $format = self::getDateFormatDisplay($valtype);

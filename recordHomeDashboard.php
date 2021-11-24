@@ -24,6 +24,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
    /**
     * 
     * Renders Dashboard on Record Home Page
+    * @param string $project_id
     * @return void 
     * @since 1.0.0
     *
@@ -34,6 +35,91 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         }
     }
 
+   
+   /**
+    * 
+    * Renders the dashboard by including target Wrapper and Javascripts
+    * 
+    * @return void
+    * @since 1.0.0
+    *
+    */
+    private function renderDashboard() {
+        ?>
+        <!-- Insert Dashboard Render Wrapper so Vue.js can mount it -->
+        <div id="STPH_DASHBOARD_WRAPPER" style="display: none;">
+            <div id="STPH_DASHBOARD_RENDER"></div>            
+        </div>
+        <link rel="stylesheet" href="<?= $this->getUrl('dist/style.css')?>">
+        <script>
+            $(function() {
+                $(document).ready(function(){
+                    $('#center').addClass("<?= $this->displayClasses() ?>")
+                    $('#event_grid_table').after('<div id="record_home_dashboard_title"><?= $this->getProjectSetting('dashboard-title') == "" ? "Record Home Dashboard" : $this->getProjectSetting('dashboard-title') ?></div>');
+                    //  We have to move our wrapper element to the correct position and then show it
+                    let wrapper = $('#STPH_DASHBOARD_WRAPPER');
+                    $('#record_home_dashboard_title').after(wrapper)
+                    wrapper.show()
+                })
+            });
+        </script>        
+        <script>
+            const stph_rhd_getBaseUrlFromBackend = function() {
+                    return '<?= $this->getBaseUrl() ?>'
+            }
+
+            const stph_rhd_getBaseParametersFromBackend = function() {
+                return {
+                    project_id: '<?= $this->getProjectId() ?>',
+                    record: '<?= htmlentities($_GET['id'], ENT_QUOTES) ?>',
+                    event: '<?= $this->getEventId() ?>'
+                }
+            }
+
+        </script>        
+        <script src="<?= $this->getUrl("./dist/appRender.js") ?>"></script>
+    <?php
+    }
+
+   /**  
+    * 
+    * Gets Display options for current user (xor impersonifed user)
+    *   
+    * @return mixed
+    * @since 1.0.0
+    *
+    */  
+    private function getDisplayOptions() {
+        $current_user = "";
+        $userRights = [];
+        $userRole = "";
+        $displayOptions = [];
+        $current_user = $this->getUser();
+        # Check if Impersonification is active (trumps super-user)
+        if(\UserRights::isImpersonatingUser()){
+            $current_user = $_SESSION['impersonate_user'][PROJECT_ID]['impersonating'];
+        }
+
+        $userRights = \REDCap::getUserRights($current_user);
+        if($userRights) {
+            $userRole = $userRights[$current_user]["role_id"];
+        }
+
+        if($userRole) {
+            $allDisplayOptions = $this->getSubSettings("display-option");
+            $displayOptions = reset(array_filter( $allDisplayOptions, function($e) use ($userRole) {
+                    return $e["user-role"] == $userRole;
+                })
+            );
+        }
+
+        if($displayOptions) {
+            return $displayOptions;
+        }
+
+        return null;
+    }        
+    
    /**
     * 
     * Gets all instances needed for table data and ensures dates are formatted correctly
@@ -49,6 +135,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     private function getInstancesData( $project_id , $record, $instrument, $fields=null) {
 
         $field_names_array = [];
+        $params = [];
+        $instances = [];
+
         //  Get a list of all fields for a form if not specified
         if($fields == null) {
             $fields = $this->getFieldNames($instrument);
@@ -97,73 +186,16 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
 
         return $instances;
     }
-
-   /**
-    * 
-    * Renders the dashboard by including target Wrapper and Javascripts
-    * 
-    * @return void
-    * @since 1.0.0
-    *
-    */
-    private function renderDashboard() {
-        ?>
-        <!-- Insert Dashboard Render Wrapper so Vue.js can mount it -->
-        <div id="STPH_DASHBOARD_WRAPPER" style="display: none;">
-            <div id="STPH_DASHBOARD_RENDER"></div>            
-        </div>
-        <link rel="stylesheet" href="<?= $this->getUrl('dist/style.css')?>">
-        <script>
-            $(function() {
-                $(document).ready(function(){
-                    $('#center').addClass("<?= $this->displayClasses() ?>")
-                    $('#event_grid_table').after('<div id="record_home_dashboard_title"><?= $this->getProjectSetting('dashboard-title') == "" ? "Record Home Dashboard" : $this->getProjectSetting('dashboard-title') ?></div>');
-                    //  We have to move our wrapper element to the correct position and then show it
-                    let wrapper = $('#STPH_DASHBOARD_WRAPPER');
-                    $('#record_home_dashboard_title').after(wrapper)
-                    wrapper.show()
-                })
-            });
-        </script>        
-        <script>
-            const stph_rhd_getBaseUrlFromBackend = function() {
-                    return '<?= $this->getBaseUrl() ?>'
-            }
-
-            const stph_rhd_getBaseParametersFromBackend = function() {
-                return {
-                    project_id: '<?= $this->getProjectId() ?>',
-                    record: '<?= htmlentities($_GET['id'], ENT_QUOTES) ?>',
-                    event: '<?= $this->getEventId() ?>'
-                }
-            }
-
-        </script>        
-        <script src="<?= $this->getUrl("./dist/appRender.js") ?>"></script>
-    <?php
-    }   
     
 
-    //  ====    A P I      ====
-
-   /**  
-    * 
-    * Gets Base URL to Request Handler
-    *
-    * @return string
-    * @since 1.0.0
-    *
-    */
-    public function getBaseUrl(){
-        return $this->getUrl("requestHandler.php");
-    }
+   //  ====    A P I      ====
+   //  Called with Axios via RequestHandler
 
    /**  
     * 
     * Gets Dashboard Data from database
-    * --> Called via Axios over RequestHandler
     *
-    * @return string
+    * @return void
     * @since 1.0.0
     *
     */
@@ -175,9 +207,8 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
    /**  
     * 
     * Saves Dashboard Data into database
-    * --> Called via Axios over RequestHandler
     *
-    * @return string
+    * @return void
     * @since 1.0.0
     *
     */    
@@ -189,12 +220,11 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
    /**  
     * 
     * Renders Element Content for each type
-    * --> Called via Axios over RequestHandler
     *   
     * @param string $type
     * @param object $content
     * @param object $params
-    * @return string
+    * @return void
     * @since 1.0.0
     *
     */        
@@ -204,22 +234,29 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         $record = $params->record;
         $event_id = $params->event;
 
-        if( $type == "link") {
-            $response= Piping::replaceVariablesInLabel($content->url, $record, $event_id, 1, array(), true, $project_id, false);
-            if (filter_var($response, FILTER_VALIDATE_URL) === FALSE) {                
-                $this->sendError();
-            }
-        }
-
-        if ($type == "list") {
+        switch ($type) {
+            
+            case 'link':
+                $response= Piping::replaceVariablesInLabel($content->url, $record, $event_id, 1, array(), true, $project_id, false);
+                if (filter_var($response, FILTER_VALIDATE_URL) === FALSE) {                
+                    $this->sendError();
+                }                
+                break;
+            
+            case 'list';
             $response = [];
             foreach ($content as $key => $el) {
                 $response[] = Piping::replaceVariablesInLabel($el->value, $record, $event_id, 1, array(), true, $project_id, false);
-            }
-        }
+            }            
+            break;
 
-        if($type == "table") {
-            $response = $this->getInstancesData($project_id, $record, "contact_activity", $content->columns);
+            case 'table':
+            $response = $this->getInstancesData($project_id, $record, $content->instrument, $content->columns);                
+            break;
+
+            default:
+            $this->sendError();
+            break;
         }
 
         $this->sendResponse($response);
@@ -228,10 +265,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
    /**  
     * 
     * Gets field names for an instrument (needed for prefilling list modal)
-    * --> Called via Axios over RequestHandler
     *   
     * @param string $instrument
-    * @return string
+    * @return void
     * @since 1.0.0
     *
     */  
@@ -241,7 +277,19 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     }
 
 
-    //  ====    D I S P L A Y   O P T I O N S      ====
+    //  ====   H E L P E R S      ====
+
+   /**  
+    * 
+    * Gets Base URL to Request Handler
+    *
+    * @return string
+    * @since 1.0.0
+    *
+    */
+    public function getBaseUrl(){
+        return $this->getUrl("requestHandler.php");
+    }    
 
    /**  
     * 
@@ -253,6 +301,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     */  
     public function isDisabledEditor() {
 
+        $displayOptions = [];
         $displayOptions = $this->getDisplayOptions();
         if($displayOptions == null) {
             return false;
@@ -264,11 +313,12 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     * 
     *  Returns classes referencing to display options per user role
     *   
-    * @return bool
+    * @return string
     * @since 1.0.0
     *
     */      
     public function displayClasses() {
+        $displayOptions = [];
         $displayOptions = $this->getDisplayOptions();
 
         $classes = "";
@@ -281,46 +331,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $classes .= " hide-repeating_forms_table";
         }
         return $classes;
-    }
-
-
-   /**  
-    * 
-    * Gets Display options for current user (xor impersonifed user)
-    *   
-    * @return mixed
-    * @since 1.0.0
-    *
-    */  
-    private function getDisplayOptions() {
-
-        $current_user = $this->getUser();
-        # Check if Impersonification is active (trumps super-user)
-        if(\UserRights::isImpersonatingUser()){
-            $current_user = $_SESSION['impersonate_user'][PROJECT_ID]['impersonating'];
-        }
-
-        $userRights = \REDCap::getUserRights($current_user);
-        if($userRights) {
-            $userRole = $userRights[$current_user]["role_id"];
-        }
-
-        if($userRole) {
-            $allDisplayOptions = $this->getSubSettings("display-option");
-            $displayOptions = reset(array_filter( $allDisplayOptions, function($e) use ($userRole) {
-                    return $e["user-role"] == $userRole;
-                })
-            );
-        }
-
-        if($displayOptions) {
-            return $displayOptions;
-        }
-
-        return null;
     }    
-
-    //  ====   H E L P E R S      ====
 
    /**  
     * 
