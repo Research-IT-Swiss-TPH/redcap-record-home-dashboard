@@ -7,6 +7,7 @@ This is the documentation for Record Home Dashboard external module.
 2. [Editor Usage](#editor-usage)
 3. [Manage Dashboard](#manage-dashboard)
 4. [Additional Configuration](#additional-configuration)
+5. [Troubleshooting](#troubleshooting)
 
 ### Introduction
 Before starting to create Dashboard it is important to know about the basic module design.
@@ -123,4 +124,7 @@ The Render View is visible for any user on the Record Home Page of every Record.
 
 #### Custom Dashboard title
 A custom dashboard title can be set.
+
+### Troubleshooting
+If you are experiencing any problems while using the module please open an issue directly on Github. Do not forget to add as many useful information and screenshots as possible. [Github Issues for Record Home Dashboard](https://github.com/tertek/redcap-record-home-dashboard/issues)
 
