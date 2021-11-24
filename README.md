@@ -7,7 +7,7 @@ Install the module from REDCap module repository and enable over Control Center.
 
 ## Usage
 
-Please read the Documentation.
+Please read the [Documentation](https://tertek.github.io/redcap-record-home-dashboard/).
 
 ## Developer Notice
 
