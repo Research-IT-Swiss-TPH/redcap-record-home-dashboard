@@ -170,7 +170,7 @@
                                 content-cols-lg="9">                                
 
                                 <div v-for="field,idx in fields" :key="idx">
-                                    <b-form-checkbox  class="text-left font-weight-light" v-model="selected.fields[idx]"  name="check-button" switch>
+                                    <b-form-checkbox :disabled="columns.length > 9 && selected.fields[idx] != true"  class="text-left font-weight-light" v-model="selected.fields[idx]"  name="check-button" switch>
                                         {{ field }}
                                     </b-form-checkbox>
                                 </div>                              
@@ -335,6 +335,14 @@ export default {
 
         handleOk() {
 
+            //  Cleanup list content before handle: only include list elements where value is set
+            if(this.selected.type == "list") {
+                let filtered = this.content["list"].filter( (li) => {
+                    return li.value != ""
+                })
+                this.content["list"] = filtered
+            }
+
             let el = {
                 "type": this.selected.type,
                 "content": this.content[this.selected.type]
@@ -396,7 +404,9 @@ export default {
             //  Do not watch when setting initial values
             if( val.length !== 0 ) {
                 this.content.table.columns = val
-            }            
+            } else {
+                this.content.table.columns = []
+            }
         }
     }
 

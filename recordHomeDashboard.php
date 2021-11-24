@@ -138,9 +138,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         $params = [];
         $instances = [];
 
-        //  Get a list of all fields for a form if not specified
+        //  Get a list of all fields for a form if not specified and limit to 10 
         if($fields == null) {
-            $fields = $this->getFieldNames($instrument);
+            $fields = array_slice($this->getFieldNames($instrument), 0, 10);
         } 
         //  Prepare for fields query
         foreach ($fields as $key => $field) {

@@ -50051,7 +50051,7 @@ var render = function () {
                         ]
                       : [
                           _c("small", { staticClass: "font-weight-bold" }, [
-                            _vm._v(_vm._s(li.title) + ":"),
+                            _vm._v(_vm._s(li.title)),
                           ]),
                           _vm._v(" "),
                           _c("span", [_vm._v(_vm._s(_vm.render[idx]))]),

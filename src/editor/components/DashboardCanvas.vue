@@ -226,8 +226,11 @@ export default {
           })
           .then( response => {
             let json = response.data;
-            setTimeout(()=> {
+            setTimeout(()=> {                
                 this.rows = JSON.parse(json)
+                if(this.rows == null) {
+                    this.rows = []
+                }
                 this.toast("Successfully loaded", "Dashboard Data", 'success')
             }, 500)              
           })

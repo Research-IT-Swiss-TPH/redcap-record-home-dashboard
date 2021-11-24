@@ -37,7 +37,7 @@
                 </template>
                 
                 <template v-else>
-                 <small class="font-weight-bold">{{ li.title}}:</small>
+                 <small class="font-weight-bold">{{ li.title}}</small>
                  <span>{{ render[idx] }}</span>
                 </template>
 

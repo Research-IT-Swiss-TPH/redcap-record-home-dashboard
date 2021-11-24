@@ -2449,6 +2449,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   setTimeout(function () {
                     _this.rows = JSON.parse(json);
 
+                    if (_this.rows == null) {
+                      _this.rows = [];
+                    }
+
                     _this.toast("Successfully loaded", "Dashboard Data", 'success');
                   }, 500);
                 })["catch"](function (e) {
@@ -3242,6 +3246,14 @@ var ModalContent = /*#__PURE__*/function () {
       });
     },
     handleOk: function handleOk() {
+      //  Cleanup list content before handle: only include list elements where value is set
+      if (this.selected.type == "list") {
+        var filtered = this.content["list"].filter(function (li) {
+          return li.value != "";
+        });
+        this.content["list"] = filtered;
+      }
+
       var el = {
         "type": this.selected.type,
         "content": this.content[this.selected.type]
@@ -3297,6 +3309,8 @@ var ModalContent = /*#__PURE__*/function () {
       //  Do not watch when setting initial values
       if (val.length !== 0) {
         this.content.table.columns = val;
+      } else {
+        this.content.table.columns = [];
       }
     }
   }
@@ -55895,7 +55909,7 @@ var render = function () {
         [
           _vm.isDisabled
             ? _c("small", { staticClass: "text-muted text-monospace mr-1" }, [
-                _vm._v("Columns limit reached"),
+                _vm._v("(max. columns)"),
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -56644,6 +56658,12 @@ var render = function () {
                                                     staticClass:
                                                       "text-left font-weight-light",
                                                     attrs: {
+                                                      disabled:
+                                                        _vm.columns.length >
+                                                          9 &&
+                                                        _vm.selected.fields[
+                                                          idx
+                                                        ] != true,
                                                       name: "check-button",
                                                       switch: "",
                                                     },

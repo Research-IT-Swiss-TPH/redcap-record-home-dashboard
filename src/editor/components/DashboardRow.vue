@@ -7,7 +7,7 @@
                 </div>                
                 <div class="editor-row-menu float-right">
 
-                    <small class="text-muted text-monospace mr-1" v-if="isDisabled">Columns limit reached</small>
+                    <small class="text-muted text-monospace mr-1" v-if="isDisabled">(max. columns)</small>
 
                     <b-button :disabled="isDisabled" @click="handleEmit('add-column')" size="xs">
                         <i v-if="!isDisabled" class="fa fa-plus"></i>
