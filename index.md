@@ -14,6 +14,10 @@ Before starting to create Dashboard it is important to know about the basic modu
 #### Editor / Render View
 Record Home Dashboard module consists of two main views. The Editor View is used to create dashboards by adding a custom layout on top of the Grid System with applied Element Types. The Render View is embedded on the Record Home page of each record and renders the layout in the defined grid system with applied element types with the record as data source.
 
+![image](https://user-images.githubusercontent.com/75415872/143252854-9b820d4c-4d98-4236-bea3-66b654b54410.png)
+
+
+The Editor view is accessible through the External Modules navigation list as "Dashboard Editor". Per default any user assigned to the project can view and edit Dashboard Editor. 
 
 #### Grid System
 Record Home Dashboard uses a grid system to create the dashboard layout. This is common practise and ensures that content can be structured logically while maintaining readbility and design.
@@ -109,7 +113,7 @@ The dashboard can be managed through the upper right menu "Manage". The menu con
 ### Additional Configuration
 
 #### Display Options
-The Editor view is accessible through the External Modules navigation list as "Dashboard Editor". Per default any user assigned to the project can view and edit Dashboard Editor. To disable Editor View for specific users, Display Options can be assigned for different user-roles in the module configuration on project level.
+To disable Editor View for specific users, Display Options can be assigned for different user-roles in the module configuration on project level.
 
 ![image](https://user-images.githubusercontent.com/75415872/143218228-10290d8b-c547-4b06-85f7-dbfda77ef688.png)
 
