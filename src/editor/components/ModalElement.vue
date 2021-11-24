@@ -177,7 +177,11 @@
                                 </b-form-group>
 
                                <div v-if="columns && columns.length > 0">
-                                 Selected Columns: {{ columns.length }}
+                                   <b-alert variant="success" show><b>Selected Columns:</b> {{ columns.length }}</b-alert>
+                                 
+                               </div>
+                               <div v-else>
+                                   <b-alert show><b>No columns selected.</b> <br>All columns (max. 10) will be rendered.</b-alert>
                                </div>
 
                             </div>

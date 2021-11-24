@@ -50,7 +50,7 @@
         <template v-if="isRendering">
           <b-skeleton-table
             :rows="perPage"
-            :columns="element.content.columns.length"
+            :columns="element.content.columns.length || 3"
             :table-props="{ striped: true }"
           ></b-skeleton-table>
         </template>

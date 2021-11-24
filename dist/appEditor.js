@@ -3075,6 +3075,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
 var ModalContent = /*#__PURE__*/function () {
   function ModalContent() {
     _classCallCheck(this, ModalContent);
@@ -56700,14 +56704,52 @@ var render = function () {
                                       ),
                                       _vm._v(" "),
                                       _vm.columns && _vm.columns.length > 0
-                                        ? _c("div", [
-                                            _vm._v(
-                                              "\n                             Selected Columns: " +
-                                                _vm._s(_vm.columns.length) +
-                                                "\n                           "
-                                            ),
-                                          ])
-                                        : _vm._e(),
+                                        ? _c(
+                                            "div",
+                                            [
+                                              _c(
+                                                "b-alert",
+                                                {
+                                                  attrs: {
+                                                    variant: "success",
+                                                    show: "",
+                                                  },
+                                                },
+                                                [
+                                                  _c("b", [
+                                                    _vm._v("Selected Columns:"),
+                                                  ]),
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(_vm.columns.length)
+                                                  ),
+                                                ]
+                                              ),
+                                            ],
+                                            1
+                                          )
+                                        : _c(
+                                            "div",
+                                            [
+                                              _c(
+                                                "b-alert",
+                                                { attrs: { show: "" } },
+                                                [
+                                                  _c("b", [
+                                                    _vm._v(
+                                                      "No columns selected."
+                                                    ),
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("br"),
+                                                  _vm._v(
+                                                    "All columns (max. 10) will be rendered."
+                                                  ),
+                                                ]
+                                              ),
+                                            ],
+                                            1
+                                          ),
                                     ],
                                     1
                                   )
