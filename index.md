@@ -12,13 +12,6 @@ This is the documentation for Record Home Dashboard external module.
 ### Introduction
 Before starting to create Dashboard it is important to know about the basic module design.
 
-#### Editor / Render View
-Record Home Dashboard module consists of two main views. The Editor View is used to create dashboards by adding a custom layout on top of the Grid System with applied Element Types. The Render View is embedded on the Record Home page of each record and renders the layout in the defined grid system with applied element types with the record as data source.
-
-![image](https://user-images.githubusercontent.com/75415872/143252854-9b820d4c-4d98-4236-bea3-66b654b54410.png)
-
-
-The Editor view is accessible through the External Modules navigation list as "Dashboard Editor". Per default any user assigned to the project can view and edit Dashboard Editor. 
 
 #### Grid System
 Record Home Dashboard uses a grid system to create the dashboard layout. This is common practise and ensures that content can be structured logically while maintaining readbility and design.
@@ -30,6 +23,16 @@ In each column can be further "p" elements.
 ![image](https://user-images.githubusercontent.com/75415872/143214704-c4514352-e529-435b-a372-623e5d1412ed.png)
 
 *Fig. 2: Above example grid system consists of `n=3` rows, where the first row has `o=3`, the second row `o=2` and the third row `o=1` columns. Elements within columns are not shown to keep things simple.*
+
+It is recommended to have an idea of the dashboard layout **before** starting to use the editor. Otherwise the creation can take longer than needed.
+
+#### Editor / Render View
+Record Home Dashboard module consists of two main views. The Editor View is used to create dashboards by adding a custom layout on top of the Grid System with applied Element Types. The Render View is embedded on the Record Home page of each record and renders the layout in the defined grid system with applied element types with the record as data source.
+
+![image](https://user-images.githubusercontent.com/75415872/143252854-9b820d4c-4d98-4236-bea3-66b654b54410.png)
+
+
+The Editor view is accessible through the External Modules navigation list as "Dashboard Editor". Per default any user assigned to the project can view and edit Dashboard Editor. 
 
 #### Element Types
 Record Home Dashboard has different element types that can be included into each column. There currently available element types are:
