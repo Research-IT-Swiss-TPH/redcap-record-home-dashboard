@@ -1,6 +1,8 @@
 # Record Home Dashboard
 A REDCap External Module that enables to add a customized Dashboard to the Record Homepage
 
+**DISCLAIMER** Still in beta. Do not use in production
+
 ## Setup
 
 Install the module from REDCap module repository and enable over Control Center.
@@ -27,8 +29,4 @@ Read more about Psalm in the official [Psalm Manual](https://psalm.dev/docs/).
 Using laravel-mix for Vue.js development: `npm run dev` => `npx mix watch`
 [Laravel Mix Docs](https://laravel-mix.com/docs/6.0/api)
 
-## Changelog
 
-Version | Description
-------- | --------------------
-v1.0.0  | Initial release.
