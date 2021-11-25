@@ -89,12 +89,12 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     * @since 1.0.0
     *
     */  
-    private function getDisplayOptions() {
+    private function getDisplayOptions() {        
         $current_user = "";
         $userRights = [];
         $userRole = "";
         $displayOptions = [];
-        $current_user = $this->getUser();
+        $current_user = ($this->getUser())->username;
         # Check if Impersonification is active (trumps super-user)
         if(\UserRights::isImpersonatingUser()){
             $current_user = $_SESSION['impersonate_user'][PROJECT_ID]['impersonating'];
