@@ -41,13 +41,13 @@
                             :key="index" 
                             :r_id="index"
                             :col_num="row.columns.length"
-                            @delete-row="rowRemove( $event )" 
+                            @confirm-delete="confirmDelete( $event, 'row' )"
                             @add-column="columnAdd( $event )"
                             >
                             <dashboard-column :columns="row.columns"
                                 :r_id="index"
                                 @add-element="elementAdd( $event )"
-                                @delete-column="columnRemove( $event )"
+                                @confirm-delete="confirmDelete( $event, 'column' )"
                                 @open-modal-element="handleModalElement( $event )"
                                 @end-col-drag="handleReorderElement('Column')"
                                 v-slot="{elements, c_id}">
@@ -56,7 +56,7 @@
                                     :r_id="index"
                                     :c_id="c_id"
                                     :elements="elements"
-                                    @delete-element="elementRemove( $event )"
+                                    @confirm-delete="confirmDelete( $event, 'element' )"                                    
                                     @open-modal-element="handleModalElement( $event )"
                                     @end-element-drag="handleReorderElement('Element')"
                                 />                        
@@ -73,6 +73,23 @@
                 </div>
             </div>
         </b-overlay>
+
+        <!-- Confirm Delete modal -->
+        <b-modal
+            centered
+            :title="'Delete '+deletion.ctx"
+            id="confirm-delete-modal"
+            size="sm">
+            <p class="my-4">Are you sure to delete this element?</p>            
+            <template #modal-footer="{cancel}">
+                <b-button @click="cancel()">
+                    Cancel
+                </b-button>                         
+                <b-button variant="danger" @click="handleDelete(deletion)">
+                    Delete
+                </b-button>                            
+            </template>
+        </b-modal>
 
         <!-- Element modal component -->
         <modal-element
@@ -125,6 +142,7 @@
             </template>
         </b-modal>
 
+        <!-- Reset Modal -->
         <b-modal
             @ok="handleReset"            
             centered scrollable
@@ -169,7 +187,11 @@ export default {
             isOverlayed: true,
             importFile: null,
             importJSON: "",
-            error: false
+            error: false,
+            deletion: {
+                target: "",
+                ctx: ""
+            }
         }
     },
     methods: {
@@ -217,6 +239,11 @@ export default {
         handleReorderElement(el) {
             this.saveDashboardData( el + ' order changed' )
         },
+        confirmDelete(target, ctx) {
+            this.deletion.target = target
+            this.deletion.ctx = ctx
+            this.$bvModal.show('confirm-delete-modal')
+        },
         async loadDashboardData() {
 
           this.axios({
@@ -262,6 +289,20 @@ export default {
                     this.isOverlayed = false
                 }, 500)
             })
+        },
+
+        handleDelete(deletion){
+            if(deletion.ctx == 'row') {
+                this.rowRemove(deletion.target)
+            } 
+            else if(deletion.ctx == 'column') {
+                this.columnRemove(deletion.target)
+            }
+            else if(deletion.ctx == 'element') {
+                this.elementRemove(deletion.target)
+            }
+            
+            this.$bvModal.hide('confirm-delete-modal')
         },
 
         handleExport() {

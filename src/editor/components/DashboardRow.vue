@@ -14,9 +14,9 @@
                         <i v-else class="fa fa-ban"></i>
                     </b-button>
 
-                    <b-button  @click="handleEmit('delete-row')" size="xs">
+                    <b-button @click="handleEmit('confirm-delete')" size="xs">
                         <i class="fa fa-trash-alt"></i>
-                    </b-button>
+                    </b-button>                
 
                 </div>
 
@@ -24,6 +24,21 @@
             <div class="card-body">
                 <slot></slot>
             </div>
+            <b-modal 
+                centered
+                @ok="handleEmit('delete-row')"
+                size="sm"
+                id="modal-confirm-delete" title="Confirm Deletion">
+                <template #modal-footer="{ ok, cancel}">
+                    <b-button @click="cancel()">
+                        Cancel
+                    </b-button>                         
+                    <b-button variant="danger" @click="ok()">
+                        Delete
+                    </b-button>                            
+                </template>
+                <p class="my-4">Are you sure to delete this element?</p>
+            </b-modal>
         </div>        
 </template>
 
@@ -40,21 +55,15 @@ export default {
     ],
     methods: {
         handleEmit(event) {
-            switch (event) {
-                case 'delete-row':
-                    this.$emit('delete-row', this.r_id)
-                    break
-                case 'add-column':
-                    this.$emit('add-column', this.r_id)
-                    break
-                default:
-                    break
-            }
+            this.$emit(event, this.r_id)        
         }
     },
     computed: {
         isDisabled() {
             return this.col_num >= this.max_col_per_row
+        },
+        deletion() {
+
         }
     }
 

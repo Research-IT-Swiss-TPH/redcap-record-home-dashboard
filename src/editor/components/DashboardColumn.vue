@@ -1,5 +1,5 @@
 <template>
-    <div>        
+    <div>
         <draggable 
             class="row"
             :list="columns"
@@ -21,9 +21,9 @@
                         <i class="fa fa-plus"></i>
                     </b-button>
 
-                    <b-button @click="handleEmit('delete-column', index)" size="xs">
+                    <b-button @click="handleEmit('confirm-delete', index)" size="xs">
                         <i class="fa fa-trash-alt"></i>
-                    </b-button>                          
+                    </b-button>                                        
 
                 </div>                
             </div>
@@ -35,7 +35,6 @@
                         :elements="column.elements">
                     </slot>                    
                 </div>
-
             </div>                            
         </div>
         </div>
@@ -57,13 +56,7 @@ export default {
     ],
     methods: {
         handleEmit(event, c_id) {
-            let params = {
-                "c_id": c_id,
-                "r_id": this.r_id,
-                "e_id": null
-            }
-            
-            this.$emit(event, params)
+            this.$emit(event, { "c_id": c_id, "r_id": this.r_id, "e_id": null })          
         }
     }
 }

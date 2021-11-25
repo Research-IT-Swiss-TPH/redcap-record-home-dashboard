@@ -16,11 +16,12 @@
                 <div class="editor-row-menu float-right">
                     <b-button  @click="handleEmit('open-modal-element', index)" size="xs">
                         <i class="fa fa-edit"></i>
-                    </b-button>                    
+                    </b-button>
 
-                    <b-button  @click="handleEmit('delete-element', index)" size="xs">
+                    <b-button  @click="handleEmit('confirm-delete', index)" size="xs">
                         <i class="fa fa-trash-alt"></i>
                     </b-button>
+
                 </div>
             </div>
             <render-element

@@ -2358,6 +2358,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2380,7 +2398,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isOverlayed: true,
       importFile: null,
       importJSON: "",
-      error: false
+      error: false,
+      deletion: {
+        target: "",
+        ctx: ""
+      }
     };
   },
   methods: {
@@ -2431,6 +2453,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     handleReorderElement: function handleReorderElement(el) {
       this.saveDashboardData(el + ' order changed');
+    },
+    confirmDelete: function confirmDelete(target, ctx) {
+      this.deletion.target = target;
+      this.deletion.ctx = ctx;
+      this.$bvModal.show('confirm-delete-modal');
     },
     loadDashboardData: function loadDashboardData() {
       var _this = this;
@@ -2503,6 +2530,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2);
       }))();
+    },
+    handleDelete: function handleDelete(deletion) {
+      if (deletion.ctx == 'row') {
+        this.rowRemove(deletion.target);
+      } else if (deletion.ctx == 'column') {
+        this.columnRemove(deletion.target);
+      } else if (deletion.ctx == 'element') {
+        this.elementRemove(deletion.target);
+      }
+
+      this.$bvModal.hide('confirm-delete-modal');
     },
     handleExport: function handleExport() {
       var blob = new Blob([JSON.stringify(this.rows)], {
@@ -2661,7 +2699,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -2670,12 +2707,11 @@ __webpack_require__.r(__webpack_exports__);
   props: ['columns', 'r_id'],
   methods: {
     handleEmit: function handleEmit(event, c_id) {
-      var params = {
+      this.$emit(event, {
         "c_id": c_id,
         "r_id": this.r_id,
         "e_id": null
-      };
-      this.$emit(event, params);
+      });
     }
   }
 });
@@ -2696,6 +2732,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.umd.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _RenderElement_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RenderElement.vue */ "./src/editor/components/RenderElement.vue");
+//
 //
 //
 //
@@ -2808,6 +2845,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -2817,24 +2869,14 @@ __webpack_require__.r(__webpack_exports__);
   props: ['r_id', 'col_num'],
   methods: {
     handleEmit: function handleEmit(event) {
-      switch (event) {
-        case 'delete-row':
-          this.$emit('delete-row', this.r_id);
-          break;
-
-        case 'add-column':
-          this.$emit('add-column', this.r_id);
-          break;
-
-        default:
-          break;
-      }
+      this.$emit(event, this.r_id);
     }
   },
   computed: {
     isDisabled: function isDisabled() {
       return this.col_num >= this.max_col_per_row;
-    }
+    },
+    deletion: function deletion() {}
   }
 });
 
@@ -55341,8 +55383,8 @@ var render = function () {
                                 col_num: row.columns.length,
                               },
                               on: {
-                                "delete-row": function ($event) {
-                                  return _vm.rowRemove($event)
+                                "confirm-delete": function ($event) {
+                                  return _vm.confirmDelete($event, "row")
                                 },
                                 "add-column": function ($event) {
                                   return _vm.columnAdd($event)
@@ -55356,8 +55398,8 @@ var render = function () {
                                   "add-element": function ($event) {
                                     return _vm.elementAdd($event)
                                   },
-                                  "delete-column": function ($event) {
-                                    return _vm.columnRemove($event)
+                                  "confirm-delete": function ($event) {
+                                    return _vm.confirmDelete($event, "column")
                                   },
                                   "open-modal-element": function ($event) {
                                     return _vm.handleModalElement($event)
@@ -55381,10 +55423,13 @@ var render = function () {
                                               elements: elements,
                                             },
                                             on: {
-                                              "delete-element": function (
+                                              "confirm-delete": function (
                                                 $event
                                               ) {
-                                                return _vm.elementRemove($event)
+                                                return _vm.confirmDelete(
+                                                  $event,
+                                                  "element"
+                                                )
                                               },
                                               "open-modal-element": function (
                                                 $event
@@ -55442,6 +55487,57 @@ var render = function () {
                 : _vm._e(),
             ]
           ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            centered: "",
+            title: "Delete " + _vm.deletion.ctx,
+            id: "confirm-delete-modal",
+            size: "sm",
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "modal-footer",
+              fn: function (ref) {
+                var cancel = ref.cancel
+                return [
+                  _c(
+                    "b-button",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return cancel()
+                        },
+                      },
+                    },
+                    [_vm._v("\n                Cancel\n            ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { variant: "danger" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.handleDelete(_vm.deletion)
+                        },
+                      },
+                    },
+                    [_vm._v("\n                Delete\n            ")]
+                  ),
+                ]
+              },
+            },
+          ]),
+        },
+        [
+          _c("p", { staticClass: "my-4" }, [
+            _vm._v("Are you sure to delete this element?"),
+          ]),
         ]
       ),
       _vm._v(" "),
@@ -55738,7 +55834,7 @@ var render = function () {
                           attrs: { size: "xs" },
                           on: {
                             click: function ($event) {
-                              return _vm.handleEmit("delete-column", index)
+                              return _vm.handleEmit("confirm-delete", index)
                             },
                           },
                         },
@@ -55853,7 +55949,7 @@ var render = function () {
                           attrs: { size: "xs" },
                           on: {
                             click: function ($event) {
-                              return _vm.handleEmit("delete-element", index)
+                              return _vm.handleEmit("confirm-delete", index)
                             },
                           },
                         },
@@ -55899,60 +55995,123 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card editor-row" }, [
-    _c("div", { staticClass: "card-header row-header row-handle" }, [
-      _c("div", { staticClass: "float-left" }, [
-        _c("small", { staticClass: "text-muted" }, [
-          _vm._v("Row - #" + _vm._s(_vm.r_id + 1) + " "),
+  return _c(
+    "div",
+    { staticClass: "card editor-row" },
+    [
+      _c("div", { staticClass: "card-header row-header row-handle" }, [
+        _c("div", { staticClass: "float-left" }, [
+          _c("small", { staticClass: "text-muted" }, [
+            _vm._v("Row - #" + _vm._s(_vm.r_id + 1) + " "),
+          ]),
         ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "editor-row-menu float-right" },
+          [
+            _vm.isDisabled
+              ? _c("small", { staticClass: "text-muted text-monospace mr-1" }, [
+                  _vm._v("(max. columns)"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { disabled: _vm.isDisabled, size: "xs" },
+                on: {
+                  click: function ($event) {
+                    return _vm.handleEmit("add-column")
+                  },
+                },
+              },
+              [
+                !_vm.isDisabled
+                  ? _c("i", { staticClass: "fa fa-plus" })
+                  : _c("i", { staticClass: "fa fa-ban" }),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-button",
+              {
+                attrs: { size: "xs" },
+                on: {
+                  click: function ($event) {
+                    return _vm.handleEmit("confirm-delete")
+                  },
+                },
+              },
+              [_c("i", { staticClass: "fa fa-trash-alt" })]
+            ),
+          ],
+          1
+        ),
       ]),
       _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [_vm._t("default")], 2),
+      _vm._v(" "),
       _c(
-        "div",
-        { staticClass: "editor-row-menu float-right" },
+        "b-modal",
+        {
+          attrs: {
+            centered: "",
+            size: "sm",
+            id: "modal-confirm-delete",
+            title: "Confirm Deletion",
+          },
+          on: {
+            ok: function ($event) {
+              return _vm.handleEmit("delete-row")
+            },
+          },
+          scopedSlots: _vm._u([
+            {
+              key: "modal-footer",
+              fn: function (ref) {
+                var ok = ref.ok
+                var cancel = ref.cancel
+                return [
+                  _c(
+                    "b-button",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return cancel()
+                        },
+                      },
+                    },
+                    [_vm._v("\n                Cancel\n            ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { variant: "danger" },
+                      on: {
+                        click: function ($event) {
+                          return ok()
+                        },
+                      },
+                    },
+                    [_vm._v("\n                Delete\n            ")]
+                  ),
+                ]
+              },
+            },
+          ]),
+        },
         [
-          _vm.isDisabled
-            ? _c("small", { staticClass: "text-muted text-monospace mr-1" }, [
-                _vm._v("(max. columns)"),
-              ])
-            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "b-button",
-            {
-              attrs: { disabled: _vm.isDisabled, size: "xs" },
-              on: {
-                click: function ($event) {
-                  return _vm.handleEmit("add-column")
-                },
-              },
-            },
-            [
-              !_vm.isDisabled
-                ? _c("i", { staticClass: "fa fa-plus" })
-                : _c("i", { staticClass: "fa fa-ban" }),
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "b-button",
-            {
-              attrs: { size: "xs" },
-              on: {
-                click: function ($event) {
-                  return _vm.handleEmit("delete-row")
-                },
-              },
-            },
-            [_c("i", { staticClass: "fa fa-trash-alt" })]
-          ),
-        ],
-        1
+          _c("p", { staticClass: "my-4" }, [
+            _vm._v("Are you sure to delete this element?"),
+          ]),
+        ]
       ),
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [_vm._t("default")], 2),
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
