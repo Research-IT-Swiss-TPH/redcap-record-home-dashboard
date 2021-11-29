@@ -18,6 +18,7 @@ if( file_exists("vendor/autoload.php") ){
 
 //  used for list rendering
 use \Piping;
+use \REDCap;
 
 class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
 
@@ -100,7 +101,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $current_user = $_SESSION['impersonate_user'][PROJECT_ID]['impersonating'];
         }
 
-        $userRights = \REDCap::getUserRights($current_user);
+        $userRights = REDCap::getUserRights($current_user);
         if($userRights) {
             $userRole = $userRights[$current_user]["role_id"];
         }
@@ -169,7 +170,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             "return_format" => "json",
             "fields" => $fields
         );
-        $data = json_decode(\Redcap::getData($params), true);
+        $data = json_decode(REDCap::getData($params), true);
 
         //  Use Formatter Class to render date formats correctly
         if (!class_exists("Formatter")) include_once("classes/Formatter.php");
