@@ -77,6 +77,10 @@ Renders a button with hyperlink.<br />
 
 ![image](https://user-images.githubusercontent.com/75415872/143240229-3fdb8e24-e559-4c32-929c-911b25aca31a.png)
 
+**Note:** Multiple events are supported. By default any piped element will resolve to first event. To reference another event use:
+
+`[event_name][variable]`
+
 
 ##### List
 Renders a list of multiple list elements. A list element can be added by clicking on the "Add" button below the last editable list element.<br />
