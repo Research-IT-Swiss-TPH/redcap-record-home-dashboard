@@ -29,7 +29,7 @@ if( $module->isDisabledEditor() ) : ?>
         }
 
         const stph_rhd_getRepeatingInstruments = function() {
-            return <?= json_encode($module->getRepeatingForms()) ?>
+            return <?= json_encode($module->getSafeRepeatingForms()) ?>
         }
 
     </script>

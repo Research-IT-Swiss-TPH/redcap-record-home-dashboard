@@ -22,6 +22,29 @@ use \REDCap;
 
 class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
 
+
+    /** @var object */    
+    protected $project_settings;
+    protected $hasMultipleEvents;
+    protected $hasMultipleArms;
+    protected $events;
+
+   /**
+    *   Constructs the class
+    *   @return void
+    *   @since 1.0.0
+    *
+    */
+    public function __construct() {        
+        parent::__construct();
+        global $Proj;
+
+        $this->project_settings = $Proj;
+        $this->hasMultipleEvents= $Proj->longitudinal;
+        $this->hasMultipleArms = $Proj->multiple_arms;
+        $this->events = array_keys($Proj->eventsForms);
+    }    
+
    /**
     * 
     * Renders Dashboard on Record Home Page
@@ -73,7 +96,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
                 return {
                     project_id: '<?= $this->getProjectId() ?>',
                     record: '<?= htmlentities($_GET['id'], ENT_QUOTES) ?>',
-                    event: '<?= $this->getEventId() ?>'
+                    
                 }
             }
 
@@ -161,23 +184,41 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             }
         }         
 
-        //  Fetch all data as JSON so that labels (piped values) are exported
+        //  Fetch all data as JSON so that labels (piped values) are exported (all events)
         $params = array(
             "project_id" => $project_id,
             "records" =>$record,
             "exportAsLabels" => true,
             "exportDataAccessGroups" => true,
             "return_format" => "json",
-            "fields" => $fields
+            "fields" => $fields,
+            "returnIncludeRecordEventArray"=> true
         );
         $data = json_decode(REDCap::getData($params), true);
+
+        //  Filter by instrument
+        $instrument_name = REDCap::getInstrumentNames($instrument);
+        $mapped = array_map(function($instance) use($instrument_name){
+            //  case-insensitive compare because instrument name may be capitalized
+            if( strcasecmp($instance["redcap_repeat_instrument"], $instrument_name) == 0 ) {
+                //  Remove Record Event Info
+                unset($instance["record_id"]);
+                unset($instance["redcap_event_name"]);
+                unset($instance["redcap_repeat_instrument"]);
+                unset($instance["redcap_repeat_instance"]);
+                return $instance;
+            } else {
+                return false;
+            }
+        }, $data);
+        $filtered = array_filter($mapped);        
 
         //  Use Formatter Class to render date formats correctly
         if (!class_exists("Formatter")) include_once("classes/Formatter.php");
         $formatter = new Formatter;
 
         //  Reset final array and handle field formatting
-        foreach ($data as $key => $instance) {
+        foreach ($filtered as $key => $instance) {
             //  Adjust formatting (dates)
             foreach ($array_to_format as $field_to_format => $valtype) {                    
                 $instance[$field_to_format] = $formatter::renderDateFormat($instance[$field_to_format], $valtype);
@@ -233,7 +274,8 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         
         $project_id = $params->project_id;
         $record = $params->record;
-        $event_id = $params->event;
+        //$event_id = $params->event;
+        $event_id =null;
 
         switch ($type) {
             
@@ -279,6 +321,30 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
 
 
     //  ====   H E L P E R S      ====
+
+   /**  
+    * 
+    * Gets Repeating Forms for single or multiple events projects
+    *
+    * @return array
+    * @since 1.0.0
+    *
+    */
+    public function getSafeRepeatingForms() {
+
+        $repeatingForms = [];
+        if($this->hasMultipleEvents) {                       
+            //  Stack repeating forms for all events
+            foreach ($this->events as $event) {
+                $repeatingForms = array_merge( $repeatingForms, $this->getRepeatingForms($event, PROJECT_ID));
+            }
+            //  Remove duplicates
+            $repeatingForms = array_unique($repeatingForms);
+        } else {
+            $repeatingForms = $this->getRepeatingForms();
+        }
+        return $repeatingForms;
+    }
 
    /**  
     * 
