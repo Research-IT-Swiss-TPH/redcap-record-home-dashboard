@@ -6,8 +6,8 @@ if ($_REQUEST['action'] == 'get-dashboard-data') {
     $module->getDashboardData();
 }
 
-else if($_REQUEST['action'] == 'save-dashboard-data') {
-    $module->saveDashboardData($_REQUEST['new']);
+else if($_POST['action'] == 'save-dashboard-data') {
+    $module->saveDashboardData($_POST['new']);
 }
 
 else if($_REQUEST['action'] == 'render-element-content') {

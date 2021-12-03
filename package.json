@@ -21,6 +21,7 @@
     "axios": "^0.24.0",
     "bootstrap-vue": "^2.21.2",
     "laravel-mix": "^6.0.34",
+    "qs": "^6.10.1",
     "resolve-url-loader": "^4.0.0",
     "sass": "^1.43.4",
     "sass-loader": "^12.1.0",

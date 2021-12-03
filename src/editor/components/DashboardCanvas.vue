@@ -172,6 +172,9 @@ import ModalElement from './ModalElement.vue'
 import draggable from 'vuedraggable'
 import loader from '../../loader.vue'
 
+import qs from 'qs';
+
+
 export default {
     components: {
         DashboardRow,
@@ -271,13 +274,17 @@ export default {
             }, 500)              
           })
         },
-        async saveDashboardData(msg) {
-            this.isOverlayed = true
+
+        async saveDashboardData(msg)  {        
+            this.isOverlayed = true    
+            const data = {
+                    action: 'save-dashboard-data',
+                    new: JSON.stringify(this.rows)                    
+            }
             this.axios({
-                params: {
-                action: 'save-dashboard-data',
-                new: JSON.stringify(this.rows)
-                }
+                method: 'POST',                
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: qs.stringify(data)
             })
             .then( response => {
                 this.toast(msg, "Changes saved", 'success')
