@@ -2284,6 +2284,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element'],
   data: function data() {
@@ -2309,7 +2312,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     action: 'render-element-content',
                     type: _this.element.type,
                     content: JSON.stringify(_this.element.content),
-                    params: stph_rhd_getBaseParametersFromBackend()
+                    params: stph_rhd_getBaseParametersFromBackend(),
+                    event: null
                   }
                 }).then(function (response) {
                   var json = response.data;
@@ -2340,6 +2344,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return textDecorations;
+    },
+    dynamicSlot: function dynamicSlot(input) {
+      return "cell(" + input + ")";
     }
   },
   mounted: function mounted() {
@@ -50054,7 +50061,9 @@ var render = function () {
                             _vm._v(_vm._s(li.title)),
                           ]),
                           _vm._v(" "),
-                          _c("span", [_vm._v(_vm._s(_vm.render[idx]))]),
+                          _c("span", {
+                            domProps: { innerHTML: _vm._s(_vm.render[idx]) },
+                          }),
                         ],
                   ],
                   2
@@ -50090,6 +50099,19 @@ var render = function () {
                       "current-page": _vm.currentPage,
                       items: _vm.render,
                     },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "cell()",
+                        fn: function (ref) {
+                          var value = ref.value
+                          return [
+                            _c("span", {
+                              domProps: { innerHTML: _vm._s(value) },
+                            }),
+                          ]
+                        },
+                      },
+                    ]),
                   }),
                   _vm._v(" "),
                   _c("b-pagination", {

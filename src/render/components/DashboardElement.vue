@@ -38,7 +38,7 @@
                 
                 <template v-else>
                  <small class="font-weight-bold">{{ li.title}}</small>
-                 <span>{{ render[idx] }}</span>
+                 <span v-html="render[idx]"></span>
                 </template>
 
         </b-list-group-item>
@@ -63,6 +63,9 @@
             size="sm"
             :current-page="currentPage"
             :items="render">
+            <template #cell()="{value}">
+              <span v-html="value"></span>
+            </template>
           </b-table>
         <b-pagination
           v-model="currentPage"
@@ -101,7 +104,8 @@ export default {
               action: 'render-element-content',
               type: this.element.type,
               content: JSON.stringify(this.element.content),
-              params: stph_rhd_getBaseParametersFromBackend()
+              params: stph_rhd_getBaseParametersFromBackend(),
+              event: null
             }
           })
           .then( response => {
@@ -128,6 +132,9 @@ export default {
         
         return textDecorations
 
+      },
+      dynamicSlot(input){
+        return "cell("+input+")"
       }
     },
     mounted() {
