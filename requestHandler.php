@@ -13,8 +13,9 @@ else if($_POST['action'] == 'save-dashboard-data') {
 else if($_REQUEST['action'] == 'render-element-content') {
     $type = htmlentities($_REQUEST['type'], ENT_QUOTES);
     $content = json_decode($_REQUEST['content']);
-    $params = json_decode($_REQUEST['params']);    
-    $module->renderElementContent($type, $content, $params);
+    $params = json_decode($_REQUEST['params']);
+    $event = json_decode($_REQUEST['event']);
+    $module->renderElementContent($type, $content, $params, $event);
 }
 
 else if($_REQUEST['action'] == 'get-field-for-instrument') {

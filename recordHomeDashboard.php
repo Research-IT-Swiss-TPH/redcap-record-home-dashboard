@@ -53,8 +53,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     * @since 1.0.0
     *
     */
-    public function redcap_every_page_top($project_id = null) {
+    public function redcap_every_page_top($project_id = null) {        
         if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) ) {
+            dump($this->getFirstEventId($project_id));
             $this->renderDashboard();            
         }
     }
@@ -95,8 +96,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             const stph_rhd_getBaseParametersFromBackend = function() {
                 return {
                     project_id: '<?= $this->getProjectId() ?>',
-                    record: '<?= htmlentities($_GET['id'], ENT_QUOTES) ?>',
-                    
+                    record: '<?= htmlentities($_GET['id'], ENT_QUOTES) ?>'                    
                 }
             }
 
@@ -270,13 +270,16 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     * @since 1.0.0
     *
     */        
-    public function renderElementContent($type, $content, $params) {
+    public function renderElementContent($type, $content, $params, $event) {
         
         $project_id = $params->project_id;
         $record = $params->record;
-        //$event_id = $params->event;
-        $event_id =null;
-
+        $event_id = $event;
+        if($event_id == null) {
+            $event_id = $this->getFirstEventId($project_id);
+            //$event_id = $this->getEventId();
+        }
+        
         switch ($type) {
             
             case 'link':
