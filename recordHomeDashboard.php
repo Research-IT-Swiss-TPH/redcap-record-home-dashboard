@@ -43,6 +43,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         $this->hasMultipleEvents= $Proj->longitudinal;
         $this->hasMultipleArms = $Proj->multiple_arms;
         $this->events = array_keys($Proj->eventsForms);
+        $this->table_pk = $Proj->table_pk;
     }    
 
    /**
@@ -54,7 +55,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     *
     */
     public function redcap_every_page_top($project_id = null) {        
-        if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) ) {            
+        if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) ) {      
             $this->renderDashboard();
         }
     }
@@ -156,7 +157,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     *
     */    
     private function getInstancesData( $project_id , $record, $instrument, $fields=null) {
-
+        
         $field_names_array = [];
         $params = [];
         $instances = [];
@@ -201,7 +202,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             //  case-insensitive compare because instrument name may be capitalized
             if( strcasecmp($instance["redcap_repeat_instrument"], $instrument_name) == 0 ) {
                 //  Remove Record Event Info
-                unset($instance["record_id"]);
+                //  Hard coded...
+                unset($instance[$this->table_pk]);
+                unset($instance["redcap_data_access_group"]);
                 unset($instance["redcap_event_name"]);
                 unset($instance["redcap_repeat_instrument"]);
                 unset($instance["redcap_repeat_instance"]);
