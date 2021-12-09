@@ -55,7 +55,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     *
     */
     public function redcap_every_page_top($project_id = null) {        
-        if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) ) {      
+        if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) && defined('USERID') ) {      
             $this->renderDashboard();
         }
     }
