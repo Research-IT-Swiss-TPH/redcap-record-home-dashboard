@@ -228,7 +228,10 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $instances[] = $instance;
         }
 
-        return $instances;
+        //  Reverse order so that greates instance number is first
+        $reversed = array_reverse($instances);
+
+        return $reversed;
     }
     
 
