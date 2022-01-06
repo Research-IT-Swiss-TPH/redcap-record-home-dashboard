@@ -1,7 +1,8 @@
 # Record Home Dashboard
 A REDCap External Module that enables to add a customized Dashboard to the Record Homepage
 
-**DISCLAIMER** Still in beta. Do not use in production
+![Demo](record_home_dashboard_demo.gif)
+
 
 ## Setup
 
