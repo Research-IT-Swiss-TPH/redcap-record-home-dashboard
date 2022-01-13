@@ -42,7 +42,8 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         $this->project_settings = $Proj;
         $this->hasMultipleEvents= $Proj->longitudinal;
         $this->hasMultipleArms = $Proj->multiple_arms;
-        $this->events = array_keys($Proj->eventsForms);
+        //$this->events = array_keys($Proj->eventsForms);
+        $this->events = (is_array($Proj->eventsForms) ? array_keys($Proj->eventsForms) : null);
         $this->table_pk = $Proj->table_pk;
     }    
 
