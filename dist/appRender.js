@@ -2457,6 +2457,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    rowClass: function rowClass(len) {
+      return "row mb-1 mt-2 row-cols-" + len;
     }
   },
   mounted: function mounted() {
@@ -50194,7 +50197,7 @@ var render = function () {
             _vm._l(_vm.rows, function (row, index) {
               return _c(
                 "div",
-                { key: index, staticClass: "row mb-1 mt-2" },
+                { key: index, class: _vm.rowClass(row.columns.length) },
                 _vm._l(row.columns, function (col, index) {
                   return _c(
                     "div",

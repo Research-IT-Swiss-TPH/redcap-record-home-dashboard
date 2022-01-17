@@ -12,7 +12,7 @@
             </template>
 
             <div class="render-wrapper p-4">
-                  <div v-for="(row, index) in rows" :key="index" class="row mb-1 mt-2">
+                  <div v-for="(row, index) in rows" :key="index" :class=rowClass(row.columns.length)>
                       
                       <div v-for="(col, index) in row.columns" :key="index" class="col">
                           <dashboard-element 
@@ -47,7 +47,6 @@ export default {
             elementData: null
         }
     },
-
     methods: {
         async loadDashboardData() {
 
@@ -66,6 +65,10 @@ export default {
           .catch(e => {
             this.toastError(e)
           })
+        },
+
+        rowClass(len) {
+          return "row mb-1 mt-2 row-cols-"+len
         }
     },
 
