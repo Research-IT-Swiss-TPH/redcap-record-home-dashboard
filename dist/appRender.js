@@ -49987,14 +49987,11 @@ var render = function () {
     _vm.element.type == "text"
       ? _c("div", [
           _vm.element.content.title
-            ? _c(
-                "h2",
-                {
-                  staticClass: "lead mt-3",
-                  class: _vm.textDecorations(_vm.element.content.decoration),
-                },
-                [_vm._v(_vm._s(_vm.element.content.title))]
-              )
+            ? _c("h2", {
+                staticClass: "lead mt-3",
+                class: _vm.textDecorations(_vm.element.content.decoration),
+                domProps: { innerHTML: _vm._s(_vm.element.content.title) },
+              })
             : _c("div", { staticClass: "empty-text" }),
         ])
       : _vm.element.type == "link"

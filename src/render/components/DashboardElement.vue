@@ -2,7 +2,7 @@
   <div>
 
     <div v-if="element.type == 'text'">        
-        <h2 v-if="element.content.title" class="lead mt-3" :class="textDecorations(element.content.decoration)">{{ element.content.title }}</h2>
+        <h2 v-if="element.content.title" class="lead mt-3" :class="textDecorations(element.content.decoration)" v-html="element.content.title"></h2>
         <div class="empty-text" v-else></div>
     </div>
 
