@@ -62,7 +62,8 @@
             hover
             size="sm"
             :current-page="currentPage"
-            :items="render">
+            :fields="render.fields"
+            :items="render.items">
             <template #cell()="{value}">
               <span v-html="value"></span>
             </template>

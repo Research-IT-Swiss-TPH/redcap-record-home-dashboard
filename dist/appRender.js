@@ -2287,6 +2287,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element'],
   data: function data() {
@@ -50097,7 +50098,8 @@ var render = function () {
                       hover: "",
                       size: "sm",
                       "current-page": _vm.currentPage,
-                      items: _vm.render,
+                      fields: _vm.render.fields,
+                      items: _vm.render.items,
                     },
                     scopedSlots: _vm._u([
                       {

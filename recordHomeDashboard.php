@@ -55,8 +55,8 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     * @since 1.0.0
     *
     */
-    public function redcap_every_page_top($project_id = null) {        
-        if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) && defined('USERID') ) {      
+    public function redcap_every_page_top($project_id = null) {
+        if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) && defined('USERID') ) {
             $this->renderDashboard();
         }
     }
@@ -174,16 +174,21 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $field_names = implode(",", $field_names_array);
 
         //  Gets all element validation types (mainly to support text field formatting)
-        $sql = 'SELECT element_validation_type, field_name FROM redcap_metadata WHERE project_id = ? AND field_name IN('.$field_names.') AND element_validation_type IS NOT NULL';
+        //  Gets field labels (table header output)
+        //  Order by field_order!
+        $sql = 'SELECT element_validation_type, field_name, element_label FROM redcap_metadata WHERE project_id = ? AND field_name IN('.$field_names.') ORDER BY field_order';
         $result = $this->query($sql, [$project_id]);
 
-        //  Preparation of fields to be formatted
         $array_to_format = [];
-        while($row = $result->fetch_object()) {               
+        $fieldLabels = array();
+        while($row = $result->fetch_object()) {
+            $label = $row->element_label;
+            if (strlen($label) > 30) $label = substr($label, 0, 15)."...".substr($label, -6);
+            $fieldLabels[] =array("key"=>$row->field_name, "label"=>$label);
             if($row->element_validation_type) {
                 $array_to_format[$row->field_name] = $row->element_validation_type;
             }
-        }         
+        }
 
         //  Fetch all data as JSON so that labels (piped values) are exported (all events)
         $params = array(
@@ -232,7 +237,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         //  Reverse order so that greates instance number is first
         $reversed = array_reverse($instances);
 
-        return $reversed;
+        return array("items"=> $reversed, "fields"=>$fieldLabels);
     }
     
 
