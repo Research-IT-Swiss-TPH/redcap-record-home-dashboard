@@ -436,6 +436,13 @@ export default {
     color: #495057;    
  }
 
+ .list-element-delete {
+    position: absolute;
+    margin-left: 7px;
+    font-size: 20px;
+    margin-top: 4px;
+ }
+
  .list-element-handle:hover {
      cursor: move;
  }

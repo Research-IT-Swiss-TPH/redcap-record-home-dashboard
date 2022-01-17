@@ -46019,7 +46019,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content[data-v-6ea9ab02] {\r\n    height: 400px;\r\n    max-height: 400px;\n}\n.b-skeleton[data-v-6ea9ab02] {\r\n     display: inline-block;\n}\n.list-element-input[data-v-6ea9ab02] {\r\n    background-color: #fff;\r\n    background-clip: padding-box;\r\n    border: 1px solid #ced4da;\r\n    \r\n    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;\r\n    padding: 3px;\r\n    line-height: 1.5;\r\n    color: #495057;\n}\n.list-element-handle[data-v-6ea9ab02]:hover {\r\n     cursor: move;\n}\n.list-element-delete[data-v-6ea9ab02]:hover {\r\n     cursor: pointer;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-content[data-v-6ea9ab02] {\r\n    height: 400px;\r\n    max-height: 400px;\n}\n.b-skeleton[data-v-6ea9ab02] {\r\n     display: inline-block;\n}\n.list-element-input[data-v-6ea9ab02] {\r\n    background-color: #fff;\r\n    background-clip: padding-box;\r\n    border: 1px solid #ced4da;\r\n    \r\n    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;\r\n    padding: 3px;\r\n    line-height: 1.5;\r\n    color: #495057;\n}\n.list-element-delete[data-v-6ea9ab02] {\r\n    position: absolute;\r\n    margin-left: 7px;\r\n    font-size: 20px;\r\n    margin-top: 4px;\n}\n.list-element-handle[data-v-6ea9ab02]:hover {\r\n     cursor: move;\n}\n.list-element-delete[data-v-6ea9ab02]:hover {\r\n     cursor: pointer;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
