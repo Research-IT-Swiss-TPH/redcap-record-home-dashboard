@@ -30,4 +30,9 @@ Read more about Psalm in the official [Psalm Manual](https://psalm.dev/docs/).
 Using laravel-mix for Vue.js development: `npm run dev` => `npx mix watch`
 [Laravel Mix Docs](https://laravel-mix.com/docs/6.0/api)
 
+## Changelog
 
+Version | Description
+------- | --------------------
+v1.1.0  | Add new feature to table element: Select event when there are multiple events.
+v1.0.0  | Initial release.
