@@ -8,6 +8,7 @@ This is the documentation for Record Home Dashboard external module.
 3. [Manage Dashboard](#manage-dashboard)
 4. [Additional Configuration](#additional-configuration)
 5. [Troubleshooting](#troubleshooting)
+6. [Limitations](#limitations)
 
 ### Introduction
 Before starting to create Dashboard it is important to know about the basic module design.
