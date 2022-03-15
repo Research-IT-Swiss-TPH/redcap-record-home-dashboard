@@ -58660,7 +58660,7 @@ var render = function () {
                                         "b-form-select-option",
                                         {
                                           staticClass: "text-success",
-                                          attrs: { value: "warning" },
+                                          attrs: { value: "success" },
                                         },
                                         [_vm._v("Success")]
                                       ),

@@ -112,7 +112,7 @@
                                 <b-form-select v-model="content.link.variant">
                                     <b-form-select-option class="text-info" value="info">Info</b-form-select-option>
                                     <b-form-select-option class="text-warning" value="warning">Warning</b-form-select-option>
-                                    <b-form-select-option class="text-success" value="warning">Success</b-form-select-option>
+                                    <b-form-select-option class="text-success" value="success">Success</b-form-select-option>
                                     <b-form-select-option class="text-danger" value="danger">Danger</b-form-select-option>
                                     <b-form-select-option class="text-secondary" value="secondary">Secondary</b-form-select-option>
                                 </b-form-select>
