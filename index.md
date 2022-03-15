@@ -135,3 +135,8 @@ A custom dashboard title can be set.
 ### Troubleshooting
 If you are experiencing any problems while using the module please open an issue directly on Github. Do not forget to add as many useful information and screenshots as possible. [Github Issues for Record Home Dashboard](https://github.com/tertek/redcap-record-home-dashboard/issues)
 
+### Limitations
+Due to the complexity of REDCap's architecture, there are limitations given of what can be covered by Record Home Dashboard.
+
+- Longitudinal Projects with repeating events are not fully supported
+
