@@ -32,6 +32,14 @@ if( $module->isDisabledEditor() ) : ?>
             return <?= json_encode($module->getSafeRepeatingForms()) ?>
         }
 
+        const stph_rhd_getProjectParams = function() {
+            return <?= json_encode($module->getProjectParameters()) ?>
+        }
+
+        const stph_rhd_getEventInfo =function() {
+            return <?= json_encode($module->getEventInfo()) ?>
+        }
+
     </script>
     <script src="<?= $module->getUrl("./dist/appEditor.js") ?>"></script>
     <link rel="stylesheet" href="<?= $module->getUrl('dist/style.css')?>">

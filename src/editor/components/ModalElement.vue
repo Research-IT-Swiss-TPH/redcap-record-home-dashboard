@@ -150,6 +150,23 @@
                         </div>
 
                         <div v-if="selected.type=='table'">
+
+                            <b-alert variant="warning" :show="params.hasMultipleEvents">
+                                Mutliple events have been detected. Please chose the relevant event for your repeating instrument.
+                            </b-alert>
+
+                            <b-form-group
+                                v-if="params.hasMultipleEvents"                      
+                                class="text-right font-weight-bold"
+                                label="Event"
+                                label-cols-lg="3"
+                                content-cols-lg="9">                                
+                                <b-form-select 
+                                v-model="content.table.event"
+                                :options="getEventInfo()"></b-form-select>
+                            </b-form-group>
+
+
                             <b-form-group                               
                                 class="text-right font-weight-bold"
                                 label="Instrument (Repeating)"
@@ -217,7 +234,7 @@ class ModalContent {
          this.text = { title: "", decoration: [] }
          this.link = { title: "", url: "", variant:"info", target: "_self" }
          this.list = [{title: "", value: ""}]
-         this.table = { instrument: "", columns: [] }
+         this.table = { instrument: "", columns: [], event: [] }
       }
       getObj() {
           return this
@@ -256,7 +273,8 @@ export default {
                     { html: '<i class="fas fa-underline"><i/>', value: 'underline' }
                 ]
             },
-            fields: []
+            fields: [],
+            params: stph_rhd_getProjectParams()
             
         }
     },
@@ -301,7 +319,11 @@ export default {
             this.selected.type = this.element.type            
             this.content[this.element.type] = this.element.content
             if(this.selected.type == 'table' && this.content["table"].instrument.length > 0) {
-                this.getFieldsForInstrument()                
+                this.getFieldsForInstrument()
+                //  Reset event id if there are no multiple events
+                if(!this.params.hasMultipleEvents) {
+                    this.element.content.event = null;
+                }
             }
         },
         changeInstrument() {
@@ -310,6 +332,9 @@ export default {
         },
         getRepeatingInstruments: function() {
             return stph_rhd_getRepeatingInstruments()
+        },
+        getEventInfo: function(){
+            return stph_rhd_getEventInfo()
         },
         async getFieldsForInstrument() {            
             this.axios({

@@ -36,11 +36,16 @@
                 <b-badge pill variant="info">instrument</b-badge>
             </abbr>
         </span>
+        <span v-if="element.content.event">
+            <abbr :title="element.content.event" class="initialism text-lowercase text-monospace">
+                <b-badge pill variant="info">event_id</b-badge>
+            </abbr>
+        </span>         
         <span>
             <abbr :title="element.content.columns.join(', ')" class="initialism text-lowercase text-monospace">
                 <b-badge pill variant="info">columns</b-badge>
             </abbr>
-        </span>        
+        </span>       
     </span>    
 </div>
 </template>

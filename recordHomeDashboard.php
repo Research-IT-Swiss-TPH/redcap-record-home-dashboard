@@ -60,7 +60,6 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $this->renderDashboard();
         }
     }
-
    
    /**
     * 
@@ -104,6 +103,20 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         </script>        
         <script src="<?= $this->getUrl("./dist/appRender.js") ?>"></script>
     <?php
+    }
+
+    /**
+     * Gets Project Parameters needed to support additional features of REDCap
+     * 
+     * @return array
+     * @since 1.1.0
+     * 
+     */
+    public function getProjectParameters() {
+        return [
+            "hasMultipleEvents" => $this->hasMultipleEvents,
+            "hasMultipleArms" => $this->hasMultipleArms
+        ];
     }
 
    /**  
@@ -157,7 +170,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     * @since 1.0.0
     *
     */    
-    private function getInstancesData( $project_id , $record, $instrument, $fields=null) {
+    private function getInstancesData( $project_id , $record, $instrument, $fields=null, $events=[]) {
         
         $field_names_array = [];
         $params = [];
@@ -194,6 +207,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         $params = array(
             "project_id" => $project_id,
             "records" =>$record,
+            "events" => $events,
             "exportAsLabels" => true,
             "exportDataAccessGroups" => true,
             "return_format" => "json",
@@ -308,7 +322,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             break;
 
             case 'table':
-            $response = $this->getInstancesData($project_id, $record, $content->instrument, $content->columns);                
+            $response = $this->getInstancesData($project_id, $record, $content->instrument, $content->columns, $content->event);                
             break;
 
             default:
@@ -358,6 +372,28 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $repeatingForms = $this->getRepeatingForms();
         }
         return $repeatingForms;
+    }
+
+
+    /**
+     * Gets event info for current project, that can be used to define event in multple event context
+     * redcap_v10.6.28\Classes\Project.php::loadEvents()
+     * 
+     * @return array
+     * @since 1.1.0
+     * 
+     */
+    public function getEventInfo() {
+
+        $eventInfo = [];
+        $sql = "select * from redcap_events_metadata e, redcap_events_arms a where a.project_id = " . PROJECT_ID . "
+        and a.arm_id = e.arm_id order by a.arm_num, e.day_offset, e.descrip";
+        $q = db_query($sql);
+        while ($row = db_fetch_assoc($q)){
+            $eventInfo[] = array( 'value' => $row['event_id'], 'text' => $row['descrip']);
+        }
+        db_free_result($q);
+        return $eventInfo;
     }
 
    /**  

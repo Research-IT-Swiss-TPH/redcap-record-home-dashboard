@@ -2314,7 +2314,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     type: _this.element.type,
                     content: JSON.stringify(_this.element.content),
                     params: stph_rhd_getBaseParametersFromBackend(),
-                    event: null
+                    event: null //not in use
+
                   }
                 }).then(function (response) {
                   var json = response.data;

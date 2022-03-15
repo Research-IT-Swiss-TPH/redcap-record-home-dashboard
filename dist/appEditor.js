@@ -3131,6 +3131,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var ModalContent = /*#__PURE__*/function () {
   function ModalContent() {
     _classCallCheck(this, ModalContent);
@@ -3151,7 +3168,8 @@ var ModalContent = /*#__PURE__*/function () {
     }];
     this.table = {
       instrument: "",
-      columns: []
+      columns: [],
+      event: []
     };
   }
 
@@ -3205,7 +3223,8 @@ var ModalContent = /*#__PURE__*/function () {
           value: 'underline'
         }]
       },
-      fields: []
+      fields: [],
+      params: stph_rhd_getProjectParams()
     };
   },
   computed: {
@@ -3251,7 +3270,11 @@ var ModalContent = /*#__PURE__*/function () {
       this.content[this.element.type] = this.element.content;
 
       if (this.selected.type == 'table' && this.content["table"].instrument.length > 0) {
-        this.getFieldsForInstrument();
+        this.getFieldsForInstrument(); //  Reset event id if there are no multiple events
+
+        if (!this.params.hasMultipleEvents) {
+          this.element.content.event = null;
+        }
       }
     },
     changeInstrument: function changeInstrument() {
@@ -3260,6 +3283,9 @@ var ModalContent = /*#__PURE__*/function () {
     },
     getRepeatingInstruments: function getRepeatingInstruments() {
       return stph_rhd_getRepeatingInstruments();
+    },
+    getEventInfo: function getEventInfo() {
+      return stph_rhd_getEventInfo();
     },
     getFieldsForInstrument: function getFieldsForInstrument() {
       var _this2 = this;
@@ -3385,6 +3411,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -58871,6 +58902,53 @@ var render = function () {
                             "div",
                             [
                               _c(
+                                "b-alert",
+                                {
+                                  attrs: {
+                                    variant: "warning",
+                                    show: _vm.params.hasMultipleEvents,
+                                  },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            Mutliple events have been detected. Please chose the relevant event for your repeating instrument.\n                        "
+                                  ),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm.params.hasMultipleEvents
+                                ? _c(
+                                    "b-form-group",
+                                    {
+                                      staticClass:
+                                        "text-right font-weight-bold",
+                                      attrs: {
+                                        label: "Event",
+                                        "label-cols-lg": "3",
+                                        "content-cols-lg": "9",
+                                      },
+                                    },
+                                    [
+                                      _c("b-form-select", {
+                                        attrs: { options: _vm.getEventInfo() },
+                                        model: {
+                                          value: _vm.content.table.event,
+                                          callback: function ($$v) {
+                                            _vm.$set(
+                                              _vm.content.table,
+                                              "event",
+                                              $$v
+                                            )
+                                          },
+                                          expression: "content.table.event",
+                                        },
+                                      }),
+                                    ],
+                                    1
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c(
                                 "b-form-group",
                                 {
                                   staticClass: "text-right font-weight-bold",
@@ -59176,6 +59254,24 @@ var render = function () {
               1
             ),
           ]),
+          _vm._v(" "),
+          _vm.element.content.event
+            ? _c("span", [
+                _c(
+                  "abbr",
+                  {
+                    staticClass: "initialism text-lowercase text-monospace",
+                    attrs: { title: _vm.element.content.event },
+                  },
+                  [
+                    _c("b-badge", { attrs: { pill: "", variant: "info" } }, [
+                      _vm._v("event_id"),
+                    ]),
+                  ],
+                  1
+                ),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("span", [
             _c(

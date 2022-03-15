@@ -106,7 +106,7 @@ export default {
               type: this.element.type,
               content: JSON.stringify(this.element.content),
               params: stph_rhd_getBaseParametersFromBackend(),
-              event: null
+              event: null //not in use
             }
           })
           .then( response => {
