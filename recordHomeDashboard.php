@@ -20,9 +20,6 @@ if( file_exists("vendor/autoload.php") ){
 use \Piping;
 use \REDCap;
 
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-
 class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
 
 
@@ -59,117 +56,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     *
     */
     public function redcap_every_page_top($project_id = null) {
-        $this->dev();
         if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) && defined('USERID') ) {
             $this->renderDashboard();
         }
-    }
-
-    private function dev() {
-
-        $params = array(
-            "project_id" => 14,
-            "records" => 4,
-            "events" => [41],
-            "exportAsLabels" => true,
-            "exportDataAccessGroups" => true,
-            "return_format" => "json",
-            "fields" => [],
-            "returnIncludeRecordEventArray"=> true
-        );
-
-        $data = json_decode(REDCap::getData($params), true);
-        //dump($data);
-
-        // Mocking Data
-        $user_id = 'test_user_1';
-        
-        //  Context propagation & validation with JWT
-
-        
-        global $salt;
-
-        $jwt = $this->generateJWT($salt, $user_id);
-        $decoded = JWT::decode($jwt, new Key($salt, 'HS256'));
-
-        //dump($jwt);
-        //dump($decoded);
-
-        //  Retrieve user rights for user
-        
-        $user_rights = REDCap::getUserRights($user_id);
-        dump($user_rights);
-        $no_access_forms = array_filter($user_rights[$user_id]["forms"], function($value){
-            return $value == 0;
-        });
-        dump($no_access_forms);
-
-        $no_access_fields = [];
-
-        foreach ($no_access_forms as $formname => $form) {
-            $no_access_fields =  array_merge($no_access_fields, $this->getFieldNames($formname));
-        }
-       
-        dump($no_access_fields);
-
-
-        $content = [
-            (object)[
-                "value" => "[foopublic]",
-                "title" => "Public"
-            ],
-            (object)[
-                "value" => "[fooprivate]",
-                "title" => "Private"
-            ]
-        ];
-
-        dump($content);
-
-        $response = [];
-        foreach ($content as $key => $el) {
-
-            $field_name = trim($el->value, '[]');
-
-            if(in_array( $field_name, $no_access_fields)) {
-                $response[] = "No Access";
-            } else {
-                $response[] = $field_name;
-            }
-        }
-
-        dump($response);
-
-
-        $results = [];
-        $fields = ['[foopublic]', '[fooprivate]'];
-        $record = 4;
-        $event_id = 41;
-        $project_id = 14;
-
-        foreach ($fields as $key => $field) {
-            $results[] = Piping::replaceVariablesInLabel($field, $record, $event_id, 1, array(), true, $project_id, false, "", 1, false, true);
-        }
-        
-        //dump($results);
-
-        //  2. check if $user_rights can be fetched from session
-
-    }
-
-    //  Module context propagation & validation token (MCPV) Token
-
-    private function generateJWT($key, $user_id) {
-
-        $payload = [
-            'user_id' => $user_id,
-            'session_id' =>  session_id(),
-            'iat' => 1356999524,
-            'nbf' => 1357000000
-        ];
-
-        return JWT::encode($payload, $key, 'HS256');
-
     }
    
    /**
@@ -421,24 +310,23 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             //$event_id = $this->getEventId();
         }
 
-        //  Check for data access on form level
-        $user_id = 'test_user_1';
+        //  Prepare data access check arrays
+        $user_id = USERID;
         $user_rights = REDCap::getUserRights($user_id);
         $no_access_forms = array_keys(array_filter($user_rights[$user_id]["forms"], function($value){
             return $value == 0;
         }));
-
         $no_access_fields = [];
         foreach ($no_access_forms as $key => $form) {
             $no_access_fields =  array_merge($no_access_fields, $this->getFieldNames($form));
         }
 
+        //  Send Error if user has not the rights to access data
         if(isset($content->instrument) && in_array($content->instrument, $no_access_forms)) {
-            $this->sendError(403);
+            //$this->sendError(403);
         }
         
-        switch ($type) {
-            
+        switch ($type) {            
             case 'link':
                 $response= Piping::replaceVariablesInLabel($content->url, $record, $event_id, 1, array(), true, $project_id, false);
                 if (filter_var($response, FILTER_VALIDATE_URL) === FALSE) {                
@@ -449,18 +337,22 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             case 'list';
             $response = [];
             foreach ($content as $key => $el) {
-                $field_name = trim($el->value, '[]');
-                if(in_array( $field_name, $no_access_fields)) {
-                    $response[] = "*No Access*";
+                //  Check if has data access on form level
+                if(in_array( trim($el->value, '[]'), $no_access_fields)) {
+                    $response[] = false;
                 } else {
                     $response[] = Piping::replaceVariablesInLabel($el->value, $record, $event_id, 1, array(), true, $project_id, false);
-                }
-                
+                }                
             }            
             break;
 
             case 'table':
-            $response = $this->getInstancesData($project_id, $record, $content->instrument, $content->columns, $content->event);                
+            //  Check if has data access on form level
+            if(isset($content->instrument) && in_array($content->instrument, $no_access_forms)) {
+                $response = false;
+            } else {
+                $response = $this->getInstancesData($project_id, $record, $content->instrument, $content->columns, $content->event);
+            }
             break;
 
             default:
