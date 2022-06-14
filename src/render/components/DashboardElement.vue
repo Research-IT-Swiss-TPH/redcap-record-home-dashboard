@@ -54,7 +54,7 @@
             :table-props="{ striped: true }"
           ></b-skeleton-table>
         </template>
-        <template v-else>
+        <template v-else-if="!isRendering && render.length > 0">
           <b-table
             id="my-table"
             :per-page="perPage"
@@ -76,6 +76,7 @@
           aria-controls="my-table"
         ></b-pagination>                    
         </template>
+        <b-alert v-else show variant="warning"><b>Error:</b> You do not have access rights to view this data.</b-alert>
     </div>
 
   </div>

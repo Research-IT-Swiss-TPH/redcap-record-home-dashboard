@@ -20,6 +20,9 @@ if( file_exists("vendor/autoload.php") ){
 use \Piping;
 use \REDCap;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
 
 
@@ -56,9 +59,117 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     *
     */
     public function redcap_every_page_top($project_id = null) {
+        $this->dev();
         if( $this->isPage('DataEntry/record_home.php') && isset( $_GET['id']) && defined('USERID') ) {
             $this->renderDashboard();
         }
+    }
+
+    private function dev() {
+
+        $params = array(
+            "project_id" => 14,
+            "records" => 4,
+            "events" => [41],
+            "exportAsLabels" => true,
+            "exportDataAccessGroups" => true,
+            "return_format" => "json",
+            "fields" => [],
+            "returnIncludeRecordEventArray"=> true
+        );
+
+        $data = json_decode(REDCap::getData($params), true);
+        //dump($data);
+
+        // Mocking Data
+        $user_id = 'test_user_1';
+        
+        //  Context propagation & validation with JWT
+
+        
+        global $salt;
+
+        $jwt = $this->generateJWT($salt, $user_id);
+        $decoded = JWT::decode($jwt, new Key($salt, 'HS256'));
+
+        //dump($jwt);
+        //dump($decoded);
+
+        //  Retrieve user rights for user
+        
+        $user_rights = REDCap::getUserRights($user_id);
+        dump($user_rights);
+        $no_access_forms = array_filter($user_rights[$user_id]["forms"], function($value){
+            return $value == 0;
+        });
+        dump($no_access_forms);
+
+        $no_access_fields = [];
+
+        foreach ($no_access_forms as $formname => $form) {
+            $no_access_fields =  array_merge($no_access_fields, $this->getFieldNames($formname));
+        }
+       
+        dump($no_access_fields);
+
+
+        $content = [
+            (object)[
+                "value" => "[foopublic]",
+                "title" => "Public"
+            ],
+            (object)[
+                "value" => "[fooprivate]",
+                "title" => "Private"
+            ]
+        ];
+
+        dump($content);
+
+        $response = [];
+        foreach ($content as $key => $el) {
+
+            $field_name = trim($el->value, '[]');
+
+            if(in_array( $field_name, $no_access_fields)) {
+                $response[] = "No Access";
+            } else {
+                $response[] = $field_name;
+            }
+        }
+
+        dump($response);
+
+
+        $results = [];
+        $fields = ['[foopublic]', '[fooprivate]'];
+        $record = 4;
+        $event_id = 41;
+        $project_id = 14;
+
+        foreach ($fields as $key => $field) {
+            $results[] = Piping::replaceVariablesInLabel($field, $record, $event_id, 1, array(), true, $project_id, false, "", 1, false, true);
+        }
+        
+        //dump($results);
+
+        //  2. check if $user_rights can be fetched from session
+
+    }
+
+    //  Module context propagation & validation token (MCPV) Token
+
+    private function generateJWT($key, $user_id) {
+
+        $payload = [
+            'user_id' => $user_id,
+            'session_id' =>  session_id(),
+            'iat' => 1356999524,
+            'nbf' => 1357000000
+        ];
+
+        return JWT::encode($payload, $key, 'HS256');
+
     }
    
    /**
@@ -183,8 +294,8 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         //  Prepare for fields query
         foreach ($fields as $key => $field) {
             $field_names_array[] = '"'.$field . '"';
-            }
-            $field_names = implode(",", $field_names_array);
+        }
+        $field_names = implode(",", $field_names_array);
 
         //  Gets all element validation types (mainly to support text field formatting)
         //  Gets field labels (table header output)
@@ -209,11 +320,12 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             "records" =>$record,
             "events" => $events,
             "exportAsLabels" => true,
-            "exportDataAccessGroups" => true,
+            "exportDataAccessGroups" => false,
             "return_format" => "json",
             "fields" => $fields,
             "returnIncludeRecordEventArray"=> true
         );
+
         $data = json_decode(REDCap::getData($params), true);
 
         //  Filter by instrument
@@ -242,9 +354,13 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         //  Reset final array and handle field formatting
         foreach ($filtered as $key => $instance) {
             //  Adjust formatting (dates)
-            foreach ($array_to_format as $field_to_format => $valtype) {                    
+            foreach ($array_to_format as $field_to_format => $valtype) {
                 $instance[$field_to_format] = $formatter::renderDateFormat($instance[$field_to_format], $valtype);
             }
+
+            //  Data Access
+            
+
             $instances[] = $instance;
         }
 
@@ -304,6 +420,22 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $event_id = $this->getFirstEventId($project_id);
             //$event_id = $this->getEventId();
         }
+
+        //  Check for data access on form level
+        $user_id = 'test_user_1';
+        $user_rights = REDCap::getUserRights($user_id);
+        $no_access_forms = array_keys(array_filter($user_rights[$user_id]["forms"], function($value){
+            return $value == 0;
+        }));
+
+        $no_access_fields = [];
+        foreach ($no_access_forms as $key => $form) {
+            $no_access_fields =  array_merge($no_access_fields, $this->getFieldNames($form));
+        }
+
+        if(isset($content->instrument) && in_array($content->instrument, $no_access_forms)) {
+            $this->sendError(403);
+        }
         
         switch ($type) {
             
@@ -317,7 +449,13 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             case 'list';
             $response = [];
             foreach ($content as $key => $el) {
-                $response[] = Piping::replaceVariablesInLabel($el->value, $record, $event_id, 1, array(), true, $project_id, false);
+                $field_name = trim($el->value, '[]');
+                if(in_array( $field_name, $no_access_fields)) {
+                    $response[] = "*No Access*";
+                } else {
+                    $response[] = Piping::replaceVariablesInLabel($el->value, $record, $event_id, 1, array(), true, $project_id, false);
+                }
+                
             }            
             break;
 
@@ -472,9 +610,20 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     * @since 1.0.0
     *
     */      
-    private function sendError() {
+    private function sendError($status = 400) {
         header('Content-Type: application/json; charset=UTF-8');
-        header("HTTP/1.1 400 Bad Request");
+
+        switch ($status) {
+            case 400:
+                header("HTTP/1.1 400 Bad Request");
+                break;
+            case 403:
+                header("HTTP/1.1 403 Forbidden");
+                break;
+            default:
+                # code...
+                break;
+        }
         die();
     }    
 }

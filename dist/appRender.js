@@ -2288,6 +2288,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element'],
   data: function data() {
@@ -50090,7 +50091,8 @@ var render = function () {
                     },
                   }),
                 ]
-              : [
+              : !_vm.isRendering && _vm.render.length > 0
+              ? [
                   _c("b-table", {
                     attrs: {
                       id: "my-table",
@@ -50132,7 +50134,11 @@ var render = function () {
                       expression: "currentPage",
                     },
                   }),
-                ],
+                ]
+              : _c("b-alert", { attrs: { show: "", variant: "warning" } }, [
+                  _c("b", [_vm._v("Error:")]),
+                  _vm._v(" You do not have access rights to view this data."),
+                ]),
           ],
           2
         )
