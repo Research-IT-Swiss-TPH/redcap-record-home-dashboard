@@ -40,6 +40,11 @@ if( $module->isDisabledEditor() ) : ?>
             return <?= json_encode($module->getEventInfo()) ?>
         }
 
+        const stph_rhd_getCSRFToken =function() {
+            return <?= json_encode($module->getCSRFToken()) ?>
+        }
+        
+
     </script>
     <script src="<?= $module->getUrl("./dist/appEditor.js") ?>"></script>
     <link rel="stylesheet" href="<?= $module->getUrl('dist/style.css')?>">
