@@ -36,9 +36,13 @@
                   <b-skeleton width="50px"></b-skeleton>
                 </template>
                 
-                <template v-else>
+                <template v-else-if="!isRendering && render[idx]">
                  <small class="font-weight-bold">{{ li.title}}</small>
                  <span v-html="render[idx]"></span>
+                </template>
+                <template v-else>
+                 <small class="font-weight-bold">{{ li.title}}</small>
+                 <span><b-badge variant="warning">No Access</b-badge></span>
                 </template>
 
         </b-list-group-item>
@@ -54,7 +58,7 @@
             :table-props="{ striped: true }"
           ></b-skeleton-table>
         </template>
-        <template v-else-if="!isRendering && render.length > 0">
+        <template v-else-if="!isRendering && render.fields && render.fields.length > 0">
           <b-table
             id="my-table"
             :per-page="perPage"
@@ -76,7 +80,9 @@
           aria-controls="my-table"
         ></b-pagination>                    
         </template>
-        <b-alert v-else show variant="warning"><b>Error:</b> You do not have access rights to view this data.</b-alert>
+        <template v-else>
+          <b-alert show variant="warning"><b>Error:</b> You do not have access rights to view this data.</b-alert>
+        </template>
     </div>
 
   </div>

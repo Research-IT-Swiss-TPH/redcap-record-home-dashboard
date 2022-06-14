@@ -2289,6 +2289,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['element'],
   data: function data() {
@@ -50059,7 +50065,8 @@ var render = function () {
                           _vm._v(" "),
                           _c("b-skeleton", { attrs: { width: "50px" } }),
                         ]
-                      : [
+                      : !_vm.isRendering && _vm.render[idx]
+                      ? [
                           _c("small", { staticClass: "font-weight-bold" }, [
                             _vm._v(_vm._s(li.title)),
                           ]),
@@ -50067,6 +50074,21 @@ var render = function () {
                           _c("span", {
                             domProps: { innerHTML: _vm._s(_vm.render[idx]) },
                           }),
+                        ]
+                      : [
+                          _c("small", { staticClass: "font-weight-bold" }, [
+                            _vm._v(_vm._s(li.title)),
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            [
+                              _c("b-badge", { attrs: { variant: "warning" } }, [
+                                _vm._v("No Access"),
+                              ]),
+                            ],
+                            1
+                          ),
                         ],
                   ],
                   2
@@ -50091,7 +50113,9 @@ var render = function () {
                     },
                   }),
                 ]
-              : !_vm.isRendering && _vm.render.length > 0
+              : !_vm.isRendering &&
+                _vm.render.fields &&
+                _vm.render.fields.length > 0
               ? [
                   _c("b-table", {
                     attrs: {
@@ -50135,10 +50159,12 @@ var render = function () {
                     },
                   }),
                 ]
-              : _c("b-alert", { attrs: { show: "", variant: "warning" } }, [
-                  _c("b", [_vm._v("Error:")]),
-                  _vm._v(" You do not have access rights to view this data."),
-                ]),
+              : [
+                  _c("b-alert", { attrs: { show: "", variant: "warning" } }, [
+                    _c("b", [_vm._v("Error:")]),
+                    _vm._v(" You do not have access rights to view this data."),
+                  ]),
+                ],
           ],
           2
         )
