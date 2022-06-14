@@ -278,8 +278,9 @@ export default {
         async saveDashboardData(msg)  {        
             this.isOverlayed = true    
             const data = {
+                    redcap_csrf_token: stph_rhd_getCSRFToken(),
                     action: 'save-dashboard-data',
-                    new: JSON.stringify(this.rows)                    
+                    new: JSON.stringify(this.rows)
             }
             this.axios({
                 method: 'POST',                
