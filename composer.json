@@ -2,5 +2,8 @@
     "require-dev": {
         "vimeo/psalm": "^4.11",
         "symfony/var-dumper": "^5.3"
+    },
+    "require": {
+        "firebase/php-jwt": "^6.2"
     }
 }
