@@ -4,7 +4,8 @@
   "description": "A REDCap External Module that enables to add a customized Dashboard to the Record Homepage",
   "scripts": {
     "build": "npx mix",
-    "dev": "npx mix watch"
+    "dev": "npx mix watch",
+    "prod": "npx mix --production"
   },
   "repository": {
     "type": "git",

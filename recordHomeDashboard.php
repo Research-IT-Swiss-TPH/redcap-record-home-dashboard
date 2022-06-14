@@ -183,8 +183,8 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         //  Prepare for fields query
         foreach ($fields as $key => $field) {
             $field_names_array[] = '"'.$field . '"';
-            }
-            $field_names = implode(",", $field_names_array);
+        }
+        $field_names = implode(",", $field_names_array);
 
         //  Gets all element validation types (mainly to support text field formatting)
         //  Gets field labels (table header output)
@@ -209,11 +209,12 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             "records" =>$record,
             "events" => $events,
             "exportAsLabels" => true,
-            "exportDataAccessGroups" => true,
+            "exportDataAccessGroups" => false,
             "return_format" => "json",
             "fields" => $fields,
             "returnIncludeRecordEventArray"=> true
         );
+
         $data = json_decode(REDCap::getData($params), true);
 
         //  Filter by instrument
@@ -242,9 +243,13 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         //  Reset final array and handle field formatting
         foreach ($filtered as $key => $instance) {
             //  Adjust formatting (dates)
-            foreach ($array_to_format as $field_to_format => $valtype) {                    
+            foreach ($array_to_format as $field_to_format => $valtype) {
                 $instance[$field_to_format] = $formatter::renderDateFormat($instance[$field_to_format], $valtype);
             }
+
+            //  Data Access
+            
+
             $instances[] = $instance;
         }
 
@@ -304,9 +309,24 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             $event_id = $this->getFirstEventId($project_id);
             //$event_id = $this->getEventId();
         }
+
+        //  Prepare data access check arrays
+        $user_id = USERID;
+        $user_rights = REDCap::getUserRights($user_id);
+        $no_access_forms = array_keys(array_filter($user_rights[$user_id]["forms"], function($value){
+            return $value == 0;
+        }));
+        $no_access_fields = [];
+        foreach ($no_access_forms as $key => $form) {
+            $no_access_fields =  array_merge($no_access_fields, $this->getFieldNames($form));
+        }
+
+        //  Send Error if user has not the rights to access data
+        if(isset($content->instrument) && in_array($content->instrument, $no_access_forms)) {
+            //$this->sendError(403);
+        }
         
-        switch ($type) {
-            
+        switch ($type) {            
             case 'link':
                 $response= Piping::replaceVariablesInLabel($content->url, $record, $event_id, 1, array(), true, $project_id, false);
                 if (filter_var($response, FILTER_VALIDATE_URL) === FALSE) {                
@@ -317,12 +337,22 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
             case 'list';
             $response = [];
             foreach ($content as $key => $el) {
-                $response[] = Piping::replaceVariablesInLabel($el->value, $record, $event_id, 1, array(), true, $project_id, false);
+                //  Check if has data access on form level
+                if(in_array( trim($el->value, '[]'), $no_access_fields)) {
+                    $response[] = false;
+                } else {
+                    $response[] = Piping::replaceVariablesInLabel($el->value, $record, $event_id, 1, array(), true, $project_id, false);
+                }                
             }            
             break;
 
             case 'table':
-            $response = $this->getInstancesData($project_id, $record, $content->instrument, $content->columns, $content->event);                
+            //  Check if has data access on form level
+            if(isset($content->instrument) && in_array($content->instrument, $no_access_forms)) {
+                $response = false;
+            } else {
+                $response = $this->getInstancesData($project_id, $record, $content->instrument, $content->columns, $content->event);
+            }
             break;
 
             default:
@@ -472,9 +502,20 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     * @since 1.0.0
     *
     */      
-    private function sendError() {
+    private function sendError($status = 400) {
         header('Content-Type: application/json; charset=UTF-8');
-        header("HTTP/1.1 400 Bad Request");
+
+        switch ($status) {
+            case 400:
+                header("HTTP/1.1 400 Bad Request");
+                break;
+            case 403:
+                header("HTTP/1.1 403 Forbidden");
+                break;
+            default:
+                # code...
+                break;
+        }
         die();
     }    
 }
