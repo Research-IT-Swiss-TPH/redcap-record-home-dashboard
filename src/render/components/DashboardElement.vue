@@ -74,7 +74,7 @@
           </b-table>
         <b-pagination
           v-model="currentPage"
-          :total-rows="render.length"
+          :total-rows="render.items.length"
           variant="info"
           :per-page="perPage"
           aria-controls="my-table"
