@@ -244,6 +244,10 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         foreach ($filtered as $key => $instance) {
             //  Adjust formatting (dates)
             foreach ($array_to_format as $field_to_format => $valtype) {
+                //  Skip empty fields otherwise it will be filled with invalid data
+                if(empty($instance[$field_to_format])) {
+                    continue;
+                }
                 $instance[$field_to_format] = $formatter::renderDateFormat($instance[$field_to_format], $valtype);
             }
 
