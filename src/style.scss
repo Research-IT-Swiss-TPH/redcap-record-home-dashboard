@@ -99,4 +99,34 @@
   outline: 1px solid #138496;
 }
 
+/*
+* Bootstrap 5 Quick Fixes
+*
+*/
 
+input[type=radio] {
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+  pointer-events: none;
+}
+
+input[type=checkbox] {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+  pointer-events: none;
+}
+
+.btn-outline-info {
+  color: #17a2b8;
+}
+
+.btn-info {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
+
+.btn-outline-info:not(:disabled):not(.disabled).active, .btn-outline-info:not(:disabled):not(.disabled):active, .show > .btn-outline-info.dropdown-toggle {
+  color: #fff;
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+}
