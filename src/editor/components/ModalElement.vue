@@ -190,16 +190,25 @@
                                     <b-form-checkbox :disabled="columns.length > 9 && selected.fields[idx] != true"  class="text-left font-weight-light" v-model="selected.fields[idx]"  name="check-button" switch>
                                         {{ field }}
                                     </b-form-checkbox>
-                                </div>                              
-                                </b-form-group>
-
-                               <div v-if="columns && columns.length > 0">
+                                </div>
+                                <div v-if="columns && columns.length > 0">
                                    <b-alert variant="success" show><b>Selected Columns:</b> {{ columns.length }}</b-alert>
                                  
                                </div>
                                <div v-else>
                                    <b-alert show><b>No columns selected.</b> <br>All columns (max. 10) will be rendered.</b-alert>
-                               </div>
+                               </div>                                                        
+                                </b-form-group>
+
+                                <b-form-group                               
+                                class="text-right font-weight-bold"
+                                label="Sorting"
+                                label-cols-lg="3"
+                                content-cols-lg="9">
+                                <b-form-select v-model="content.table.sortBy" :options="fields"></b-form-select>
+                                <b-form-checkbox v-model="content.table.sortDesc" switch size="sm">Descending</b-form-checkbox>
+                                </b-form-group>
+
 
                             </div>
                         
@@ -234,7 +243,7 @@ class ModalContent {
          this.text = { title: "", decoration: [] }
          this.link = { title: "", url: "", variant:"info", target: "_self" }
          this.list = [{title: "", value: ""}]
-         this.table = { instrument: "", columns: [], event: [] }
+         this.table = { instrument: "", columns: [], event: [], sortBy: "", sortDesc: "" }
       }
       getObj() {
           return this
@@ -316,7 +325,7 @@ export default {
             this.content.list.push(lEl)
         },
         prefill: function() {
-            this.selected.type = this.element.type            
+            this.selected.type = this.element.type
             this.content[this.element.type] = this.element.content
             if(this.selected.type == 'table' && this.content["table"].instrument.length > 0) {
                 this.getFieldsForInstrument()

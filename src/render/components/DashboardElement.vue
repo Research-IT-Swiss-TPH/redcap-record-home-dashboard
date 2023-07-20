@@ -67,7 +67,10 @@
             size="sm"
             :current-page="currentPage"
             :fields="render.fields"
-            :items="render.items">
+            :items="render.items"
+            :sortBy="element.content.sortBy"
+            :sortDesc="element.content.sortDesc"
+            >
             <template #cell()="{value}">
               <span v-html="value"></span>
             </template>
