@@ -51606,7 +51606,6 @@ var render = function () {
                       items: _vm.render.items,
                       sortBy: _vm.element.content.sortBy,
                       sortDesc: _vm.element.content.sortDesc,
-                      "sort-icon-left": "",
                     },
                     scopedSlots: _vm._u([
                       {

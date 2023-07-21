@@ -205,7 +205,11 @@
                                 label="Sorting"
                                 label-cols-lg="3"
                                 content-cols-lg="9">
-                                <b-form-select v-model="content.table.sortBy" :options="fields"></b-form-select>
+                                <b-form-select v-model="content.table.sortBy" :options="fields">
+                                    <template #first>
+                                        <b-form-select-option :value="null">-- sort by --</b-form-select-option>
+                                    </template>
+                                </b-form-select>
                                 <b-form-checkbox v-model="content.table.sortDesc" switch size="sm">Descending</b-form-checkbox>
                                 </b-form-group>
 
