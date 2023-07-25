@@ -424,7 +424,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
         and a.arm_id = e.arm_id order by a.arm_num, e.day_offset, e.descrip";
         $q = db_query($sql);
         while ($row = db_fetch_assoc($q)){
-            $eventInfo[] = array( 'value' => $row['event_id'], 'text' => $row['descrip']);
+            $eventInfo[] = array( 'value' => (string)(int) $row['event_id'], 'text' => htmlspecialchars($row['descrip'], ENT_QUOTES));
         }
         db_free_result($q);
         return $eventInfo;
