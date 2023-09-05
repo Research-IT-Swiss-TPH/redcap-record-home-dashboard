@@ -10,7 +10,7 @@ Vue.use(VueAxios, axios.create({
 
 //  Bootstrap Vue
 import { BootstrapVue} from 'bootstrap-vue'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
 Vue.use(BootstrapVue)
 
 //  Mixin
