@@ -138,10 +138,20 @@
                                 v-for="(element, idx) in content.list"
                                 :key="idx"
                                 >
-                                <i class="fa fa-align-justify list-element-handle mr-2"></i>
-                                <input placeholder="title" class="ml-1 list-element-input" type="text"  v-model="element.title" />
-                                <input placeholder="value" class="ml-1 list-element-input" type="text"  v-model="element.value" />
-                                <i class="fa fa-times close list-element-delete" @click="removeListElement(idx)"></i>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text"><i class="fa fa-align-justify list-element-handle"></i></div>                                        
+                                    </div>
+                                    <input placeholder="title" class="list-element-input form-control" type="text"  v-model="element.title" />
+                                    <input placeholder="value" class="list-element-input form-control" type="text"  v-model="element.value" />
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <i class="fa fa-times close list-element-delete" @click="removeListElement(idx)"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 </li>
                             </draggable>
                             <div class="mt-2 pb-4 float-right">
@@ -474,12 +484,12 @@ export default {
     color: #495057;    
  }
 
- .list-element-delete {
+ /* .list-element-delete {
     position: absolute;
     margin-left: 7px;
     font-size: 20px;
     margin-top: 4px;
- }
+ } */
 
  .list-element-handle:hover {
      cursor: move;
