@@ -28,6 +28,7 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     protected $hasMultipleEvents;
     protected $hasMultipleArms;
     protected $events;
+    protected $table_pk;
 
    /**
     *   Constructs the class
