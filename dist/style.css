@@ -128,3 +128,11 @@ input[type=checkbox] {
   background-color: #17a2b8;
   border-color: #17a2b8;
 }
+
+/** Fix small button sizes **/
+.btn-sm {
+  padding: 0.15rem 0.25rem;
+  font-size: 0.675rem;
+  line-height: 1.25;
+  border-radius: 0.15rem;
+}

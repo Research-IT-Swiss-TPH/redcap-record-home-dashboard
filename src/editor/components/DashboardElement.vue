@@ -14,11 +14,11 @@
                     <span class="badge badge-light text-uppercase p-1"> <i :class="iconClass(element.type)"></i>  {{ element.type }}</span>
                 </div>
                 <div class="editor-row-menu float-right">
-                    <b-button  @click="handleEmit('open-modal-element', index)" size="xs">
+                    <b-button  @click="handleEmit('open-modal-element', index)" size="sm">
                         <i class="fa fa-edit"></i>
                     </b-button>
 
-                    <b-button  @click="handleEmit('confirm-delete', index)" size="xs">
+                    <b-button  @click="handleEmit('confirm-delete', index)" size="sm">
                         <i class="fa fa-trash-alt"></i>
                     </b-button>
 

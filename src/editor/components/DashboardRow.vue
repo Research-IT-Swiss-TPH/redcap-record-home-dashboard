@@ -9,12 +9,12 @@
 
                     <small class="text-muted text-monospace mr-1" v-if="isDisabled">(max. columns)</small>
 
-                    <b-button :disabled="isDisabled" @click="handleEmit('add-column')" size="xs">
+                    <b-button :disabled="isDisabled" @click="handleEmit('add-column')" size="sm">
                         <i v-if="!isDisabled" class="fa fa-plus"></i>
                         <i v-else class="fa fa-ban"></i>
                     </b-button>
 
-                    <b-button @click="handleEmit('confirm-delete')" size="xs">
+                    <b-button @click="handleEmit('confirm-delete')" size="sm">
                         <i class="fa fa-trash-alt"></i>
                     </b-button>                
 
