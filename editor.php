@@ -17,7 +17,7 @@ if( $module->isDisabledEditor() ) : ?>
 <?php else: ?>
 
     <div style="width:950px;max-width:960px;" class="d-none d-md-block mt-3 mb-3">
-    <?= $module->tt("module_page_subtitle") ?> <a target="_blank" href="https://tertek.github.io/redcap-record-home-dashboard/">Documentation</a>
+    <?= $module->tt("module_page_subtitle") ?> <a target="_blank" href="https://research-it-swiss-tph.github.io/redcap-record-home-dashboard/">Documentation</a>
     </div>
     <!-- Dashboard Editor Render Target -->
     <div id="STPH_DASHBOARD_EDITOR"></div>
