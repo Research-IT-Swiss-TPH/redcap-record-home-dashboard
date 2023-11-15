@@ -25,8 +25,16 @@ class Formatter
     public static function renderDateFormat($value, $valtype) {
         
         $format = self::getDateFormatDisplay($valtype);
-        $date = date_create($value);
-        return date_format($date,$format);
+
+		//workaround for valtypes that return empty string from getDateFormatDisplay
+		if ($format == ''){
+			return $value;
+		}
+		else {
+			$date = date_create($value);
+			return date_format($date,$format);
+		}
+
     }
 
     /**
