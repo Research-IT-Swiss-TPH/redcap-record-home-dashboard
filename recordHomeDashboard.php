@@ -30,23 +30,21 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     protected $events;
     protected $table_pk;
 
-   /**
-    *   Constructs the class
-    *   @return void
-    *   @since 1.0.0
-    *
-    */
-    public function __construct() {        
-        parent::__construct();
-        global $Proj;
-
-        $this->project_settings = $Proj;
-        $this->hasMultipleEvents= $Proj->longitudinal;
-        $this->hasMultipleArms = $Proj->multiple_arms;
-        //$this->events = array_keys($Proj->eventsForms);
-        $this->events = (is_array($Proj->eventsForms) ? array_keys($Proj->eventsForms) : null);
-        $this->table_pk = $Proj->table_pk;
-    }    
+//    /**
+//     *   Constructs the class
+//     *   @return void
+//     *   @since 1.0.0
+//     *
+//     */
+//     public function __construct() {        
+//         parent::__construct();
+//         //global $Proj;
+//         
+//         // $this->hasMultipleEvents= $Proj->longitudinal;
+//         // $this->hasMultipleArms = $Proj->multiple_arms;
+//         // $this->events = (is_array($Proj->eventsForms) ? array_keys($Proj->eventsForms) : null);
+//         // $this->table_pk = $Proj->table_pk;
+//     }    
 
    /**
     * 
@@ -114,6 +112,11 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
      * 
      */
     public function getProjectParameters() {
+
+        global $Proj;
+        $this->hasMultipleEvents= $Proj->longitudinal;
+        $this->hasMultipleArms = $Proj->multiple_arms;        
+
         return [
             "hasMultipleEvents" => $this->hasMultipleEvents,
             "hasMultipleArms" => $this->hasMultipleArms
@@ -172,6 +175,9 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     *
     */    
     private function getInstancesData( $project_id , $record, $instrument, $fields=null, $events=[]) {
+
+        global $Proj;
+        $this->table_pk = $Proj->table_pk;
         
         $field_names_array = [];
         $params = [];
@@ -394,6 +400,10 @@ class recordHomeDashboard extends \ExternalModules\AbstractExternalModule {
     *
     */
     public function getSafeRepeatingForms() {
+
+        global $Proj;
+        $this->hasMultipleEvents= $Proj->longitudinal;
+        $this->events = (is_array($Proj->eventsForms) ? array_keys($Proj->eventsForms) : null);
 
         $repeatingForms = [];
         if($this->hasMultipleEvents) {                       
