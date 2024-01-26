@@ -18,19 +18,22 @@
     "url": "https://github.com/tertek/redcap-record-home-dashboard/issues"
   },
   "homepage": "https://github.com/tertek/redcap-record-home-dashboard#readme",
-  "devDependencies": {
+  "dependencies": {
     "axios": "^0.24.0",
     "bootstrap": "^4.6.2",
-    "bootstrap-vue": "^2.23.2",
-    "laravel-mix": "^6.0.49",
+    "bootstrap-vue": "^2.23.0",
     "qs": "^6.11.2",
     "resolve-url-loader": "^4.0.0",
-    "sass": "^1.69.4",
-    "sass-loader": "^12.6.0",
     "vue": "^2.7.14",
     "vue-axios": "^3.5.2",
-    "vue-loader": "^15.10.2",
-    "vue-template-compiler": "^2.7.14",
     "vuedraggable": "^2.24.3"
+  },
+  "devDependencies": {
+    "@vue/runtime-dom": "^3.4.15",
+    "laravel-mix": "^6.0.49",
+    "sass": "^1.69.4",
+    "sass-loader": "^12.6.0",
+    "vue-loader": "^15.10.2",
+    "vue-template-compiler": "^2.7.14"
   }
 }
