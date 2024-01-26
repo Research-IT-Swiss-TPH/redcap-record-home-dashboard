@@ -1,3 +1,42 @@
+// Adjust colors to REDCap
+$theme-colors: (
+  "info": #337ab7,
+);
+
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+//@import '~bootstrap/scss/root';
+//@import '~bootstrap/scss/reboot';
+//@import '~bootstrap/scss/type';
+//@import '~bootstrap/scss/images';
+//@import '~bootstrap/scss/code';
+//@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/tables';
+@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/buttons';
+//@import '~bootstrap/scss/transitions';
+@import '~bootstrap/scss/dropdown';
+@import '~bootstrap/scss/button-group';
+@import '~bootstrap/scss/input-group';
+@import '~bootstrap/scss/custom-forms';
+//@import '~bootstrap/scss/card';
+//@import '~bootstrap/scss/breadcrumb';
+//@import '~bootstrap/scss/pagination';
+@import '~bootstrap/scss/badge';
+//@import '~bootstrap/scss/alert';
+//@import '~bootstrap/scss/progress';
+//@import '~bootstrap/scss/media';
+@import '~bootstrap/scss/list-group';
+@import '~bootstrap/scss/close';
+@import '~bootstrap/scss/toasts';
+@import '~bootstrap/scss/modal';
+//@import '~bootstrap/scss/utilities';
+
+
+
+
 .editor-container {
   /* max-width: 960px; */
   min-width: 920px;
@@ -48,9 +87,9 @@
   color: #fff!important;
 }
 
-.alert.alert-info{
-  border-color: #d1ecf1!important;
-}
+// .alert.alert-info{
+//   border-color: #d1ecf1!important;
+// }
 
 .alert.alert-secondary {
   border-color: #d6d8db!important;
@@ -68,9 +107,9 @@
   border-color: #ffeeba!important;
 }
 
-.alert.alert-info {
-  border-color: #bee5eb!important;
-}
+// .alert.alert-info {
+//   border-color: #bee5eb!important;
+// }
 
 .alert.alert-light {
   border-color: #fdfdfe!important;
@@ -82,7 +121,7 @@
 
 .page-item.active .page-link {
   color: #fff!important;
-  background-color: #17a2b8!important;
+  background-color: #337ab7!important;
   border-color: #17a2b8!important;
 }
 
@@ -91,12 +130,12 @@
 }
 
 .page-link {
-  color: #17a2b8!important;
+  color: #337ab7!important;
 }
 
 .page-link:hover {
-  color: #138496!important;
-  outline: 1px solid #138496;
+  color: #337ab7!important;
+  outline: 1px solid #337ab7;
 }
 
 /*
@@ -116,14 +155,14 @@ input[type=checkbox] {
   pointer-events: none;
 }
 
-.btn-outline-info {
-  color: #17a2b8;
-}
+// .btn-outline-info {
+//   color: #17a2b8;
+// }
 
-.btn-info {
-  background-color: #17a2b8;
-  border-color: #17a2b8;
-}
+// .btn-info {
+//   background-color: #17a2b8;
+//   border-color: #17a2b8;
+// }
 
 .btn-outline-info:not(:disabled):not(.disabled).active, .btn-outline-info:not(:disabled):not(.disabled):active, .show > .btn-outline-info.dropdown-toggle {
   color: #fff;
