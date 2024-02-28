@@ -1,0 +1,30 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Record Home Dashboard
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Ekin
+    family-names: Tertemiz
+    email: ekin.tertemiz@swisstph.ch
+    affiliation: Swiss Tropical and Public Health Institute
+identifiers:
+  - type: url
+    value: >-
+      https://github.com/Research-IT-Swiss-TPH/redcap-record-home-dashboard
+repository-code: >-
+  https://github.com/Research-IT-Swiss-TPH/redcap-record-home-dashboard
+abstract: >-
+  A REDCap External Module that enables to add a customized
+  Dashboard to the Record Homepage
+keywords:
+  - REDCap
+  - External Module
+  - Dashboard
+license: MIT
+version: 2.2.1
+date-released: '2023-07-25'
